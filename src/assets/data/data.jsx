@@ -113,3 +113,19 @@ export const postEdit = {
 export const profile = {
   profile: "پروفایل"
 }
+
+export const sideBar = {
+  searchBar: "جستجوی کاربر",
+  papularUsers: "محبوب ترین ها",
+  name: "نسرین",
+  id: "nasrin007jf",
+  follow: "دنبال کردن"
+}
+
+export const explore = {
+  searchBar: "جستجوی پست",
+  sortBy: "دسته بندی بر اساس",
+  date: "جدید ترین",
+  papularity: "محبوب ترین",
+  related: "مرتبط ترین"
+}
