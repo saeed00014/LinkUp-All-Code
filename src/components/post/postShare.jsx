@@ -4,7 +4,10 @@ import PostFooterButtons from "./postFooterButtons";
 
 const PostShare = () => {
   return (
-    <PostFooterButtons icon={<IoShareSocialOutline />} text={post.share} />
+    <PostFooterButtons 
+      icon={<IoShareSocialOutline />} 
+      text={post.share} 
+    />
   )
 }
 

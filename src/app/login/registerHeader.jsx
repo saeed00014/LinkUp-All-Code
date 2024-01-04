@@ -8,10 +8,12 @@ const RegisterHeader = ({setRegister}) => {
       </h1>
       <button 
         onClick={() => setRegister(false)} 
-        className="relative flex items-center justify-center font-normal w-10 h-10 rounded-full hover:bg-bg-hover"
+        className="relative flex items-center justify-center font-normal w-10 h-10 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800"
       >
-        <i className="absolute w-[.1rem] h-5 rotate-45 bg-black"></i>  
-        <i className="absolute w-5 h-[.1rem] rotate-45 bg-black"></i>  
+        <i className="absolute w-[.1rem] h-5 rotate-45 bg-black dark:bg-white">
+        </i>  
+        <i className="absolute w-5 h-[.1rem] rotate-45 bg-black dark:bg-white">
+        </i>  
       </button>
     </div>
   )

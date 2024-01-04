@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 const ProfileHeader = () => {
   return (
-    <div className='relative flex items-center w-full h-[234px] '>
+    <div className='sticky flex items-center w-full h-[234px] z-40'>
       <div className='flex h-full w-full'> 
         <Image 
           src={testProfile2} 
@@ -31,7 +31,7 @@ const ProfileHeader = () => {
           </div>
         </div>
       </div>
-      <div className='absolute right-[16rem] top-[6rem] flex h-[162px] w-[162px] z-10 rounded-full overflow-hidden'> 
+      <div className='absolute right-[16rem] top-[5rem] flex h-[162px] w-[162px] z-10 rounded-full overflow-hidden'> 
         <Image 
           src={testProfile} 
           alt="" 

@@ -6,7 +6,10 @@ import { BiAperture } from "react-icons/bi";
 const LogoLink = () => {
   return (
     <li className='group flex items-center justify-center'>
-      <Link href={"/"} className='flex justify-start items-center w-full px-3 py-2 gap-3'>
+      <Link 
+        href={"/"} 
+        className='flex justify-start items-center w-full px-3 py-2 gap-3'
+      >
         {/* <span className='relative w-8 h-8'>
           <Image 
             fill={true}

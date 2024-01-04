@@ -31,6 +31,11 @@
   scroll-behavior: smooth;
   direction: rtl;
   font-weight: 500;
+
+}
+
+body {
+  overflow: hidden;
 }
 
 /* width */
@@ -41,15 +46,15 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #d8d8d8;
+  background: #505050;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #575757;
+  background: #cfcfcf;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #b3b3b3;
 }

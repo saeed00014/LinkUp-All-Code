@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
     <html className="dark" lang="en">
       <body>
         <Providers>
-          <main className="min-w-screen min-h-screen text-black dark:text-white ![&>*]:border-gray-600 bg-gray-100 dark:bg-gray-950 xl:mr-[240px] mr-[88px]">
+          <main className="min-w-screen min-h-screen text-black dark:text-white ![&>*]:border-gray-600 bg-gray-200 dark:bg-gray-950 xl:mr-[240px] mr-[88px]">
             <Header />
             {children}
           </main>

@@ -4,7 +4,10 @@ import PostFooterButtons from "./postFooterButtons";
 
 const PostLike = () => {
   return (
-    <PostFooterButtons icon={<FaRegHeart />} text={post.like} />
+    <PostFooterButtons 
+      icon={<FaRegHeart />} 
+      text={post.like} 
+    />
   )
 }
 
