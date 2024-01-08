@@ -4,9 +4,9 @@ import profile from "@/assets/images/profile.jpg"
 import Image from "next/image"
 import { IoSend } from "react-icons/io5"
 
-const CommentInput = () => {
+const CommentInput = ({type}) => {
   return (
-    <div className="relative flex items-center justify-start w-full gap-2">
+    <div className={`${type == "comments" ? "sticky bottom-0" : "relative" } flex items-center justify-start w-full gap-2 bg-white dark:bg-gray-800`}>
       <span className="relative w-10 min-w-10 h-10 rounded-full overflow-hidden">
         <Image 
           file={true}

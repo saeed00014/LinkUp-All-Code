@@ -1,5 +1,4 @@
 import { FaRegEdit } from "react-icons/fa"
-import { RiMoreFill } from "react-icons/ri"
 
 const EditInfoButton = () => {
   return (

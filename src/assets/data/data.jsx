@@ -76,7 +76,7 @@ export const mainHeaderLinks = [
   },
   {
     name: 'پیام ها',
-    path: '/messages',
+    path: '/chats',
     icon: <TiMessages />
   },
   {
@@ -100,8 +100,15 @@ export const post = {
   allComments: "مشاهده همه نظرات",
   input: "نظر خود را بنویسید",
   name: "نسرین",
-  testComment: "چقدر زیبا"
+  testComment: "چقدر زیبا",
+  liked: "لایک شده"
 }
+
+export const postShare = {
+  share: "اشتراک گذاری",
+  suggested: "پیشنهادی",
+  sendTo: "ارسال به"
+} 
 
 export const postMake = {
   video: "فیلم",
@@ -125,7 +132,28 @@ export const postMaker = {
 }
 
 export const profile = {
-  profile: "پروفایل"
+  profile: "پروفایل",
+  id: "nasrin007jf",
+  name: "نسرین",
+  lastName: "علیزاده",
+  fullName: "نسرین علیزاده",
+  job: "عکاس",
+  job2: "طراح گرافیک",
+  followers: "دنبال کننده",
+  following: "دنبال شونده",
+  editProfile: "تغییر اطلاعات"
+}
+
+export const profileEdit = {
+  username: "نام کاربری",
+  email: "ایمیل",
+  name: "نام",
+  lastName: "نام خوانوادگی",
+  job: "مهارت/شغل",
+  job2: "",
+  link: "لیک ها",
+  bio: "درباره",
+  submitEdit: "ذخیره"
 }
 
 export const sideBar = {

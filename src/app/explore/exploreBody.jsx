@@ -1,6 +1,4 @@
-import test from "@/assets/images/profile.jpg"
 import Post from "@/components/post/post"
-import Image from "next/image"
 
 const ExploreBody = () => {
   return (

@@ -1,8 +1,8 @@
 "use client"
 import { useState } from "react"
-import SideBarHeader from "./sideBarHeader"
 import SideBarPapulars from "./sideBarPapulars"
 import { IoMdArrowDropright } from "react-icons/io"
+import UserSearch from "../../components/userSearch"
 
 const SideBar = () => {
   const [isOpen,  setIsOpen] = useState(false)
@@ -15,7 +15,7 @@ const SideBar = () => {
       >
         <IoMdArrowDropright className="text-[1.6rem]"/>
       </span>
-      <SideBarHeader />
+      <UserSearch type="home"/>
       <SideBarPapulars />
     </div>
   )

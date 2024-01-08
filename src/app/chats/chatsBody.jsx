@@ -1,13 +1,13 @@
 import Chat from "./chat"
-import MessagesUsers from "./messagesUsers"
+import ChatsSideBar from "./chatsSideBar"
 
-const MessagesBody = () => {
+const ChatsBody = () => {
   return (
     <div className="flex justify-start w-full h-screen pb-[57.5px]">
-      <MessagesUsers />
+      <ChatsSideBar />
       <Chat />
     </div>
   )
 }
 
-export default MessagesBody
+export default ChatsBody

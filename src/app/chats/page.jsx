@@ -1,8 +1,8 @@
 import { messages } from "@/assets/data/data"
 import PageHeader from "@/components/pageHeader"
-import MessagesBody from "./messagesBody"
+import MessagesBody from "./chatsBody"
 
-const Messages = () => {
+const Chats = () => {
   return (
     <section className="flex flex-col h-auto">
       <PageHeader title={messages.messages} />
@@ -11,4 +11,4 @@ const Messages = () => {
   )
 }
 
-export default Messages
+export default Chats

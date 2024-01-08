@@ -2,7 +2,7 @@ import Image from "next/image"
 import profile from "@/assets/images/profile.jpg"
 import { messages } from "@/assets/data/data"
 
-const MessagesChats = () => {
+const ChatsUsers = () => {
   return (
     <ul className="flex flex-col w-full mt-[4rem] !overflow-y-scroll">
       <li className="flex w-full min-h-[4rem] p-2 gap-3 border-b border-gray-400 dark:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer  ">
@@ -425,4 +425,4 @@ const MessagesChats = () => {
   )
 }
 
-export default MessagesChats
+export default ChatsUsers
