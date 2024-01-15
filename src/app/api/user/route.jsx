@@ -3,13 +3,14 @@ import bcrypt from "bcrypt"
 import { NextResponse } from "next/server"
 
 export async function GET(req) {
+  const username = req.nextUrl.searchParams.get("username")
+  console.log(username)
   const result = await query({
-    query: "SELECT * FROM user",
-    values: []
+    query: `SELECT id,username,firstname,image FROM user WHERE username like '%${username}%'`,
+    values: [username]
   })
   if(result) {
-    const response = JSON.stringify(result)
-    return NextResponse.json({ message: response}, { status: 200 })
+    return NextResponse.json({ response: result }, { status: 200 })
   }
 }
 

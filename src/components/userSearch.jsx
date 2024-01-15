@@ -1,11 +1,26 @@
 "use client"
 import { useState } from "react"
 import { FaMagnifyingGlass } from "react-icons/fa6"
-import UserSearchResultContainer from "./userSearchResultContainer"
+import UserSearchResult from "./userSearchResult"
 import { postShare, sideBar } from "@/assets/data/data"
+import { useMutation } from "@tanstack/react-query"
+import { baseURL } from "@/axios/axios"
 
 const UserSearch = ({type}) => {
-  const [searchValue, setSearchValue] = useState("")
+  const [searchResult, setSearchResult] = useState("")
+  const mutation = useMutation({
+    mutationFn: async (searchValue) => {
+      const response = await baseURL.get(`/user?username=${searchValue}`)
+      if(response.data) {
+        setSearchResult(response.data.response)
+      }
+    }
+  })
+  const handleChange = (e) => {
+    const value = e.target.value
+    !value && setSearchResult("")
+    value && mutation.mutate(value)
+  }
 
   return (
     <div className={`relative flex items-center justify-center w-full z-40`}>
@@ -29,12 +44,15 @@ const UserSearch = ({type}) => {
           name="text"
           id="text"
           placeholder={sideBar.searchBar}
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={(e) => handleChange(e)}
           className={`w-full py-2 ${type == "home" ? "pr-10" : "pr-11"} pl-1  bg-gray-200 dark:bg-gray-700 rounded-[3rem] z-40`}
         />
       </div>
-      {searchValue &&
-        <UserSearchResultContainer type={type} />
+      {searchResult &&
+        <UserSearchResult 
+          searchResult={searchResult}
+          type={type} 
+        />
       }
     </div>
   )

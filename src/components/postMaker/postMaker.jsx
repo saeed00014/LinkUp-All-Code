@@ -1,5 +1,5 @@
 "use client"
-import { useRef, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import { useMutation } from "@tanstack/react-query"
 import CloseHeader from "../closeHeader"
 import Input from "./input"
@@ -20,12 +20,7 @@ const PostMaker = ({setIsMakePostActive}) => {
 
   const mutation = useMutation({
     mutationFn: async (newPost) => {
-      const response = await baseURL.post('/post',{ 
-        newPost,  
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      })
+      const response = await baseURL.post('/post', newPost)
       console.log(response)
     }
   })
