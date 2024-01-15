@@ -1,25 +1,49 @@
 "use client"
-
 import RegisterForm from "./registerForm"
 import { useRef, useState } from "react"
 import { login, patterns } from "@/assets/data/data"
 import ErorrText from "./erorrText"
+import { useMutation } from "@tanstack/react-query"
+import { baseURL } from "@/axios/axios"
+import Cookies from "universal-cookie"
 
 const LoginForm = () => {
   const [register, setRegister] = useState(false)
   const [loginErorrMessage, setLoginErorrMessage] = useState(false)
   const ref = useRef()
 
+  const mutation = useMutation({
+    mutationFn: (userInfo) => {
+      baseURL.post("/auth", userInfo)
+        .then((res) => {
+          const data = res.data
+          if(data.login) {
+            const cookie = new Cookies()
+            cookie.set('user', data.result, {path: "/"})
+            location.reload("")
+          } else {
+            setLoginErorrMessage(true)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  })
   const handleSubmit = (e) => {
     e.preventDefault()
     const email = ref.current.email.value
     const password = ref.current.password.value
-    if(email == "" || password == "" || !patterns.email.test(email) || !patterns.password.test(password)) {
+    if(email == "" || password == "" || !patterns.username.test(email) || !patterns.password.test(password)) {
       setLoginErorrMessage(true)
     }
-    if(email !== "" && password !== "") {
-
+    if(email !== "" && password !== "" && patterns.username.test(email) && patterns.password.test(password)) {
+      console.log("djklfs")
     }
+    mutation.mutate({
+      username: email,
+      password: password
+    })
   }
 
   return (
@@ -34,7 +58,7 @@ const LoginForm = () => {
           id="email" 
           name="email" 
           autoComplete="on"
-          placeholder={login.email}
+          placeholder={login.username}
         />
         <input 
           id="password" 

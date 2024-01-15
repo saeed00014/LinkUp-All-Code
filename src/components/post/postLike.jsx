@@ -1,17 +1,59 @@
+import { useContext } from "react"
+import { PostContext } from "@/context/context"
 import { FaRegHeart } from "react-icons/fa"
 import { FaHeart } from "react-icons/fa"
 import PostFooterButtons from "./postFooterButtons"
-import { post } from "@/assets/data/data"
+import { postText } from "@/assets/data/data"
+import { useMutation } from "@tanstack/react-query"
+import { baseURL } from "@/axios/axios"
 
-const PostLike = ({setIsLiked, isLiked}) => {
+const PostLike = () => {
+  const { post, isLiked, setIsLiked } = useContext(PostContext)
+  const post_id = post.id
+  const likedPostsIdStorage = JSON.parse(localStorage.getItem("likedPostsId"))
+  
+  const mutationLike = useMutation({
+    mutationFn: async () => {
+      const response = await baseURL.post(`/like?post_id=${post.id}`)
+      if(response) {
+        likedPostsIdStorage ? 
+          (likedPostsIdStorage.push({post_id}) && 
+            localStorage.setItem("likedPostsId", 
+              JSON.stringify(likedPostsIdStorage)
+            )
+          )
+        : localStorage.setItem("likedPostsId", 
+            JSON.stringify([{post_id}])
+          )
+      }
+    }
+  })
+
+  const mutationDisLike = useMutation({
+    mutationFn: async () => {
+      const response = await baseURL.delete(`/like?post_id=${post.id}`)
+      if(response) {
+          const filteredPostsStorage = likedPostsIdStorage.filter((post_id) => post_id.post_id != post.id)
+          localStorage.setItem("likedPostsId", 
+            JSON.stringify(filteredPostsStorage)
+          )
+      }
+    }
+  })
+  
+  const handleLike = () => {
+    !isLiked && mutationLike.mutate()
+    isLiked && mutationDisLike.mutate()
+    setIsLiked(!isLiked)
+  }
   return (
     <div 
       className="w-full"
-      onClick={() => setIsLiked(!isLiked)}
+      onClick={handleLike}
     >
       <PostFooterButtons 
         icon={isLiked ? <FaHeart /> : <FaRegHeart />} 
-        text={post.like} 
+        text={postText.like} 
       />
     </div>
   )

@@ -1,5 +1,4 @@
 "use client"
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AuthProvider from "./AuthProvider"
 import { ThemeProvider } from "next-themes"
@@ -9,11 +8,11 @@ const Providers = ({children}) => {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="light">
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
           {children}
-        </QueryClientProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   )
 }

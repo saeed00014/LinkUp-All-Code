@@ -1,12 +1,14 @@
 "use client"
-import testProfile from '@/assets/images/profile.jpg'
+import { useContext, useState } from 'react'
+import { ProfileContext } from '@/context/context'
+import ProfileEdit from './profileEdit'
+import defaultImage from '@/assets/images/default.jpg'
 import testProfile2 from '@/assets/images/post.jpg'
 import Image from 'next/image'
 import { profile } from '@/assets/data/data'
-import { useState } from 'react'
-import ProfileEdit from './profileEdit'
 
 const ProfileHeader = () => {
+  const { user } = useContext(ProfileContext)
   const [isEditActive, setIsEditActive] = useState(false)
 
   return (
@@ -22,34 +24,21 @@ const ProfileHeader = () => {
       </div>
       <div className='absolute left-0 top-0 bottom-0 flex flex-col h-full w-full overflow-y-hidden'>
         <div className='flex flex-col justify-between h-full w-[17rem] py-1 pr-4 pl-2 dark:bg-gray-800 bg-white z-10 gap-1'>
-          <div className='flex flex-col gap-1'>
-            <div className="text-[1.3rem]">
-              <span>
-                {profile.name}
-              </span>
-              <span>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
-              </span>
-              <span>
-                {profile.id}
-              </span>
-            </div>
-            <span>
-              {profile.fullName}
+          <div className='flex flex-col text-[1rem] gap-1'>
+            <span className='text-[1.2rem]'>
+              {user.firstname}&nbsp;{user.lastname}
             </span>
-            <div>
-              <span>
-                {profile.job}
-              </span>
-              <span>
-                &nbsp;&nbsp;_&nbsp;&nbsp;
-              </span>
-              <span>
-                {profile.job2}
-              </span>
-            </div>
+            <span className='text-[1.2rem]'>
+              {user.username}
+            </span>
+            <span>
+              {user.job}
+            </span>
+            <span>
+              {user.bio}
+            </span>
             <a href='nasrin007jf.com'>
-              nasrin007jf.com
+              {user.link}
             </a>
           </div>
           <div className='flex flex-col items-start gap-1'>
@@ -59,7 +48,7 @@ const ProfileHeader = () => {
                   {profile.following}
                 </span>
                 <span>
-                  213K
+                  {user.following}
                 </span>
               </div>
               <div className='flex gap-1'>
@@ -67,7 +56,7 @@ const ProfileHeader = () => {
                   {profile.followers}
                 </span>
                 <span>
-                  213K
+                  {user.follower}
                 </span>
               </div>
             </div>
@@ -82,7 +71,7 @@ const ProfileHeader = () => {
       </div>
       <div className='absolute right-[16rem] top-[5rem] flex h-[162px] w-[162px] z-10 rounded-full overflow-hidden'> 
         <Image 
-          src={testProfile} 
+          src={user.image || defaultImage} 
           width={1000}
           height={1000}
           alt="" 

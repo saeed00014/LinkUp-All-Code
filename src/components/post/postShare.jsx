@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { IoShareSocialOutline } from "react-icons/io5"
 import PostFooterButtons from "./postFooterButtons"
-import { post, postShare } from "@/assets/data/data"
+import { postText, postShare } from "@/assets/data/data"
 import CloseHeader from "../closeHeader"
 import UserSearch from "@/components/userSearch"
 import UserSearchResult from "@/components/userSearchResult"
@@ -18,7 +18,7 @@ const PostShare = () => {
       >
         <PostFooterButtons 
           icon={<IoShareSocialOutline />} 
-          text={post.share} 
+          text={postText.share} 
         />
       </span>
       {isShareActive && 

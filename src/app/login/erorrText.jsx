@@ -2,7 +2,7 @@ import React from 'react'
 
 const ErorrText = ({text}) => {
   return (
-    <span className="-my-2 text-[.95rem] text-text-error">
+    <span className="flex justify-start w-full text-[.95rem] text-red-600">
       {text}
     </span>
   )

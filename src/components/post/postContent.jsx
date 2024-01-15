@@ -1,12 +1,14 @@
+import { useContext } from "react"
+import { PostContext } from "@/context/context"
 import Image from "next/image"
-import { register } from "@/assets/data/data"
 import postImage from "@/assets/images/post.jpg"
 
 const PostContent = () => {
+  const { post } = useContext(PostContext)
   return (
     <div className="flex flex-col gap-3 text-[.9rem]">
       <p className="px-4">
-        {register.passRepeatedErorr}
+        {post.text}
       </p>
       <span className="relative flex max-w-[550px]">
         <Image 

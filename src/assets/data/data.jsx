@@ -1,9 +1,10 @@
 export const login = {
-  errorMessage: "ایمیل یا رمز عبور صحیح نیست",
+  errorMessage: "نام کاربری یا رمز عبور صحیح نیست",
   submit: "ورود",
   forgotPass: "رمز عبور را فراموش کرده ام",
   register: "ثبت نام",
   email: "ایمیل",
+  username: "نام کاربری",
   pass: "رمز عبور"
 }
 
@@ -26,15 +27,15 @@ export const register = {
   email: "ایمیل",
   pass: "رمز عبور",
   name: "نام",
-  userName: "نام کاربری",
-  lastName: "نام خوانوادگی",
+  username: "نام کاربری",
+  lastname: "نام خوانوادگی",
   gender: "جنسیت",
   birthDate: "تاریخ تولد",
   fillErorr: "باید پر شود و کمتر از 25 حرف باشد",
   emailErorr: "باید شامل @ و بین 8 تا 25 حرف لاتین یا اعداد یا حروف خاص باشد",
   emailRepeated: "ایمیل تکراری است",
-  userNameErorr: "باید بین 3 تا 15 حرف لاتین باشد",
-  userNameRepeated: "نام کاربری تکراری است",
+  usernameErorr: "باید بین 3 تا 15 حرف لاتین باشد",
+  usernameRepeated: "نام کاربری تکراری است",
   female: "زن",
   male: "مرد",
   passErorr: "باید بین 8 تا 18 حرف حرف لاتین اعداد و حداقل یک حرف خاص (!@#$%^&*) باشد",
@@ -47,7 +48,7 @@ export const register = {
 
 export const patterns = {
   password: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,18}$/,
-  userName: /^[A-Za-z]{3,12}$/,
+  username: /^[A-Za-z]{3,12}$/,
   email: /^(?=.*[@])(?=.*[.])[a-zA-Z0-9!@#$%^&*.]{8,25}$/
 }  
 
@@ -92,7 +93,7 @@ export const headerLinkMore = {
   icon: <CgMoreO />
 }
 
-export const post = {
+export const postText = {
   comments: "نظرات",
   comment: "ارسال نظرات",
   like: "دوست داشتن",
@@ -125,6 +126,9 @@ export const postMaker = {
   imageChoose: "انتخاب فایل",
   noChoosenImage: "هیچ فایلی انتخاب نشده",
   tag: "اضافه کردن تگ",
+  tagPlaceHolder: "تگ ها برای سرچ اسفاده میشوند",
+  textPlaceHolder: "متن اصلی پست خود را وارد کنید",
+  myCommentPlaceHolder: "این به عنوان اولین نظر در ابتدای تخش نظرات قرار میگیرد",
   commentCheck: "بخش نظرات",
   tagCheck: "تگ ها",
   myComment: "اولین نظر",
@@ -135,7 +139,7 @@ export const profile = {
   profile: "پروفایل",
   id: "nasrin007jf",
   name: "نسرین",
-  lastName: "علیزاده",
+  lastname: "علیزاده",
   fullName: "نسرین علیزاده",
   job: "عکاس",
   job2: "طراح گرافیک",
@@ -148,7 +152,7 @@ export const profileEdit = {
   username: "نام کاربری",
   email: "ایمیل",
   name: "نام",
-  lastName: "نام خوانوادگی",
+  lastname: "نام خوانوادگی",
   job: "مهارت/شغل",
   job2: "",
   link: "لیک ها",

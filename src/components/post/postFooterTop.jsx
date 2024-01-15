@@ -1,31 +1,33 @@
 "use client"
-import { post } from "@/assets/data/data"
+import { useContext } from "react"
+import { PostContext } from "@/context/context"
 import { FaRegHeart } from "react-icons/fa"
 import { FaHeart } from "react-icons/fa"
+import { postText } from "@/assets/data/data"
 
-const PostFooterTop = ({setIsLiked, isLiked}) => {
-
+const PostFooterTop = () => {
+  const { post, isLiked } = useContext(PostContext)
   return (
     <div className="flex justify-between w-full">
-      <div onClick={() => setIsLiked(!isLiked)} className="relative flex items-center justify-end w-fit gap-2 cursor-pointer z-10">
+      <div className="relative flex items-center justify-end w-fit gap-2 cursor-pointer z-10">
         <span>
           {isLiked ?  <FaHeart /> : <FaRegHeart /> }
         </span>
         <span>
-          7                                     
+          {post.likes}                                  
         </span>
         {isLiked && 
           <span>
-            {post.liked}
+            {postText.like}
           </span>
         }
       </div>
       <div className="flex gap-2">
         <span>
-          23
+          {post.comments}
         </span>
         <span>
-          {post.comments}
+          {postText.comments}
         </span>
       </div>
     </div>

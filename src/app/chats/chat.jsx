@@ -1,8 +1,8 @@
 "use client"
-import React, { createContext, useState } from "react"
+import { useState } from "react"
 import ChatHeader from "./chatHeader"
 import ChatSendBar from "./chatsSendBar"
-import Message from "@/components/message"
+import Message from "@/app/chats/message"
 import { DragedMessageContext } from "../../context/context"
 
 const Chat = () => {

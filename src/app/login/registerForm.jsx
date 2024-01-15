@@ -1,14 +1,17 @@
 import { useRef, useState } from "react"
-import { patterns, selectOptionsMounths } from "@/assets/data/data"
-import { register } from "@/assets/data/data"
+import { useMutation } from "@tanstack/react-query"
 import ErorrIcon from "./erorrIcon"
 import ErorrText from "./erorrText"
 import RegisterHeader from "./registerHeader"
+import { register } from "@/assets/data/data"
+import { patterns, selectOptionsMounths } from "@/assets/data/data"
+import { baseURL } from "@/axios/axios"
+import Cookies from 'universal-cookie'
 
 const RegisterForm = ({setRegister}) => {
   const ref = useRef()
-  const [firstNameErorr, setFirstNameErorr] = useState(false)
-  const [lastNameErorr, setLastNameErorr] = useState(false)
+  const [firstnameErorr, setFirstnameErorr] = useState(false)
+  const [lastnameErorr, setLastnameErorr] = useState(false)
   const [emailErorr, setEmailErorr] = useState(false)
   const [usernameErorr, setUsernameErorr] = useState(false)
   const [birthErorr, setBirthErorr] = useState(false)
@@ -16,14 +19,38 @@ const RegisterForm = ({setRegister}) => {
   const [passwordErorr, setPasswordErorr] = useState(false)
   const [confirmPasswordErorr, setConfirmPasswordErorr] = useState(false)
   const [confirmPasswordErorrMessage, setConfirmPasswordErorrMessage] = useState("")
-  const [repeatedUserName, setRepeatedUserName] = useState("")
-  const [repeatedEmail, setRepeatedEmail] = useState("")
+  const [repeatedUsername, setRepeatedUsername] = useState(false)
+  const [repeatedEmail, setRepeatedEmail] = useState(false)
+
+  const mutation = useMutation({
+    mutationFn: (newUser) => {
+      baseURL.post('/user', newUser)
+        .then(res => {
+          const data = res.data
+          if(data.repeated) {
+            data.repeated.includes('email') ? 
+            (setRepeatedEmail(true), setRepeatedUsername(false))
+            : (setRepeatedUsername(true), setRepeatedEmail(false))
+          } else {
+            setRepeatedEmail(false)
+            setRepeatedUsername(false)
+          }
+          if(data.id) {
+            const cookies = new Cookies();
+            cookies.set('user', data, {path: "/"})
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const currentRef = ref.current
-    const firstName = currentRef.firstName.value
-    const lastName = currentRef.lastName.value
+    const firstname = currentRef.firstname.value
+    const lastname = currentRef.lastname.value
     const email = currentRef.email.value
     const username = currentRef.username.value
     const days = currentRef.days.value
@@ -35,35 +62,45 @@ const RegisterForm = ({setRegister}) => {
 
     if(password == confirmPassword && password != "") {setConfirmPasswordErorrMessage(false)} 
     if(password != confirmPassword && password != "") {setConfirmPasswordErorrMessage(true)}
-    if(firstName == "" || firstName.length > 20) {setFirstNameErorr(true)}
-    if(lastName == "" || lastName.length > 20) {setLastNameErorr(true)}
+    if(firstname == "" || firstname.length > 20) {setFirstnameErorr(true)}
+    if(lastname == "" || lastname.length > 20) {setLastnameErorr(true)}
     if(!patterns.email.test(email)) {setEmailErorr(true)}
-    if(!patterns.userName.test(username)) {setUsernameErorr(true)}
+    if(!patterns.username.test(username)) {setUsernameErorr(true)}
     if(!patterns.password.test(password)) {setPasswordErorr(true)}
     if(confirmPassword == "") {setConfirmPasswordErorr(true)}
     if(gender != "male" && gender != "female") {setGenderErorr(true)}
     if(years >= 1384) {setBirthErorr(true)}
-    if(!confirmPasswordErorrMessage && !firstNameErorr && !lastNameErorr && !emailErorr && !passwordErorr && !genderErorr && !birthErorr) { }
+    if(!confirmPasswordErorrMessage && !firstnameErorr && !lastnameErorr && !emailErorr && !passwordErorr && !genderErorr && !birthErorr) {
+    }
+    mutation.mutate({
+      username : username, 
+      email : email, 
+      firstname : firstname, 
+      lastname : lastname, 
+      gender : gender, 
+      years : years, 
+      password : password
+    })
   } 
 
   const onChangeBlur = (e) => {
     const target = e.target.name
     const currentRef = ref.current
     switch(target) {
-      case "firstName":
-        const firstName = currentRef.firstName.value
-        if(firstName == ""|| firstName.length > 25) { 
-          setFirstNameErorr(true) 
+      case "firstname":
+        const firstname = currentRef.firstname.value
+        if(firstname == ""|| firstname.length > 25) { 
+          setFirstnameErorr(true) 
         } else {
-          setFirstNameErorr(false)
+          setFirstnameErorr(false)
         }
         break;
-        case "lastName":
-        const lastName = currentRef.lastName.value
-        if(lastName == ""|| lastName.length > 25) { 
-          setLastNameErorr(true) 
+        case "lastname":
+        const lastname = currentRef.lastname.value
+        if(lastname == ""|| lastname.length > 25) { 
+          setLastnameErorr(true) 
         } else {
-          setLastNameErorr(false)
+          setLastnameErorr(false)
         }
         break;
       case "email":
@@ -74,7 +111,7 @@ const RegisterForm = ({setRegister}) => {
         }
         break;
       case "username":
-        if(patterns.userName.test(currentRef.username.value)) { 
+        if(patterns.username.test(currentRef.username.value)) { 
           setUsernameErorr(false) 
         } else {
           setUsernameErorr(true)
@@ -130,27 +167,27 @@ const RegisterForm = ({setRegister}) => {
         <div>
           <input 
             type="name" 
-            id="firstName" 
-            name="firstName" 
+            id="firstname" 
+            name="firstname" 
             placeholder={register.name}
             onBlur={(e) => onChangeBlur(e)} 
             onChange={(e) => onChangeBlur(e)} 
-            className={`${firstNameErorr ? "border-text-error border-[1px]" : ""}`} 
+            className={`${firstnameErorr ? "border-text-error border-[1px]" : ""}`} 
           />
-          {firstNameErorr && 
+          {firstnameErorr && 
             <ErorrIcon text={register.fillErorr}/>}
         </div>
         <div>
           <input 
             type="name" 
-            id="lastName" 
-            name="lastName" 
-            placeholder={register.lastName}
+            id="lastname" 
+            name="lastname" 
+            placeholder={register.lastname}
             onBlur={(e) => onChangeBlur(e)} 
             onChange={(e) => onChangeBlur(e)} 
-            className={`${lastNameErorr ? "border-text-error border-[1px]" : ""}`} 
+            className={`${lastnameErorr ? "border-text-error border-[1px]" : ""}`} 
           />
-          {lastNameErorr && 
+          {lastnameErorr && 
             <ErorrIcon text={register.fillErorr}/>}
         </div>
       </div>
@@ -174,15 +211,15 @@ const RegisterForm = ({setRegister}) => {
           type="username" 
           id="username" 
           name="username" 
-          placeholder={register.userName}
+          placeholder={register.username}
           onBlur={(e) => onChangeBlur(e)} 
           onChange={(e) => onChangeBlur(e)} 
           className={`${usernameErorr ? "border-text-error border-[1px]" : ""}`} 
         />
         {usernameErorr && 
-          <ErorrIcon text={register.userNameErorr}/>}
-        {repeatedUserName && 
-          <ErorrText text={register.repeatedUserName}/>}
+          <ErorrIcon text={register.usernameErorr}/>}
+        {repeatedUsername && 
+          <ErorrText text={register.usernameRepeated}/>}
       </div>
       <span className="relative flex items-center gap-1 text-[.9rem] w-24">
         {register.birthDate}

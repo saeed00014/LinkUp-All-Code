@@ -1,38 +1,51 @@
 "use client"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { PostContext } from "@/context/context"
 import PostLike from "./postLike"
 import PostComment from "./postComment"
 import PostShare from "./postShare"
-import CommentSuggested from "./commentSuggested"
 import CommentInput from "./commentInput"
-import PostAllComments from "./comments"
-import { post } from "@/assets/data/data" 
 import PostFooterTop from "./postFooterTop"
+import Image from "next/image"
+import profile from "@/assets/images/profile.jpg"
+import { postText } from "@/assets/data/data" 
 
 const PostFooter = () => {
-  const [isAllCommentsActive, setIsAllCommentsActive] = useState(false)
-  const [isLiked, setIsLiked] = useState(false)
+  const { setIsCommentActive } = useContext(PostContext)
 
   return (
     <footer className="flex flex-col px-4 mt-1">
-      <PostFooterTop setIsLiked={setIsLiked} isLiked={isLiked} />
+      <PostFooterTop />
       <div className="flex justify-between items-center py-1 mt-2 border-t-2 border-b-2 dark:border-gray-600 gap-1">
-        <PostLike setIsLiked={setIsLiked} isLiked={isLiked} />
+        <PostLike />
         <PostComment />
         <PostShare />
       </div>
       <div className="flex flex-col w-full gap-2">
         <button 
-          onClick={() => setIsAllCommentsActive(!isAllCommentsActive)} className="flex justify-start w-full text-[.8rem] hover:underline cursor-pointer"
+          onClick={() => setIsCommentActive(true)} className="flex justify-start w-full text-[.8rem] hover:underline cursor-pointer"
         >
-          {post.allComments}
+          {postText.allComments}
         </button>
-        <CommentSuggested />
+        <div className="flex w-full gap-2">
+          <span className="relative w-10 min-w-10 h-10 rounded-full overflow-hidden">
+            <Image 
+              fill={true}
+              src={profile}
+              alt="profile picture"
+            />
+          </span>
+          <div className="flex flex-col w-full h-fit px-2 pb-1 ml-10 bg-gray-200 dark:bg-gray-700 rounded-[.5rem] text-[.9rem]">
+            <span>
+              {postText.name}
+            </span>
+            <span>
+              {postText.testComment}
+            </span>
+          </div>
+        </div>
         <CommentInput />
       </div>
-      {isAllCommentsActive && 
-        <PostAllComments setIsAllCommentsActive={setIsAllCommentsActive} />
-      }
     </footer>
   )
 }

@@ -1,10 +1,10 @@
 import Post from "@/components/post/post"
-import PostMake from "@/components/post/postMake"
+import PostMake from "@/components/postMaker/postMake"
 
 const ProfilePost = () => {
   return (
     <div className="flex flex-col justify-start gap-6">
-      <PostMake />
+      {/* <PostMake /> */}
       <Post />
       <Post />
       <Post />

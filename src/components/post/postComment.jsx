@@ -1,12 +1,14 @@
 "use client"
-
-import { post } from "@/assets/data/data"
+import { useContext } from "react"
+import { PostContext } from "@/context/context"
 import { FaRegComment } from "react-icons/fa"
+import { postText } from "@/assets/data/data"
 import PostFooterButtons from "./postFooterButtons"
 
 const PostComment = () => {
+  const { post } = useContext(PostContext)
   const handleClick = () => {
-    document.getElementById("commentInputLable").click()
+    document.getElementById(`commentInputLable${post.id}`).click()
   }
 
   return (
@@ -16,7 +18,7 @@ const PostComment = () => {
     >
       <PostFooterButtons 
         icon={<FaRegComment />} 
-        text={post.comment} 
+        text={postText.comment} 
       />
     </span>
   )

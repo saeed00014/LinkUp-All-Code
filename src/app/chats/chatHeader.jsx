@@ -29,12 +29,10 @@ const ChatHeader = () => {
       {dragedMessage && dragedMessage.length > 0 && !editMessage &&
         <div className="flex items-center justify-center h-full gap-3 [&>span]:flex [&>span]:items-center [&>span]:justify-center [&>span]:h-[3rem] [&>span]:w-[3rem] [&>span]:cursor-pointer [&>span]:rounded-[.3rem]">
           <MessageDelete />
-          {dragedMessage.length < 2 && !editMessage && 
+          {dragedMessage.length < 2 &&
             <MessageEdit />
           }
-          {!editMessage &&
-            <MessageShare />
-          }
+          <MessageShare />
         </div>
       }
     </header>
