@@ -5,8 +5,9 @@ import PostFooterButtons from "./postFooterButtons"
 import { postText, postShare } from "@/assets/data/data"
 import CloseHeader from "../closeHeader"
 import UserSearch from "@/components/userSearch"
-import UserSearchResult from "@/components/userSearchResult"
+import UserSearchResult from "@/components/post/postShareUser"
 import PostShareFooter from "./postShareFooter"
+import PostShareUser from "@/components/post/postShareUser"
 
 const PostShare = () => {
   const [isShareActive, setIsShareActive] = useState(false)
@@ -31,19 +32,8 @@ const PostShare = () => {
                 {postShare.suggested}
               </span>
               <div className="flex flex-col overflow-y-scroll">
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
-                <UserSearchResult type="postShare" />
+                <PostShareUser />
+                <PostShareUser />
               </div>
             </div>
             <PostShareFooter />

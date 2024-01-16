@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 
 export async function GET(req) {
   const cookie = cookies()
-  const loginUser = JSON.parse(cookie.get("id").value)
+  const loginUser = JSON.parse(cookie.get("user").value)
   const values = [loginUser.id]
   const result = await query({
     query: "SELECT `post_id` FROM `like` WHERE user_id = ?",
@@ -20,7 +20,7 @@ export async function GET(req) {
 
 export async function POST(req) {
   const cookie = cookies()
-  const loginUser = JSON.parse(cookie.get("id").value)
+  const loginUser = JSON.parse(cookie.get("user").value)
   const post_id = req.nextUrl.searchParams.get('post_id')
   const values = [loginUser.id, post_id]
   const result = await query({
@@ -42,10 +42,9 @@ export async function POST(req) {
 
 export async function DELETE(req) {
   const cookie = cookies()
-  const loginUser = JSON.parse(cookie.get("id").value)
+  const loginUser = JSON.parse(cookie.get("user").value)
   const post_id = req.nextUrl.searchParams.get('post_id')
   const values = [loginUser.id, post_id]
-  console.log(values)
   const result = await query({
     query: "DELETE FROM `like` WHERE user_id = ? && post_id = ?",
     values: values

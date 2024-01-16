@@ -1,27 +1,44 @@
 "use client"
 import { baseURL } from "@/axios/axios"
-import { HomeUserLogin } from "@/context/context"
+import { HomeContext } from "@/context/context"
 import { useQuery } from "@tanstack/react-query"
-import Cookies from "universal-cookie"
+import { useState } from "react"
 
 const Context = ({children}) => {
-  const cookies = new Cookies
-  const LoginUser = cookies.get("user")
+  const localUser = localStorage.getItem("user")
+  const loginUser = localUser && JSON.parse(localUser)
+  const [searchResult, setSearchResult] = useState("")
+
+  const suggestionUser = useQuery({
+    queryKey: ["suggestionUser"],
+    queryFn: async () => {
+      const users = await baseURL.get("/user")
+        return users
+    }
+  })
 
   const { isPending, error, data } = useQuery({
     queryKey: ["post"],
     queryFn: async () => {
       const post = await baseURL.get(`/post`)
-      const response = {post: post}
-      return response
+      return post
     }
   })
-  if(data) {
-    const post = data.post.data.response
+  if(!isPending && loginUser && !suggestionUser.isPending) {
+    const post = data.data.response
+    const suggestedUsers = suggestionUser.data.data.response
     return (
-      <HomeUserLogin.Provider value={{LoginUser, post}}>
+      <HomeContext.Provider 
+        value={{
+          loginUser,
+          post,
+          searchResult,
+          setSearchResult,
+          suggestedUsers
+        }}
+      >
         {children}
-      </HomeUserLogin.Provider>
+      </HomeContext.Provider>
     )
   }
 }

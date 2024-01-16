@@ -1,10 +1,13 @@
 "use client"
-import { useState } from "react"
-import SideBarPapulars from "./sideBarPapulars"
+import { useContext, useState } from "react"
+import { HomeContext } from "@/context/context"
 import { IoMdArrowDropright } from "react-icons/io"
+import SideBarSuggestion from "./sideBarSuggestion"
 import UserSearch from "../../components/userSearch"
+import UserSearchResult from "./userSearchResult"
 
 const SideBar = () => {
+  const { searchResult, setSearchResult } = useContext(HomeContext)
   const [isOpen,  setIsOpen] = useState(false)
 
   return (
@@ -15,8 +18,16 @@ const SideBar = () => {
       >
         <IoMdArrowDropright className="text-[1.6rem]"/>
       </span>
-      <UserSearch type="home"/>
-      <SideBarPapulars />
+      <UserSearch 
+        type="home"
+        setSearchResult={setSearchResult}
+      />
+      {searchResult ? 
+        <UserSearchResult 
+          searchResult={searchResult}
+        /> 
+        : <SideBarSuggestion />  
+      }
     </div>
   )
 }

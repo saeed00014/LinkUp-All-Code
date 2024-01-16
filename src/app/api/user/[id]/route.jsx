@@ -4,10 +4,9 @@ import { NextResponse } from "next/server"
 export async function GET(req, route) {
   const id = route.params.id
   const result = await query({
-    query: "SELECT id,username,email,follower,following,firstname,lastname,gender,birth,job,link,bio,image FROM user where id = ?",
+    query: "SELECT id,username,email,follower,following,firstname,lastname,gender,birth,job,link,bio,image,background FROM user where id = ?",
     values: [id]
   })
-  console.log(result)
   if(result[0]) {
     return NextResponse.json({ response: result[0] }, { status: 200 })
   }

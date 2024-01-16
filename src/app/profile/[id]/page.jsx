@@ -11,7 +11,7 @@ const Profile = () => {
       <PageHeader title={profile.profile}/>
       <Context>
         <ProfileHeader />
-        {/* <ProfileBody /> */}
+        <ProfileBody />
       </Context>
     </section>
   )

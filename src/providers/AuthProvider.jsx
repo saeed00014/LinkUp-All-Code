@@ -8,13 +8,13 @@ const AuthProvider = ({children}) => {
     queryKey: ["auth"],
     queryFn: async () => {
       const response = await baseURL.get('/auth')
+      localStorage.setItem("user", JSON.stringify(response.data.user))
       return response
     }
   })
-  if(!isPending && data) {
+  if(!isPending) {
     const login = data.data.login
     if(login) {
-      // localStorage.setItem('user', JSON.stringify(data.data.user))
       return children
     }
     if(!login) {

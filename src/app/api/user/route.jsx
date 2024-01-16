@@ -3,14 +3,16 @@ import bcrypt from "bcrypt"
 import { NextResponse } from "next/server"
 
 export async function GET(req) {
-  const username = req.nextUrl.searchParams.get("username")
-  console.log(username)
+  console.log("kdfjs")
   const result = await query({
-    query: `SELECT id,username,firstname,image FROM user WHERE username like '%${username}%'`,
-    values: [username]
+    query: "SELECT id,username,firstname,image FROM user ORDER BY RAND() LIMIT 2",
+    values: ""
   })
-  if(result) {
+  if(result && !result.errno) {
     return NextResponse.json({ response: result }, { status: 200 })
+  }
+  if(result) {
+    return NextResponse.json({ response: "failed" }, { status: 500 })
   }
 }
 
@@ -24,8 +26,8 @@ export async function POST(req) {
     query: "INSERT INTO user (email, username, firstname, lastname, gender, birth, password) VALUES (?, ?, ?, ?, ?, ?, ?)",
     values: values
   })
-  if (result.insertId) {
-    return NextResponse.json({ id: result.insertId, username: username, email: email, firstname: firstname, lastname: lastname, gender: gender, birth: years, password: hashedPassword }, { status: 200 })
+  if(result.insertId) {
+    return NextResponse.json({ id: result.insertId, username: username, password: hashedPassword }, { status: 200 })
   }
   if(result.code == 'ER_DUP_ENTRY') {
     const repeated = result.sqlMessage.split('key')[1]

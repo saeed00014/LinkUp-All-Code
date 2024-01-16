@@ -19,6 +19,7 @@ const LoginForm = () => {
           const data = res.data
           if(data.login) {
             const cookie = new Cookies()
+            console.log(data.result)
             cookie.set('user', data.result, {path: "/"})
             location.reload("")
           } else {

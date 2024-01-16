@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { profile } from '@/assets/data/data'
 
 const ProfileHeader = () => {
-  const { user } = useContext(ProfileContext)
+  const { user, isLoginUser } = useContext(ProfileContext)
   const [isEditActive, setIsEditActive] = useState(false)
 
   return (
@@ -60,12 +60,15 @@ const ProfileHeader = () => {
                 </span>
               </div>
             </div>
-            <button
-              onClick={() => setIsEditActive(true)} 
-              className='text-[#098C95]'
-            >
-              {profile.editProfile}
-            </button>
+            {isLoginUser ? 
+              <button
+                onClick={() => setIsEditActive(true)} 
+                className='text-[#098C95]'
+              >
+                {profile.editProfile}
+              </button> 
+              : <div></div>
+            }
           </div>
         </div>
       </div>

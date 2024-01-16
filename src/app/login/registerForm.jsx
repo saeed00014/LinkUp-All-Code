@@ -41,7 +41,7 @@ const RegisterForm = ({setRegister}) => {
           }
         })
         .catch(err => {
-          console.log(err)
+          (err)
         })
     },
   })

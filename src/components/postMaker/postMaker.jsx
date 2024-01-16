@@ -21,7 +21,6 @@ const PostMaker = ({setIsMakePostActive}) => {
   const mutation = useMutation({
     mutationFn: async (newPost) => {
       const response = await baseURL.post('/post', newPost)
-      console.log(response)
     }
   })
   

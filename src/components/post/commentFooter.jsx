@@ -31,7 +31,6 @@ const CommentFooter = () => {
         <ul className="relative flex flex-col w-full h-full justify-start items-start py-2 px-2 gap-1">
           {data ? 
             data.data.result.map((message) => {
-              console.log(message)
               return ( 
                 <div key={message.id} className="w-full">
                   <CommentMessage message={message} />

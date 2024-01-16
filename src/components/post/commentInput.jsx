@@ -2,7 +2,6 @@
 import { useContext } from "react"
 import { IoSend } from "react-icons/io5"
 import { PostContext } from "@/context/context"
-import Cookies from "universal-cookie"
 import { postText } from "@/assets/data/data"
 import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
@@ -10,14 +9,12 @@ import { useMutation } from "@tanstack/react-query"
 import { baseURL } from "@/axios/axios"
 
 const CommentInput = ({type}) => {
-  const cookies = new Cookies()
-  const LoginUser = cookies.get("user")
-  console.log(LoginUser)
+  const localUser = localStorage.getItem("user")
+  const loginUser = localUser && JSON.parse(localUser)
   const { post, postUser } = useContext(PostContext)
   const mutationPost = useMutation({
     mutationFn: async (newComment) => {
-      const response = await baseURL.post(`/comment?post_id=${post.id}&loginUser_id=${LoginUser.id}`, newComment)
-      console.log(response)
+      const response = await baseURL.post(`/comment?post_id=${post.id}&loginUser_id=${loginUser.id}`, newComment)
     }
   })
   const handleSubmit = (e) => {
@@ -37,7 +34,7 @@ const CommentInput = ({type}) => {
         className="relative w-10 min-w-10 h-10 rounded-full overflow-hidden"
       >
         <Image 
-          src={LoginUser.image || defaultImage}
+          src={loginUser.image || defaultImage}
           width={55}
           height={55}
           alt="profile picture"

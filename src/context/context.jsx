@@ -3,7 +3,7 @@ import { createContext } from "react"
 
 export const DragedMessageContext = createContext(null)
 
-export const HomeUserLogin = createContext(null)
+export const HomeContext = createContext(null)
 
 export const HeaderUserLogin = createContext(null)
 

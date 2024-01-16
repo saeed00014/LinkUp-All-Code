@@ -162,7 +162,7 @@ export const profileEdit = {
 
 export const sideBar = {
   searchBar: "جستجوی کاربر",
-  papularUsers: "محبوب ترین ها",
+  papularUsers: "پیشنهاد ها",
   name: "نسرین",
   id: "nasrin007jf",
   follow: "دنبال کردن"

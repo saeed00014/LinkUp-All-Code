@@ -9,17 +9,16 @@ import PostMaker from "./postMaker"
 import { postMake } from "@/assets/data/data"
 import defaultImage from "@/assets/images/default.jpg"
 
-const PostMake = ({LoginUser}) => {
+const PostMake = ({user}) => {
   const [isMakePostActive, setIsMakePostActive] = useState(false)
 
   return (
     <div className="flex flex-col w-full max-w-[550px] min-h-[123px] pt-3 pb-2 px-4 rounded-[.8rem] bg-white dark:bg-gray-800">
-      <span>{LoginUser.userrname}</span>
       <div className="flex items-center gap-4 pb-3 mb-1 border-b-2 dark:border-gray-600">
         <span className="relative min-w-12 h-12 rounded-full overflow-hidden">
           <Image 
             fill={true}
-            src={LoginUser.image || defaultImage}
+            src={user.image || defaultImage}
             alt="profile picture"
           />
         </span>
