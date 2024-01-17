@@ -18,7 +18,8 @@ export async function GET(req) {
 
 export async function POST(req) {
   const cookie = cookies()
-  const loginUser = JSON.parse(cookie.get("user").value)
+  const loginUserCookie = cookie.get("user")
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
   const body = await req.json()
   const isComments = body.isCommentsChecked ? 1 : 0 
   const values = [loginUser.id,isComments,body.text,body.tag,body.myComment,body.image]

@@ -5,16 +5,17 @@ import bcrypt from "bcrypt"
 
 export async function GET(req) {
   const cookie = cookies()
-  const loginUser = cookie.get('user') && JSON.parse(cookie.get('user').value) 
+  const loginUserCookie = cookie.get("user")
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
   if(loginUser) {
     const result = await query({
       query: "SELECT * FROM user WHERE id = ?",
       values: [loginUser.id]
     })
     if(result[0]) {
-      const {username, follower, following, firstname, lastname, job, link, bio, image, background} = result[0]
+      const {id, username, follower, following, firstname, lastname, job, link, bio, image, background} = result[0]
       if(result[0].username == username && result[0].password == loginUser.password) {
-        return NextResponse.json({login: true, user: {username, follower, following, firstname, lastname, job, link, bio, image, background}}, { status: 200 })
+        return NextResponse.json({login: true, user: {id, username, follower, following, firstname, lastname, job, link, bio, image, background}}, { status: 200 })
       }
       if(result[0].username != username || result[0].password != loginUser.password) {
         return NextResponse.json({ login: false }, { status: 200 })

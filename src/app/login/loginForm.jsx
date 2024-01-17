@@ -1,16 +1,15 @@
 "use client"
-import RegisterForm from "./registerForm"
 import { useRef, useState } from "react"
-import { login, patterns } from "@/assets/data/data"
-import ErorrText from "./erorrText"
 import { useMutation } from "@tanstack/react-query"
+import RegisterForm from "./registerForm"
 import { baseURL } from "@/axios/axios"
 import Cookies from "universal-cookie"
+import { login, patterns } from "@/assets/data/data"
 
 const LoginForm = () => {
+  const ref = useRef()
   const [register, setRegister] = useState(false)
   const [loginErorrMessage, setLoginErorrMessage] = useState(false)
-  const ref = useRef()
 
   const mutation = useMutation({
     mutationFn: (userInfo) => {
@@ -19,7 +18,6 @@ const LoginForm = () => {
           const data = res.data
           if(data.login) {
             const cookie = new Cookies()
-            console.log(data.result)
             cookie.set('user', data.result, {path: "/"})
             location.reload("")
           } else {
@@ -69,7 +67,10 @@ const LoginForm = () => {
           placeholder={login.pass}
         />
         {loginErorrMessage &&
-          <ErorrText text={login.errorMessage} />}
+          <span className="flex justify-start w-full text-[.95rem] text-red-600">
+            {login.errorMessage}
+          </span>
+        }
         <div className="flex flex-col items-center justify-between w-full pt-2 gap-3">
           <input 
             type="submit" 

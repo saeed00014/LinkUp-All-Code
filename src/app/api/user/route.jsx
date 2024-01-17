@@ -1,12 +1,15 @@
 import { query } from "@/db/db" 
 import bcrypt from "bcrypt"
+import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
 export async function GET(req) {
-  console.log("kdfjs")
+  const cookie = cookies()
+  const loginUserCookie = cookie.get("user")
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
   const result = await query({
-    query: "SELECT id,username,firstname,image FROM user ORDER BY RAND() LIMIT 2",
-    values: ""
+    query: "SELECT id,username,firstname,image FROM user WHERE id != '165' ORDER BY RAND() LIMIT 2",
+    values: [loginUser.id]
   })
   if(result && !result.errno) {
     return NextResponse.json({ response: result }, { status: 200 })

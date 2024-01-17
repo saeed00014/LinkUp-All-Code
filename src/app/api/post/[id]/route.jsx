@@ -4,7 +4,8 @@ import { NextResponse } from "next/server"
 
 export async function GET(req, route) {
   const cookie = cookies()
-  const loginUser = JSON.parse(cookie.get("user").value)
+  const loginUserCookie = cookie.get("user")
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
   const id = route.params.id
   const result = await query({
     query: `SELECT * FROM post WHERE user_id = ${id}`,

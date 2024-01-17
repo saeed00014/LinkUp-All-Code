@@ -1,12 +1,13 @@
 import { useRef, useState } from "react"
 import { useMutation } from "@tanstack/react-query"
-import ErorrIcon from "./erorrIcon"
-import ErorrText from "./erorrText"
-import RegisterHeader from "./registerHeader"
-import { register } from "@/assets/data/data"
-import { patterns, selectOptionsMounths } from "@/assets/data/data"
+import Input from "./input"
+import InputRadio from "./inputRadio"
+import InputSelect from "./inputSelect"
+import InputSelectTitle from "./inputSelectTitle"
 import { baseURL } from "@/axios/axios"
 import Cookies from 'universal-cookie'
+import { patterns, selectOptionsMounths, register } from "@/assets/data/data"
+import CloseHeader from "@/components/closeHeader"
 
 const RegisterForm = ({setRegister}) => {
   const ref = useRef()
@@ -53,101 +54,37 @@ const RegisterForm = ({setRegister}) => {
     const lastname = currentRef.lastname.value
     const email = currentRef.email.value
     const username = currentRef.username.value
-    const days = currentRef.days.value
-    const mounths = currentRef.mounths.value
     const years = currentRef.years.value
     const gender = currentRef.gender.value
     const password = currentRef.password.value
     const confirmPassword = currentRef.confirmPassword.value
 
-    if(password == confirmPassword && password != "") {setConfirmPasswordErorrMessage(false)} 
-    if(password != confirmPassword && password != "") {setConfirmPasswordErorrMessage(true)}
-    if(firstname == "" || firstname.length > 20) {setFirstnameErorr(true)}
-    if(lastname == "" || lastname.length > 20) {setLastnameErorr(true)}
+    if(password == confirmPassword && password != "") {
+      setConfirmPasswordErorrMessage(false)
+    } else {
+      setConfirmPasswordErorrMessage(true)
+    } 
+    if(!patterns.fill.test(firstname)) {setFirstnameErorr(true)}
+    if(!patterns.fill.test(lastname)) {setLastnameErorr(true)}
     if(!patterns.email.test(email)) {setEmailErorr(true)}
     if(!patterns.username.test(username)) {setUsernameErorr(true)}
     if(!patterns.password.test(password)) {setPasswordErorr(true)}
-    if(confirmPassword == "") {setConfirmPasswordErorr(true)}
-    if(gender != "male" && gender != "female") {setGenderErorr(true)}
+    if(!patterns.password.test(confirmPassword)) {setConfirmPasswordErorr(true)}
+    if(!patterns.fill.test(gender)) {setGenderErorr(true)}
     if(years >= 1384) {setBirthErorr(true)}
     if(!confirmPasswordErorrMessage && !firstnameErorr && !lastnameErorr && !emailErorr && !passwordErorr && !genderErorr && !birthErorr) {
+      mutation.mutate({
+        username : username, 
+        email : email, 
+        firstname : firstname, 
+        lastname : lastname, 
+        gender : gender, 
+        years : years, 
+        password : password
+      })
     }
-    mutation.mutate({
-      username : username, 
-      email : email, 
-      firstname : firstname, 
-      lastname : lastname, 
-      gender : gender, 
-      years : years, 
-      password : password
-    })
   } 
 
-  const onChangeBlur = (e) => {
-    const target = e.target.name
-    const currentRef = ref.current
-    switch(target) {
-      case "firstname":
-        const firstname = currentRef.firstname.value
-        if(firstname == ""|| firstname.length > 25) { 
-          setFirstnameErorr(true) 
-        } else {
-          setFirstnameErorr(false)
-        }
-        break;
-        case "lastname":
-        const lastname = currentRef.lastname.value
-        if(lastname == ""|| lastname.length > 25) { 
-          setLastnameErorr(true) 
-        } else {
-          setLastnameErorr(false)
-        }
-        break;
-      case "email":
-        if(patterns.email.test(currentRef.email.value)) { 
-          setEmailErorr(false) 
-        } else {
-          setEmailErorr(true)
-        }
-        break;
-      case "username":
-        if(patterns.username.test(currentRef.username.value)) { 
-          setUsernameErorr(false) 
-        } else {
-          setUsernameErorr(true)
-        }
-        break;
-      case "password":
-        if(patterns.password.test(currentRef.password.value)) { 
-          setPasswordErorr(false) 
-        } else {
-          setPasswordErorr(true)
-        }
-        break;
-      case "confirmPassword":
-        if(currentRef.confirmPassword.value == "") { 
-          setConfirmPasswordErorr(true) 
-        } else {
-          setConfirmPasswordErorr(false)
-        }
-        break;
-      case "gender":
-        const gender = currentRef.gender.value
-        if(gender == "male" || gender == "femal") { 
-          setGenderErorr(false) 
-        } else {
-          setGenderErorr(false) 
-        }
-        break;
-      case "years":
-        if(currentRef.years.value >= 1384) { 
-          setBirthErorr(true) 
-        } else {
-          setBirthErorr(false)
-        }
-      break;
-    }
-  }
   const days = []
   for (let i = 1; i <= 31; i++ ) {
     days.push(i)
@@ -156,176 +93,133 @@ const RegisterForm = ({setRegister}) => {
   for (let i = 1402; i >= 1302; i-- ) {
     years.push(i)
   }
+
   return (  
     <form 
-      ref={ref} 
+      ref={ref}
       onSubmit={(e) => handleSubmit(e)} 
-      className=" flex flex-col bg-white dark:bg-gray-900 md:gap-4 gap-3 [&>div]:relative [&>div]:flex [&>div]:items-center [&>div>input]:bg-gray-200 dark:[&>div>input]:bg-gray-800 [&>div>input]:h-10 [&>div>input]:w-full [&>div>input]:px-2 [&>div>input]:pb-1 shadow-3xl p-4 pt-2 w-[400px] rounded-[.5rem]"
+      className=" flex flex-col bg-white dark:bg-gray-900 md:gap-4 gap-2 shadow-3xl p-4 pt-0 w-[400px] rounded-[.5rem]"
     >
-      <RegisterHeader setRegister={setRegister}/>
-      <div className="flex items-center w-full gap-2 [&>div]:relative [&>div]:flex [&>div]:items-center [&>div>input]:bg-gray-200 dark:[&>div>input]:bg-gray-800 [&>div>input]:h-10 [&>div>input]:w-full [&>div>input]:px-2 [&>div>input]:pb-1">
-        <div>
-          <input 
-            type="name" 
-            id="firstname" 
-            name="firstname" 
-            placeholder={register.name}
-            onBlur={(e) => onChangeBlur(e)} 
-            onChange={(e) => onChangeBlur(e)} 
-            className={`${firstnameErorr ? "border-text-error border-[1px]" : ""}`} 
-          />
-          {firstnameErorr && 
-            <ErorrIcon text={register.fillErorr}/>}
-        </div>
-        <div>
-          <input 
-            type="name" 
-            id="lastname" 
-            name="lastname" 
-            placeholder={register.lastname}
-            onBlur={(e) => onChangeBlur(e)} 
-            onChange={(e) => onChangeBlur(e)} 
-            className={`${lastnameErorr ? "border-text-error border-[1px]" : ""}`} 
-          />
-          {lastnameErorr && 
-            <ErorrIcon text={register.fillErorr}/>}
-        </div>
+      <div className="text-[1.5rem] -mb-2">
+        <CloseHeader setEvent={setRegister} title={register.register} />
       </div>
-      <div className="flex flex-col justify-center">
-        <input 
-          type="text" 
-          id="email" 
-          name="email"  
-          placeholder={register.email}
-          onBlur={(e) => onChangeBlur(e)} 
-          onChange={(e) => onChangeBlur(e)} 
-          className={`${emailErorr ? "border-text-error border-[1px]" : ""}`} 
+      <div className="flex items-center w-full gap-2">
+        <Input 
+          type="name" 
+          id="firstname" 
+          name="firstname" 
+          placeholder={register.name}
+          setError={setFirstnameErorr}
+          pattern={patterns.fill}
+          isIconError={firstnameErorr}
+          iconErrorText={register.fillErorr}
         />
-        {emailErorr && 
-          <ErorrIcon text={register.emailErorr}/>}
-        {repeatedEmail && 
-          <ErorrText text={register.emailRepeated}/>}
-      </div>
-      <div className="flex flex-col justify-center">
-        <input 
-          type="username" 
-          id="username" 
-          name="username" 
-          placeholder={register.username}
-          onBlur={(e) => onChangeBlur(e)} 
-          onChange={(e) => onChangeBlur(e)} 
-          className={`${usernameErorr ? "border-text-error border-[1px]" : ""}`} 
+        <Input 
+          type="name" 
+          id="lastname" 
+          name="lastname" 
+          placeholder={register.lastname}
+          setError={setLastnameErorr}
+          pattern={patterns.fill}
+          isIconError={lastnameErorr}
+          iconErrorText={register.fillErorr}
         />
-        {usernameErorr && 
-          <ErorrIcon text={register.usernameErorr}/>}
-        {repeatedUsername && 
-          <ErorrText text={register.usernameRepeated}/>}
       </div>
-      <span className="relative flex items-center gap-1 text-[.9rem] w-24">
-        {register.birthDate}
-        {birthErorr && 
-          <ErorrIcon text={register.birthErorr}/>}
-      </span>
-      <div className="flex w-full md:gap-2 gap-1 [&>select]:h-10 [&>select]:w-full [&>select]:px-2 [&>select]:border [&>select]:bg-white dark:[&>select]:bg-gray-950 [&>select]:appearance-none [&>select]:bg-arrow [&>select]:bg-no-repeat [&>select]:bg-[length:12px_12px] [&>select]:bg-[center_left_.5rem]">
-        <select 
+      <Input 
+        type="text" 
+        id="email" 
+        name="email" 
+        placeholder={register.email}
+        setError={setEmailErorr}
+        pattern={patterns.email}
+        isIconError={emailErorr}
+        iconErrorText={register.emailErorr}
+        isTextError={repeatedEmail}
+        textErrorText={register.emailRepeated}
+      />
+      <Input 
+        type="username" 
+        id="username" 
+        name="username" 
+        placeholder={register.username}
+        setError={setUsernameErorr}
+        pattern={patterns.username}
+        isIconError={usernameErorr}
+        iconErrorText={register.usernameErorr}
+        isTextError={repeatedUsername}
+        textErrorText={register.repeatedUsername}
+      />
+      <InputSelectTitle
+        title={register.birthDate}
+        isIconError={birthErorr}
+        iconErrorText={register.birthErorr}
+      />
+      <div className="flex w-full md:gap-2 gap-1">
+        <InputSelect 
           id="days"
           name="days" 
-          onChange={(e) => onChangeBlur(e)} 
-        >
-          {days.map((day, e) => {
-            return (
-              <option key={e} value={day}>
-                {day}
-              </option>
-            )
-          })}
-        </select>
-        <select 
+          options={days}
+        />
+        <InputSelect 
           id="mounths"
           name="mounths" 
-          onChange={(e) => onChangeBlur(e)} 
-        >
-          {selectOptionsMounths.map((mounth, e) => {
-            return (
-              <option key={e} value={mounth}>
-                {mounth}
-              </option>
-            )
-          })}
-        </select>
-        <select 
+          options={selectOptionsMounths}
+        />
+        <InputSelect 
           id="years"
           name="years" 
-          onChange={(e) => onChangeBlur(e)} 
-        >
-          {years.map((year, e) => {
-            return (
-              <option key={e} value={year}>
-                {year}
-              </option>
-            )
-          })}
-        </select>
-      </div>
-      <span className="relative flex items-center gap-1 text-[.9rem] w-24">
-        {register.gender}
-        {genderErorr && 
-          <ErorrIcon text={register.genderErorr}/>}
-      </span>
-      <div className="flex items-center w-full md:gap-2 gap-1 [&>span]:flex [&>span]:items-center [&>span]:justify-between [&>span>label]:w-full [&>span]:h-10 [&>span]:w-full [&>span]:px-4 [&>span]:border [&>span]:border-bg-theme-darker [&>span]:bg-white dark:[&>span]:bg-gray-950">
-        <span>
-          <label htmlFor="female">
-            {register.female}
-          </label>
-          <input 
-            type="radio" 
-            id="female" 
-            name="gender" 
-            value="female"
-            onChange={(e) => onChangeBlur(e)} 
-          />
-        </span>
-        <span>
-          <label htmlFor="male">
-            {register.male}
-          </label>
-          <input 
-            type="radio" 
-            id="male" 
-            name="gender" 
-            value="male"
-            onChange={(e) => onChangeBlur(e)} 
-          />
-        </span>
-      </div>
-      <div>
-        <input 
-          type="password" 
-          id="password" 
-          name="password" 
-          placeholder={register.pass}
-          onBlur={(e) => onChangeBlur(e)} 
-          onChange={(e) => onChangeBlur(e)} 
-          className={`${passwordErorr ? "border-text-error border-[1px]" : ""}`} 
+          setError={setBirthErorr}
+          pattern={patterns.fill}
+          options={years}
         />
-        {passwordErorr && 
-          <ErorrIcon text={register.passErorr}/>}
       </div>
-      <div>
-        <input 
-          type="password" 
-          id="confirmPassword" 
-          name="confirmPassword" 
-          placeholder={register.passRepeat}
-          onBlur={(e) => onChangeBlur(e)} 
-          onChange={(e) => onChangeBlur(e)} 
-          className={`${confirmPasswordErorr ? "border-text-error border-[1px]" : ""}`}     
+      <InputSelectTitle
+        title={register.gender}
+        isIconError={genderErorr}
+        iconErrorText={register.genderErorr}
+      />
+      <div className="flex items-center w-full md:gap-2 gap-1">
+        <InputRadio 
+          label={register.female}
+          type="radio" 
+          id="female" 
+          name="gender" 
+          value="female"
+          setError={setGenderErorr}
+          pattern={patterns.fill}
         />
-        {confirmPasswordErorr && 
-          <ErorrIcon text={register.passRepeatErorr}/>}
+        <InputRadio 
+          label={register.male}
+          type="radio" 
+          id="male" 
+          name="gender" 
+          value="male"
+          setError={setGenderErorr}
+          pattern={patterns.fill}
+        />
       </div>
-      {confirmPasswordErorrMessage && 
-        <ErorrText text={register.passRepeatedErorr} />}
+      <Input 
+        type="password" 
+        id="password" 
+        name="password" 
+        placeholder={register.pass}
+        setError={setPasswordErorr}
+        pattern={patterns.password}
+        isIconError={passwordErorr}
+        iconErrorText={register.passErorr}
+      />
+      <Input 
+        type="password" 
+        id="confirmPassword" 
+        name="confirmPassword" 
+        placeholder={register.passRepeat}
+        setError={setConfirmPasswordErorr}
+        pattern={patterns.password}
+        isIconError={confirmPasswordErorr}
+        iconErrorText={register.passRepeatErorr}
+        isTextError={confirmPasswordErorrMessage}
+        textErrorText={register.passRepeatedErorr}
+      />
       <span className="flex justify-center w-full">
         <input 
           type="submit" 

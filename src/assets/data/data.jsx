@@ -47,6 +47,7 @@ export const register = {
 }
 
 export const patterns = {
+  fill: /^.{1,25}$/,
   password: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,18}$/,
   username: /^[A-Za-z]{3,12}$/,
   email: /^(?=.*[@])(?=.*[.])[a-zA-Z0-9!@#$%^&*.]{8,25}$/

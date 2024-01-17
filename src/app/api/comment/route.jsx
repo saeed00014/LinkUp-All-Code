@@ -19,14 +19,11 @@ export async function GET(req) {
 
 export async function POST(req) {
   const cookie = cookies()
-  const user = JSON.parse(cookie.get("id").value)
-  const loginUser_id = req.nextUrl.searchParams.get("loginUser_id")
-  if(user.id != loginUser_id) {
-    return NextResponse.json({ response: "wrong user" }, { status: 500 })
-  }
+  const loginUserCookie = cookie.get("user")
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
   const post_id = req.nextUrl.searchParams.get("post_id")
   const text = await req.json()
-  const values = [post_id, loginUser_id, text.text]
+  const values = [post_id, loginUser.id, text.text]
   const result = await query({
     query: "INSERT INTO `comment` (`post_id`, `user_id`, `text`) VALUES (?, ?, ?)",
     values: values

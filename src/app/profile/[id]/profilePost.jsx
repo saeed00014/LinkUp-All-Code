@@ -6,9 +6,10 @@ import Post from "@/components/post/post"
 
 const ProfilePost = () => {
   const { user, posts, isLoginUser } = useContext(ProfileContext)
+
   return (
     <div className="flex flex-col justify-start gap-6">
-      {isLoginUser && <PostMake LoginUser={user} />}
+      {isLoginUser && <PostMake user={user} />}
       {posts[0] ? 
         posts.map((post) => {
           return (
