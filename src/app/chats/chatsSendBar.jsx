@@ -1,33 +1,45 @@
 "use client"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { IoSend } from "react-icons/io5"
 import { messages } from "@/assets/data/data"
+import { ChatContext } from "@/context/context"
 
-const ChatsSendBar = () => {
+const ChatsSendBar = ({setSendMessage}) => {
+  const { currentChat } = useContext(ChatContext)
+  const { targetUser, chat } = currentChat
+
   const [ message, setMessage ] = useState("")
-  const handleSubmit = () => {
-
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSendMessage({message: message, targetUser_id: targetUser.id})
+    setMessage("")
   }
 
   return (
-    <div className="flex items-center w-full">
+    <form
+      onSubmit={(e) => handleSubmit(e)}
+      className="flex items-center w-full">
       <label 
-        htmlFor=""
-        onClick={handleSubmit}
+        htmlFor="chatsSubmit"
         className="absolute left-0 flex items-center justify-center w-[3rem] h-full text-[1.2rem] rotate-180 cursor-pointer"
       >
         <IoSend />
+        <input 
+          type="submit" 
+          id="chatsSubmit"
+          className="invisible w-0 h-0"
+        />
       </label>
       <input
         type="text" 
         name="text"
-        id="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        id="chatsSendBar"
         placeholder={messages.enterMessage}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)} 
         className="w-full px-2 pt-3 pb-4 bg-white dark:bg-gray-800" 
       />
-    </div>
+    </form>
   )
 }
 

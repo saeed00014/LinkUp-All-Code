@@ -1,5 +1,5 @@
 import ChatsSearchBar from "./chatsSearchBar"
-import ChatsUsers from "./chatsUsers"
+import ChatsUsers from "./chatsUsersCon"
 
 const ChatsSideBar = () => {
   return (

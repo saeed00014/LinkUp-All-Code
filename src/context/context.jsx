@@ -10,3 +10,5 @@ export const HeaderUserLogin = createContext(null)
 export const PostContext = createContext(null)
 
 export const ProfileContext = createContext(null)
+
+export const ChatContext = createContext(null)

@@ -4,11 +4,10 @@ import { DragedMessageContext } from "../../context/context"
 import MessageDelete from "./messageDelete"
 import MessageShare from "./messageShare"
 import MessageEdit from "./messageEdit"
-import { messages } from "@/assets/data/data"
 import Image from "next/image"
-import profile from "@/assets/images/profile.jpg"
+import defaultImage from "@/assets/images/default.jpg"
  
-const ChatHeader = () => {
+const ChatHeader = ({targetUser}) => {
   const {dragedMessage, editMessage} = useContext(DragedMessageContext)
 
   return (
@@ -16,14 +15,16 @@ const ChatHeader = () => {
       <div className="flex gap-2">
         <span className="relative flex h-12 w-12">
           <Image
-            src={profile}
+            src={targetUser.image || defaultImage}
             alt=""
+            width={60}
+            height={60}
             className="rounded-full"        
           />
         </span>
         <div className="flex flex-col justify-around text-[.9rem]">
-          <span>{messages.name}</span>
-          <span>{messages.id}</span>
+          <span>{targetUser.firstname}</span>
+          <span>{targetUser.username}</span>
         </div>
       </div>
       {dragedMessage && dragedMessage.length > 0 && !editMessage &&
