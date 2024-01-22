@@ -1,9 +1,6 @@
-import { DragedMessageContext } from "@/context/context"
-import { useContext } from "react"
 import { FaTrash } from "react-icons/fa"
 
 const MessageDelete = () => {
-  const { dragedMessage } = useContext(DragedMessageContext)
   const handleDelete = () => {
 
   }
@@ -11,7 +8,7 @@ const MessageDelete = () => {
   return (
     <span
       onClick={handleDelete}
-      className="hover:bg-gray-200 dark:hover:bg-gray-700"
+      className="text-[1rem] hover:bg-gray-200 dark:hover:bg-gray-700"
     >
       <FaTrash />
     </span>

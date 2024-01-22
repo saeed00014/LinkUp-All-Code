@@ -1,7 +1,6 @@
 import { useContext } from "react"
 import { PostContext } from "@/context/context"
 import { FaRegEdit } from "react-icons/fa"
-import Link from "next/link"
 import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
 
@@ -9,7 +8,7 @@ const PostHeader = () => {
   const { post, postUser } = useContext(PostContext)
   return (
     <header className="flex justify-between pl-6 pr-4 text-[.9rem]">
-      <Link 
+      <a 
         href={`/profile/${post.user_id}`} 
         className="flex gap-4"
       >
@@ -28,7 +27,7 @@ const PostHeader = () => {
             {postUser.username}
           </span>
         </div>
-      </Link>
+      </a>
       <div className="flex items-center">
         <span className="text-2xl cursor-pointer rounded-full ">
           <FaRegEdit />

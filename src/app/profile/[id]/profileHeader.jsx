@@ -6,6 +6,8 @@ import defaultImage from '@/assets/images/default.jpg'
 import testProfile2 from '@/assets/images/post.jpg'
 import Image from 'next/image'
 import { profile } from '@/assets/data/data'
+import ProfileChatButton from './profileChatButton'
+import ProfileFollowButton from './profileFollowButton'
 
 const ProfileHeader = () => {
   const { user, isLoginUser } = useContext(ProfileContext)
@@ -67,7 +69,10 @@ const ProfileHeader = () => {
               >
                 {profile.editProfile}
               </button> 
-              : <div></div>
+              : <div className='flex w-full items-center justify-between gap-2'>
+                <ProfileFollowButton />
+                <ProfileChatButton />
+              </div>
             }
           </div>
         </div>

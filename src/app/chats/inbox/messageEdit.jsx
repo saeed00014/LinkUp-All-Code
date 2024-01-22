@@ -11,7 +11,7 @@ const MessageEdit = () => {
   return (
     <span
       onClick={handleEdit}
-      className="text-[1.5rem] hover:bg-gray-200 dark:hover:bg-gray-700">
+      className=" hover:bg-gray-200 dark:hover:bg-gray-700">
       <AiFillEdit />
     </span>
   )

@@ -1,5 +1,5 @@
 "use client"
-import { useContext } from "react"
+import { useContext, useRef, useState } from "react"
 import { IoSend } from "react-icons/io5"
 import { PostContext } from "@/context/context"
 import { postText } from "@/assets/data/data"
@@ -9,22 +9,27 @@ import { useMutation } from "@tanstack/react-query"
 import { baseURL } from "@/axios/axios"
 
 const CommentInput = ({type}) => {
+  const { post, setComments, comments } = useContext(PostContext)
+  const [inputValue, setInputValue] = useState("")
   const localUser = localStorage.getItem("user")
   const loginUser = localUser && JSON.parse(localUser)
-  const { post, postUser } = useContext(PostContext)
   const mutationPost = useMutation({
     mutationFn: async (newComment) => {
       const response = await baseURL.post(`/comment?post_id=${post.id}&loginUser_id=${loginUser.id}`, newComment)
     }
   })
+  
   const handleSubmit = (e) => {
     e.preventDefault()
-    const text = e.target.text.value
-    text && mutationPost.mutate({text})
+    const text = ref.current.text.value
+    text && setComments([...comments,{user_id: loginUser.id, text: inputValue}])
+    text && mutationPost.mutate({text: text})
   }
   
+  const ref = useRef()
   return (
     <form 
+      ref={ref}
       onSubmit={(e) => handleSubmit(e)}
       className={`${type == "comments" ? "sticky bottom-0" : "relative" } flex items-center justify-start w-full gap-2 bg-white dark:bg-gray-800`}
     >
@@ -38,23 +43,25 @@ const CommentInput = ({type}) => {
           width={55}
           height={55}
           alt="profile picture"
-          />
+        />
       </label>
       <input
         type="text"
         name="text"
         id={`commentInput${post.id}`} 
         placeholder={postText.input}
-        className="flex items-center justify-start w-full h-fit py-1 pr-4 pl-10 rounded-full bg-gray-200 dark:bg-gray-700 duration-100">
-      </input>
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        className="flex items-center justify-start w-full h-fit py-1 pr-4 pl-10 rounded-full bg-gray-200 dark:bg-gray-700 duration-100"
+      />
       <label 
-        htmlFor={`commentInputSubmit${post.id}`} 
+        htmlFor={`commentInputSubmit${post.id}${type}`} 
         className="absolute left-0 cursor-pointer flex items-center justify-center h-full w-12"  
       >
         <IoSend />
         <input 
           type="submit" 
-          id={`commentInputSubmit${post.id}`} 
+          id={`commentInputSubmit${post.id}${type}`} 
           className="invisible w-0"
         />
       </label>

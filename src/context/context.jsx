@@ -12,3 +12,5 @@ export const PostContext = createContext(null)
 export const ProfileContext = createContext(null)
 
 export const ChatContext = createContext(null)
+
+export const ExploreContext = createContext(null)

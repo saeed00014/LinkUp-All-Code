@@ -5,13 +5,13 @@ import { messages } from "@/assets/data/data"
 import { ChatContext } from "@/context/context"
 
 const ChatsSendBar = ({setSendMessage}) => {
-  const { currentChat } = useContext(ChatContext)
-  const { targetUser, chat } = currentChat
-
+  const { currentChat, loginUser } = useContext(ChatContext)
+  const { targetUser, chat_id } = currentChat
   const [ message, setMessage ] = useState("")
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    setSendMessage({message: message, targetUser_id: targetUser.id})
+    setSendMessage({text: message, image: "", post_id: "", user_id: loginUser.id})
     setMessage("")
   }
 

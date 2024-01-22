@@ -78,7 +78,7 @@ export const mainHeaderLinks = [
   },
   {
     name: 'پیام ها',
-    path: '/chats',
+    path: '/chats/inbox',
     icon: <TiMessages />
   },
   {
@@ -146,7 +146,10 @@ export const profile = {
   job2: "طراح گرافیک",
   followers: "دنبال کننده",
   following: "دنبال شونده",
-  editProfile: "تغییر اطلاعات"
+  editProfile: "تغییر اطلاعات",
+  follow: "دنبال کردن",
+  unfollow: "دنبال کردن",
+  sendMessage: "ارسال پیام"
 }
 
 export const profileEdit = {
@@ -174,7 +177,8 @@ export const explore = {
   sortBy: "دسته بندی بر اساس",
   date: "جدید ترین",
   papularity: "محبوب ترین",
-  related: "مرتبط ترین"
+  related: "مرتبط ترین",
+  search: "جستجو"
 }
 
 export const messages = {
@@ -189,4 +193,8 @@ export const messages = {
 export const groups = {
   groups: "گروه ها",
   noGroup: "هیچ گروهی وجود ندارد"
+}
+
+export const chatData = {
+  chooseChat: "یک چت را انتخاب کنید"
 }

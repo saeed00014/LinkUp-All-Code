@@ -5,11 +5,11 @@ import { useQuery } from "@tanstack/react-query"
 
 const Context = ({children}) => {
   const url = window.location.href
-  const userId = url.split("/")[url.split("/").length - 1]
+  const targetUser_id = url.split("/")[url.split("/").length - 1]
   const userPosts = useQuery({
     queryKey: ["userPosts"],
     queryFn: async () => {
-      const post = await baseURL.get(`/post/${userId}`)
+      const post = await baseURL.get(`/post/${targetUser_id}`)
       return post
     }
   })
@@ -17,7 +17,7 @@ const Context = ({children}) => {
   const { isPending, error, data } = useQuery({
     queryKey: ["profileUser"],
     queryFn: async () => {
-      const user = await baseURL.get(`/user/${userId}`)
+      const user = await baseURL.get(`/user/${targetUser_id}`)
       return user
     }
   })
@@ -30,7 +30,8 @@ const Context = ({children}) => {
         value={{
           user, 
           posts,
-          isLoginUser
+          isLoginUser,
+          targetUser_id
         }}
       >
         {children}

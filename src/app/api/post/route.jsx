@@ -1,13 +1,15 @@
-import { query } from "@/db/db";
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { query } from "@/db/db"
+import { cookies } from "next/headers"
+import { NextResponse } from "next/server"
 
 export async function GET(req) {
+  const cookie = cookies()
+  const loginUserCookie = cookie.get("user")
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
   const result = await query({
     query: "SELECT * FROM post",
     value: ""
   })
-  //`SELECT * FROM message WHERE chat_id = ? ORDER BY sent DESC LIMIT ? OFFSET ?`
   if(result[0]) {
     return NextResponse.json({ response: result }, { status: 200 })
   }
@@ -28,7 +30,7 @@ export async function POST(req) {
     values: values
   })
   if(result.insertId) {
-    return NextResponse.json({ response: "post is make", id: result.insertId }, { status: 200 })
+    return NextResponse.json({ response: "post is made", id: result.insertId }, { status: 200 })
   }
   if(result) {
     return NextResponse.json({ response: "failed" }, { status: 500 })

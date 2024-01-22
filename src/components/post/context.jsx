@@ -6,8 +6,9 @@ import Comment from "./comment"
 import { baseURL } from "@/axios/axios"
 
 const Context = ({children, post}) => {
-  const [isCommentActive, setIsCommentActive] = useState(false)
+  const [isCommentActive, setIsCommentActive] = useState()
   const [isLiked, setIsLiked] = useState(false)
+  const [comments, setComments] = useState("")
   const likedPostsIdStorage = JSON.parse(localStorage.getItem("likedPostsId"))
 
   useEffect(() => {
@@ -46,7 +47,9 @@ const Context = ({children, post}) => {
         post, 
         setIsCommentActive,
         isLiked, 
-        setIsLiked
+        setIsLiked,
+        comments,
+        setComments
         }}
       >
         {children}

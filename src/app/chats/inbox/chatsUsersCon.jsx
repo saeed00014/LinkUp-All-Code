@@ -9,7 +9,7 @@ const ChatsUsersCon = () => {
   const { chats } = useContext(ChatContext)
 
   return (
-    <ul className="flex flex-col w-full mt-[4rem] !overflow-y-scroll">
+    <ul className="flex flex-col w-full !overflow-y-scroll">
       {chats && 
         chats.map((chat) => {
           const targetUser_id = (chat.userOne == chat.loginUser_id) ? chat.userTwo : chat.userOne
