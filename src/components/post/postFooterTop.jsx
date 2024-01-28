@@ -5,13 +5,16 @@ import { FaRegHeart } from "react-icons/fa"
 import { FaHeart } from "react-icons/fa"
 import { postText } from "@/assets/data/data"
 
-const PostFooterTop = () => {
-  const { post, isLiked } = useContext(PostContext)
+const PostFooterTop = ({commentEdition}) => {
+  const { post, isLiked, miniEdition } = useContext(PostContext)
   return (
-    <div className="flex justify-between w-full">
+    <div className={`flex justify-between w-full ${miniEdition && !commentEdition ? "px-2 text-[.8rem]" : "px-4"}`}>
       <div className="relative flex items-center justify-end w-fit gap-2 cursor-pointer z-10">
         <span>
-          {isLiked ?  <FaHeart /> : <FaRegHeart /> }
+          {isLiked ? 
+            <FaHeart /> 
+            : <FaRegHeart /> 
+          }
         </span>
         <span>
           {post.likes}                                  

@@ -8,9 +8,8 @@ export async function GET(req, route) {
   const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
   const searchValue = req.nextUrl.searchParams.get("value")
   const searchCategory = req.nextUrl.searchParams.get("category")
-
   const result = await query({
-    query: `SELECT * FROM post WHERE text like '%${searchValue}%' SORT BY comments`,
+    query: `SELECT * FROM post WHERE user_id != ${loginUser.id} and text like '%${searchValue}%'`,
     value: [searchValue]
   })
   if(result && !result.errno) {

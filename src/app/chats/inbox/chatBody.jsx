@@ -1,31 +1,40 @@
 "use client"
 import { useContext, useEffect, useState } from "react"
-import { ChatContext, DragedMessageContext } from "@/context/context"
+import { ChatContext, ChatMessageContext, DragedMessageContext } from "@/context/context"
 import { useMutation, useQuery } from "@tanstack/react-query"
+import Link from "next/link"
+import LoadingSpin from "@/components/loadingSpin"
 import ChatHeader from "./chatHeader"
 import Message from "./message"
 import ChatsSendBar from "./chatsSendBar"
+import Image from "next/image"
+import defaultImage from "@/assets/images/default.jpg"
 import { baseURL } from "@/axios/axios"
 import { io } from 'socket.io-client'
+import { chatData } from "@/assets/data/data"
 
 const ChatBody = () => {
   const { currentChat } = useContext(ChatContext)
   const { targetUser, chat_id } = currentChat
-  const [dragedMessage, setDragedMessage] = useState([])
   const [sendMessage, setSendMessage] = useState("")
   const [messages, setMessages] = useState([])
+  const [editMessage, setEditMessage] = useState("")
+  const [shareMessage, setShareMessage] = useState("")
+  const [chooseMessage, setChooseMessage] = useState("")
+  console.log(editMessage)
 
-  const {isPending, error, data} = useQuery({
+  const getCurrentChatMessages = useQuery({
     queryKey: [`messages${chat_id}`],
     queryFn: async () => {
       const response = await baseURL.get(`/message?chat_id=${chat_id}`)
       setMessages(response.data.response)
+      return response
     }
   })
 
   const postNewMessage = useMutation({
     mutationFn: async ({sendMessage}) => {
-      const response = await baseURL.post(`/message?chat_id=${chat_id}&user_id=${sendMessage.user_id}`,{text: sendMessage.text, image: sendMessage.image, post_id: sendMessage.post_id})
+      const response = await baseURL.post(`/message?chat_id=${chat_id}&user_id=${sendMessage.user_id}`,{text: sendMessage.text, image: sendMessage.image, post_id: sendMessage.post_id, attachedMessage: sendMessage.attachedMessage, attachedMessage_id: sendMessage.attachedMessage_id})
       const socket = io({path: "/api/socket"})
       if(response.data) {
         socket.emit('newMessage', { message: {...sendMessage, id: response.data.response} })
@@ -40,11 +49,9 @@ const ChatBody = () => {
     if(sendMessage.text || sendMessage.image || sendMessage.post_id) {
       postNewMessage.mutate({sendMessage})
     }
-
     socket.on('serverMessage', (message) => {
       setMessages(messages => [...messages, message])
     })
-
     return () => {
       socket.disconnect()
     }
@@ -52,37 +59,75 @@ const ChatBody = () => {
 
   return (
     <div className="relative flex flex-col justify-between w-full h-auto bg-gray-200 dark:bg-gray-950">
-      <DragedMessageContext.Provider 
+      <ChatMessageContext.Provider 
         value={{ 
-            dragedMessage, 
-            setDragedMessage
+          messages,
+          setMessages,
+          editMessage,
+          setEditMessage,
+          shareMessage,
+          setShareMessage,
+          chooseMessage,
+          setChooseMessage
         }}
       >
         <ChatHeader 
           targetUser={targetUser}
         />
-        {!isPending && 
+        {!getCurrentChatMessages.isPending ? 
           <ul 
             id="chatMessageList"
             className="relative flex flex-col-reverse w-full h-full justify-start items-start py-2 px-2 gap-1 overflow-y-auto"
           >
-            <div className="flex-col w-full">
-              {!isPending && messages != [] && 
+            <div className="flex-col-revers w-full">
+              {messages[0] ? 
                 messages.map((message) => {
                   return (
-                    <div className="w-full">
+                    <div 
+                      key={message.id} 
+                      className="w-full"
+                    >
                       <Message message={message} />
                     </div>
                   )
                 })
+                : 
+                <div className="flex flex-col items-center justify-center w-full h-screen gap-1">
+                  <span className="relative flex h-24 w-24">
+                    <Image
+                      src={targetUser.image || defaultImage}
+                      alt="profile picture"
+                      width={100}
+                      height={100}
+                      className="rounded-full"        
+                    />
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <span className="pb-[.3rem]">
+                      {targetUser.firstname}
+                    </span>
+                    <span>|</span>
+                    <span>
+                      {targetUser.username}@
+                    </span>
+                  </div>
+                  <Link
+                    href={`/profile/${targetUser.id}`}
+                    className="px-4 py-2 rounded-[.5rem] bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700"
+                  >
+                    {chatData.viewProfile}
+                  </Link>
+                </div>
               }
             </div>
-          </ul>
+          </ul> : <div className="flex items-center justify-center w-full h-full">
+            <LoadingSpin />
+          </div>
         }
         <ChatsSendBar 
           setSendMessage={setSendMessage}
         />
-      </DragedMessageContext.Provider>
+      </ChatMessageContext.Provider>
     </div>
   )
 }

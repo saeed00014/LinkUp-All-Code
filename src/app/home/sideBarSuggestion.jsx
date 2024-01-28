@@ -5,6 +5,7 @@ import defaultImage from "@/assets/images/default.jpg"
 import { sideBar } from "@/assets/data/data"
 import { useMutation } from "@tanstack/react-query"
 import { baseURL } from "@/axios/axios"
+import Link from "next/link"
 
 const SideBarSuggestion = () => {
   const { loginUser, suggestedUsers } = useContext(HomeContext)
@@ -28,7 +29,7 @@ const SideBarSuggestion = () => {
         suggestedUsers.map((user) => {
           return (
             <div className="flex flex-col items-center justify-center w-full px-3 pt-3 pb-3 bg-gray-200 dark:bg-gray-700 rounded-[1rem] gap-2">
-              <a
+              <Link
                 href={`/profile/${user.id}`} 
                 className="relative w-20 h-20 rounded-full overflow-hidden cursor-pointer"
               >
@@ -37,7 +38,7 @@ const SideBarSuggestion = () => {
                   src={user.image || defaultImage}
                   alt="profile picture"
                 />
-              </a>
+              </Link>
               <div className="flex flex-col justify-center items-center">
                 <span>
                   {user.firstname}

@@ -10,27 +10,25 @@ const ChatsUsersCon = () => {
 
   return (
     <ul className="flex flex-col w-full !overflow-y-scroll">
-      {chats && 
-        chats.map((chat) => {
-          const targetUser_id = (chat.userOne == chat.loginUser_id) ? chat.userTwo : chat.userOne
-          const { isPending, error, data } = useQuery({
-            queryKey: ["profileUser"],
-            queryFn: async () => {
-              const user = await baseURL.get(`/user/${targetUser_id}`)
-              return user
-            }
-          })
-          if(!isPending && chat.id) {
-            const targetUser = data.data.response
-            return (
-              <div key={targetUser_id}>
-                <ChatsUser
-                  targetUser={targetUser}
-                  chat={chat}
-                />
-              </div>
-            )
+      {chats && chats.map((chat) => {
+        const getChatUserInfo = useQuery({
+          queryKey: [`chatUser${chat.id}`],
+          queryFn: async () => {
+            const user = await baseURL.get(`/chat/user?userOne=${chat.userOne}&userTwo=${chat.userTwo}`)
+            return user
           }
+        })
+        if(!getChatUserInfo.isPending && chat.id) {
+          const targetUser = getChatUserInfo.data.data.response
+          return (
+            <div key={chat.id}>
+              <ChatsUser
+                targetUser={targetUser}
+                chat={chat}
+              />
+            </div>
+          )
+        }
       })}
     </ul>
   )

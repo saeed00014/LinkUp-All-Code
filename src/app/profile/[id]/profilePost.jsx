@@ -9,12 +9,19 @@ const ProfilePost = () => {
 
   return (
     <div className="flex flex-col justify-start gap-6">
-      {isLoginUser && <PostMake user={user} />}
+      {isLoginUser && 
+        <PostMake 
+          localLoginUser={user} 
+        />
+      }
       {posts[0] ? 
         posts.map((post) => {
           return (
             <div key={post.id}>
-              <Post post={post} />
+              <Post
+                isMyPost={isLoginUser} 
+                post={post} 
+              />
             </div>
           )
         }) 

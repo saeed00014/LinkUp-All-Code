@@ -12,14 +12,13 @@ export async function POST(req) {
     query: "INSERT INTO `follow`(loginUser_id, targetUser_id) VALUES (?,?)",
     values: values
   })
-  if(result.effectedRows) {
+  if(result && !result.errno) {
     return NextResponse.json({ response: "user followed", id: result.insertId }, { status: 200 })
   }
-  if(result.errno) {
-    if(result.code == 'ER_DUP_ENTRY') {
-      return NextResponse.json({ response: "was followed before", id: "", repeat: true }, { status: 200 })
-    }
+  if(result.errno && result.code == 'ER_DUP_ENTRY' ) {
+    return NextResponse.json({ response: "was followed before", id: "", repeat: true }, { status: 200 })
+  }
+  if(result) {
     return NextResponse.json({ response: "failed", id: "" }, { status: 500 })
   }
-  return NextResponse.json({ response: "failed", id: "" }, { status: 500 })
 }

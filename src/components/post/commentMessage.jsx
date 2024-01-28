@@ -43,7 +43,7 @@ const CommentMessage = ({message}) => {
             <span className="text-[.7rem]">
               {user.firstname}
             </span>
-            <span className="flex py-2 px-3 w-fit max-w-[20rem] text-[.8rem] bg-gray-200 dark:bg-gray-950 rounded-[.5rem] z-20">
+            <span className="flex py-2 px-3 w-fit max-w-[20rem] text-[.8rem] bg-white dark:bg-gray-800 rounded-[.5rem] z-20">
               {message.text}
             </span>
           </div>

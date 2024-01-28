@@ -5,18 +5,25 @@ import { useQuery } from "@tanstack/react-query"
 
 const Context = ({children}) => {
   const localUser = localStorage.getItem("user")
-  const loginUser = localUser && JSON.parse(localUser)
+  const localLoginUser = localUser && JSON.parse(localUser)
   
   const { isPending, error, data } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const response = await baseURL.get(`/user/${id}`)
+      const response = await baseURL.get(`/user/loginUser/userInfo`)
       return response
     }
   })
-  if(!isPending || loginUser) {
+  
+  if(!isPending) {
+    const loginUser = data.data.response
     return (
-      <HeaderUserLogin.Provider value={{loginUser}}>
+      <HeaderUserLogin.Provider 
+        value={{
+          loginUser,
+          localLoginUser
+        }}
+      >
         {children}
       </HeaderUserLogin.Provider>
     )

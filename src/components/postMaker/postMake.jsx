@@ -9,7 +9,7 @@ import PostMaker from "./postMaker"
 import { postMake } from "@/assets/data/data"
 import defaultImage from "@/assets/images/default.jpg"
 
-const PostMake = ({user}) => {
+const PostMake = ({loginUser, localLoginUser}) => {
   const [isMakePostActive, setIsMakePostActive] = useState(false)
 
   return (
@@ -18,7 +18,7 @@ const PostMake = ({user}) => {
         <span className="relative min-w-12 h-12 rounded-full overflow-hidden">
           <Image 
             fill={true}
-            src={user.image || defaultImage}
+            src={localLoginUser.image || defaultImage}
             alt="profile picture"
           />
         </span>

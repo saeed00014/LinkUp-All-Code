@@ -4,8 +4,9 @@ import { useDropzone} from "react-dropzone"
 import Image from "next/image"
 import checkFormat from "../hooks/checkFormat"
 import { postMaker } from "@/assets/data/data"
+import imageSizeReducer from "./imageSizeReducer"
 
-const ImageDragDrop = ({setImage, isProfile, profileImage}) => {
+const ImageDragDrop = ({setImage, currentImage, edition, lable}) => {
   const [binaryImage, setBinaryImage] = useState("")
   const [binaryImageName, setBinaryImageName] = useState("")
   const [format, setFormat] = useState("")
@@ -18,10 +19,14 @@ const ImageDragDrop = ({setImage, isProfile, profileImage}) => {
     const file = new FileReader
     
     file.onload = function() {
-      setImage(file.result)
       setBinaryImage(file.result)
+      imageSizeReducer({
+        file: file.result, 
+        setImage: setImage, 
+        edition: edition
+      })
     }
-    
+
     file.readAsDataURL(acceptedFiles[0])
   }, [])
 
@@ -35,7 +40,7 @@ const ImageDragDrop = ({setImage, isProfile, profileImage}) => {
         htmlFor="image" 
         className="min-w-fit h-fit text-[.8rem]"
       >
-        {postMaker.image}
+        {lable}   
       </label>
       <div 
         {...getRootProps()}
@@ -58,7 +63,7 @@ const ImageDragDrop = ({setImage, isProfile, profileImage}) => {
                   height={0}
                   sizes="100vw"
                   alt="Upload preview image" 
-                  className={`${isProfile ? "h-[20rem] w-[20rem] rounded-full object-cover" : "object-contain w-full h-full max-h-[20rem]"}`}
+                  className={`${edition == "avatar" ? "h-[20rem] w-[20rem] rounded-full object-cover" : "object-contain w-full h-full max-h-[20rem]"}`}
                 />
               </span>
               <span>
@@ -66,7 +71,21 @@ const ImageDragDrop = ({setImage, isProfile, profileImage}) => {
               </span>
             </div>
           )}
-          {binaryImageName && format == "video" && !isFormatError && !isProfile && (
+          {edition != "post" && !binaryImage && !isFormatError && 
+            <span className="relative flex items-center justify-center w-full max-h-[20rem] mt-3">
+              {currentImage && 
+                <Image 
+                src={currentImage} 
+                width={0}
+                height={0}
+                sizes="100vw"
+                alt="Upload preview image" 
+                className={`object-cover h-[20rem]  ${edition == "avatar" ? "w-[20rem] rounded-full" : "w-full"} `}
+                />
+              }
+            </span>
+          }
+          {binaryImageName && format == "video" && !isFormatError && edition == "post" && (
             <div className="flex flex-col w-full items-center gap-2">
               <span className="relative flex w-full max-h-[20rem] mt-3">
                 <video 
@@ -81,18 +100,6 @@ const ImageDragDrop = ({setImage, isProfile, profileImage}) => {
               </span>
             </div>
           )}
-          {isProfile && !binaryImage && !isFormatError && 
-            <span className="relative flex items-center justify-center w-full max-h-[20rem] mt-3">
-              <Image 
-                src={profileImage} 
-                width={0}
-                height={0}
-                sizes="100vw"
-                alt="Upload preview image" 
-                className="object-cover h-[20rem] w-[20rem] rounded-full"
-              />
-            </span>
-          }
           {isFormatError && 
             <span>
               format not supported

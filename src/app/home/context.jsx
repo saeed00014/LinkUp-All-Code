@@ -1,15 +1,24 @@
 "use client"
 import { baseURL } from "@/axios/axios"
+import LoadingSpin from "@/components/loadingSpin"
 import { HomeContext } from "@/context/context"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 
 const Context = ({children}) => {
   const localUser = localStorage.getItem("user")
-  const loginUser = localUser && JSON.parse(localUser)
+  const localLoginUser = localUser && JSON.parse(localUser)
   const [searchResult, setSearchResult] = useState("")
 
-  const suggestionUser = useQuery({
+  const getLoginUser = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const response = await baseURL.get(`/user/loginUser/userInfo`)
+      return response
+    }
+  })
+
+  const getSuggestionUser = useQuery({
     queryKey: ["suggestionUser"],
     queryFn: async () => {
       const users = await baseURL.get("/user")
@@ -17,20 +26,31 @@ const Context = ({children}) => {
     }
   })
 
-  const { isPending, error, data } = useQuery({
+  const getRandomPost = useQuery({
     queryKey: ["post"],
     queryFn: async () => {
-      const post = await baseURL.get(`/post`)
+      const post = await baseURL.get(`/post/random`)
       return post
     }
   })
-  if(!isPending && loginUser && !suggestionUser.isPending) {
-    const post = data.data.response
-    const suggestedUsers = suggestionUser.data.data.response
+
+  if(getRandomPost.isPending, getSuggestionUser.isPending) {
+    return (
+      <div className="fixed left-0 top-0 bottom-0 right-0 flex items-center justify-center">
+        <LoadingSpin />
+      </div>
+    )
+  }
+
+  if(!getRandomPost.isPending && !getLoginUser.isPending && !getSuggestionUser.isPending) {
+    const post = getRandomPost.data.data.response
+    const suggestedUsers = getSuggestionUser.data.data.response
+    const loginUser = getLoginUser.data.data.response
     return (
       <HomeContext.Provider 
         value={{
           loginUser,
+          localLoginUser,
           post,
           searchResult,
           setSearchResult,

@@ -23,9 +23,15 @@ const SideBar = () => {
         setSearchResult={setSearchResult}
       />
       {searchResult ? 
-        <UserSearchResult 
-          searchResult={searchResult}
-        /> 
+        <div className="flex flex-col w-full rounded-[.3rem] h-screen bg-white dark:bg-gray-800 overflow-y-scroll z-30">
+          {searchResult.map((result) => {
+            return (
+              <UserSearchResult 
+                user={result}
+              /> 
+            )
+          })}
+        </div>
         : <SideBarSuggestion />  
       }
     </div>

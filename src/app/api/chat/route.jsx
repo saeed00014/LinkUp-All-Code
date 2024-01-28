@@ -11,8 +11,7 @@ export async function GET(req) {
     values: [loginUser.id, loginUser.id]
   })
   if(result && !result.errno) {
-    const response = [{...result[0], loginUser_id: loginUser.id}]
-    return NextResponse.json({ response: response }, { status: 200})
+    return NextResponse.json({ response: result }, { status: 200})
   }
   if(result) {
     return NextResponse.json({ response: "" }, { status: 500})

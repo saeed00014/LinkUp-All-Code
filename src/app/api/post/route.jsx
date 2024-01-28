@@ -7,7 +7,7 @@ export async function GET(req) {
   const loginUserCookie = cookie.get("user")
   const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
   const result = await query({
-    query: "SELECT * FROM post",
+    query: `SELECT * FROM post WHERE user_id != ${loginUser.id}`,
     value: ""
   })
   if(result[0]) {

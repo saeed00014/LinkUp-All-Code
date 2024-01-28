@@ -6,15 +6,18 @@ import Link from "next/link"
 
 const ChatsUser = ({targetUser, chat}) => {
   const { setCurrentChat } = useContext(ChatContext)
-
   const handleClick = () => {
-    setCurrentChat({targetUser: targetUser, chat_id: chat.id})
+    setCurrentChat({
+      targetUser: targetUser, 
+      chat_id: chat.id
+    })
   }
   return (
     <Link 
       href={`/chats/inbox?chat_id=${chat.id}&targetUser_id=${targetUser.id}`}
       onClick={handleClick}
-      className="flex w-full min-h-[4rem] p-2 gap-3 border-b border-gray-400 dark:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer  ">
+      className="flex w-full min-h-[4rem] p-2 gap-3 border-b border-gray-400 dark:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+    >
       <span className="relative w-12 min-w-12 h-12">
         <Image 
           fill={true}

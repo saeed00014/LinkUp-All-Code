@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import Comment from "./comment"
 import { baseURL } from "@/axios/axios"
 
-const Context = ({children, post}) => {
+const Context = ({children, post, isMyPost, miniEdition}) => {
   const [isCommentActive, setIsCommentActive] = useState()
   const [isLiked, setIsLiked] = useState(false)
   const [comments, setComments] = useState("")
@@ -38,18 +38,20 @@ const Context = ({children, post}) => {
       return users
     }
   })
-  
+
   if(!isPending && !getAllLikes.isPending && data.data.response) {
     const postUser = data.data.response
     return (
       <PostContext.Provider value={{
         postUser, 
         post, 
+        isMyPost,
         setIsCommentActive,
         isLiked, 
         setIsLiked,
         comments,
-        setComments
+        setComments,
+        miniEdition
         }}
       >
         {children}

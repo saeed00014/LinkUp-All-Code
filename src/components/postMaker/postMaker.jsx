@@ -1,5 +1,5 @@
 "use client"
-import { useContext, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useMutation } from "@tanstack/react-query"
 import CloseHeader from "../closeHeader"
 import Input from "./input"
@@ -19,8 +19,8 @@ const PostMaker = ({setIsMakePostActive}) => {
   const [myComment, setMyComment] = useState("")
 
   const mutation = useMutation({
-    mutationFn: async (newPost) => {
-      const response = await baseURL.post('/post', newPost)
+    mutationFn: async (madeNewPost) => {
+      const response = await baseURL.post('/post', madeNewPost)
     }
   })
   
@@ -28,7 +28,6 @@ const PostMaker = ({setIsMakePostActive}) => {
     e.preventDefault()
     const fd = new FormData()
     const blob = new Blob([image], { type: "multipart/form-data" });
-    console.log(blob)
     fd.append('file', 'blob')
     
     mutation.mutate({
@@ -66,6 +65,8 @@ const PostMaker = ({setIsMakePostActive}) => {
         />
         <ImageDragDrop 
           setImage={setImage} 
+          lable={postMaker.image}
+          edition={"post"}
         />
         {isTagsChecked && 
           <Input

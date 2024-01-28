@@ -11,14 +11,16 @@ import defaultImage from "@/assets/images/default.jpg"
 import { postText } from "@/assets/data/data" 
 
 const PostFooter = () => {
-  const { setIsCommentActive, post, postUser } = useContext(PostContext)
+  const { setIsCommentActive, post, postUser, miniEdition } = useContext(PostContext)
 
   return (
-    <footer className="flex flex-col px-4 mt-1">
+    <footer className={`flex flex-col  ${miniEdition ? "px-2" : "px-4"} mt-1`}>
       <PostFooterTop />
-      <div className="flex justify-between items-center py-1 mt-2 border-t-2 border-b-2 dark:border-gray-600 gap-1">
+      <div className={`flex justify-between items-center py-1 mt-2 ${post.isComments == 0 && "mb-2"} border-t-2 border-b-2 dark:border-gray-600 gap-1`}>
         <PostLike />
-        {post.isComments == 1 && <PostComment />}
+        {post.isComments == 1 && 
+          <PostComment />
+        }
         <PostShare />
       </div>
       {post.isComments == 1 && 
@@ -28,6 +30,7 @@ const PostFooter = () => {
           >
             {postText.allComments}
           </button>
+          {post.myComment && 
           <div className="flex w-full gap-2">
             <span className="relative w-10 min-w-10 h-10 rounded-full overflow-hidden">
               <Image 
@@ -45,6 +48,7 @@ const PostFooter = () => {
               </span>
             </div>
           </div>
+          }
           <CommentInput type="home" />
         </div>
       }

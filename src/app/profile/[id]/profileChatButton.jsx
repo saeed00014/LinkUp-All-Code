@@ -1,14 +1,20 @@
 "use client"
+import { useContext } from 'react'
+import { ProfileContext } from '@/context/context'
 import { useMutation } from '@tanstack/react-query'
 import { baseURL } from '@/axios/axios'
+import { profile } from '@/assets/data/data'
+import { useRouter } from 'next/navigation'
 
 const ProfileChatButton = () => {
+  const router = useRouter()
+  const { targetUser_id } = useContext(ProfileContext)
   const chatStatus = useMutation({
     mutationFn: async () => {
       const response = await baseURL.get(`/chat/${targetUser_id}`)
-      if(response) {
+      if(response.data) {
         const chat_id = response.data.chat_id
-        location.href(`/chats/inbox?chat_id=${chat_id}&targetUser_id=${targetUser_id}`)
+        router.push(`/chats/inbox?chat_id=${chat_id}&targetUser_id=${targetUser_id}`)
       }
     }
   })

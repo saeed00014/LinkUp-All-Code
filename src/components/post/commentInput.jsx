@@ -9,7 +9,7 @@ import { useMutation } from "@tanstack/react-query"
 import { baseURL } from "@/axios/axios"
 
 const CommentInput = ({type}) => {
-  const { post, setComments, comments } = useContext(PostContext)
+  const { post, setComments, comments, miniEdition } = useContext(PostContext)
   const [inputValue, setInputValue] = useState("")
   const localUser = localStorage.getItem("user")
   const loginUser = localUser && JSON.parse(localUser)
@@ -31,7 +31,7 @@ const CommentInput = ({type}) => {
     <form 
       ref={ref}
       onSubmit={(e) => handleSubmit(e)}
-      className={`${type == "comments" ? "sticky bottom-0" : "relative" } flex items-center justify-start w-full gap-2 bg-white dark:bg-gray-800`}
+      className={`${type == "comments" ? "sticky bottom-0" : "relative" } flex items-center justify-start w-full py-2 gap-2 rounded-b-[1rem]`}
     >
       <label 
         id={`commentInputLable${post.id}`}
@@ -56,7 +56,7 @@ const CommentInput = ({type}) => {
       />
       <label 
         htmlFor={`commentInputSubmit${post.id}${type}`} 
-        className="absolute left-0 cursor-pointer flex items-center justify-center h-full w-12"  
+        className={`absolute ${miniEdition ? "left-0" : "left-2"}  cursor-pointer flex items-center justify-center h-full w-12`}  
       >
         <IoSend />
         <input 

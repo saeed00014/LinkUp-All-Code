@@ -1,25 +1,25 @@
 "use client"
 import { FaMagnifyingGlass } from "react-icons/fa6"
-import { sideBar } from "@/assets/data/data"
+import { chatPage } from "@/assets/data/data"
 import { useMutation } from "@tanstack/react-query"
 import { baseURL } from "@/axios/axios"
 import { useContext } from "react"
 import { ChatContext } from "@/context/context"
 
 const ChatSearch = () => {
-  const { setSearchResult } = useContext(ChatContext)
-  const mutation = useMutation({
-    mutationFn: async (searchValue) => {
-      const response = await baseURL.get(`/user/search?username=${searchValue}`)
-      if(response.data) {
-        setSearchResult(response.data.response)
-      }
-    }
-  })
+  const { setSearchResult, chats } = useContext(ChatContext)
+  // const mutation = useMutation({
+  //   mutationFn: async (searchValue) => {
+  //     const response = await baseURL.get(`/chat/search?searchValue=${searchValue}`)
+  //     if(response.data) {
+  //       console.log(response.data)
+  //       setSearchResult(response.data.response)
+  //     }
+  //   }
+  // })
   const handleChange = (e) => {
     const value = e.target.value
     !value && setSearchResult("")
-    value && mutation.mutate(value)
   }
 
   return (
@@ -35,7 +35,7 @@ const ChatSearch = () => {
           type="text" 
           name="text"
           id="text"
-          placeholder={sideBar.searchBar}
+          placeholder={chatPage.seachBar}
           onChange={(e) => handleChange(e)}
           className="w-full py-2 pr-10 pl-1  bg-gray-200 dark:bg-gray-700 rounded-[3rem] z-40"
         />

@@ -43,18 +43,3 @@ body {
   height: 0px;
   width: 0px;
 }
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #505050;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #cfcfcf;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #b3b3b3;
-}

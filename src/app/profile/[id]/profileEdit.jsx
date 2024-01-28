@@ -18,11 +18,11 @@ const ProfileEdit = ({setIsEditActive}) => {
   const [link, setLink] = useState(user.link)
   const [bio, setBio] = useState(user.bio)
   const [image, setImage] = useState(user.image)
+  const [background, setBackground] = useState(user.background)
 
   const mutation = useMutation({
     mutationFn: async (editedValues) => {
       const response = await baseURL.put(`/user/${user.id}`, editedValues)
-      console.log(response)
       location.reload("")
     }
   })
@@ -37,7 +37,8 @@ const ProfileEdit = ({setIsEditActive}) => {
       job : job,
       link : link,
       bio : bio,
-      image : image
+      image : image,
+      background: background
     }
     mutation.mutate(editedValues)
   }
@@ -104,23 +105,30 @@ const ProfileEdit = ({setIsEditActive}) => {
             />
           </div>
           <Input
-              lable={profileEdit.bio}
-              type="text"
-              name="bio"
-              id="bio"
-              value={bio}
-              setValue={setBio}
-            />
+            lable={profileEdit.bio}
+            type="text"
+            name="bio"
+            id="bio"
+            value={bio}
+            setValue={setBio}
+          />
           <ImageDragDrop 
             setImage={setImage} 
-            isProfile={true}
-            profileImage={image} 
+            currentImage={image} 
+            lable={profileEdit.avatar} 
+            edition="avatar"
+            />
+          <ImageDragDrop 
+            setImage={setBackground} 
+            currentImage={background}
+            lable={profileEdit.background} 
+            edition="background"
           />
           <div>
             <input 
               type="submit" 
               value={profileEdit.submitEdit}
-              className="border-none !w-fit !px-14 !bg-gray-200 dark:!bg-gray-700 hover:!bg-gray-300 dark:hover:!bg-gray-600 cursor-pointer"
+              className="border-none !w-fit !px-14 py-2 !bg-gray-200 dark:!bg-gray-700 hover:!bg-gray-300 dark:hover:!bg-gray-600 cursor-pointer"
             />
           </div>
         </form>

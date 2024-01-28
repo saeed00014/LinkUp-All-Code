@@ -1,16 +1,18 @@
 import { useContext } from "react"
 import { PostContext } from "@/context/context"
-import { FaRegEdit } from "react-icons/fa"
 import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
+import Link from "next/link"
+import PostHeaderEdit from "./postHeaderEdit"
+import PostHeaderinfo from "./postHeaderinfo"
 
-const PostHeader = () => {
-  const { post, postUser } = useContext(PostContext)
+const PostHeader = ({commentEdition}) => {
+  const { post, postUser, isMyPost, miniEdition } = useContext(PostContext)
   return (
-    <header className="flex justify-between pl-6 pr-4 text-[.9rem]">
-      <a 
+    <header className={`flex justify-between ${miniEdition && !commentEdition ? "px-2" : "px-4"}  text-[.9rem]`}>
+      <Link 
         href={`/profile/${post.user_id}`} 
-        className="flex gap-4"
+        className="flex gap-4 w-full"
       >
         <span className="relative w-12 h-12 rounded-full overflow-hidden">
           <Image 
@@ -27,12 +29,12 @@ const PostHeader = () => {
             {postUser.username}
           </span>
         </div>
-      </a>
-      <div className="flex items-center">
-        <span className="text-2xl cursor-pointer rounded-full ">
-          <FaRegEdit />
-        </span>
-      </div>
+      </Link>
+      {isMyPost ? 
+        <PostHeaderEdit />
+      : 
+        <PostHeaderinfo />
+      } 
     </header>
   )
 }

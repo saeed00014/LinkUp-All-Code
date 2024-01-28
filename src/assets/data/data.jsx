@@ -148,7 +148,7 @@ export const profile = {
   following: "دنبال شونده",
   editProfile: "تغییر اطلاعات",
   follow: "دنبال کردن",
-  unfollow: "دنبال کردن",
+  unfollow: "دنبال شده",
   sendMessage: "ارسال پیام"
 }
 
@@ -161,7 +161,9 @@ export const profileEdit = {
   job2: "",
   link: "لیک ها",
   bio: "درباره",
-  submitEdit: "ذخیره"
+  submitEdit: "ذخیره",
+  avatar: "آپلود عکس پروفایل",
+  background: "آپلود عکس پس زمینه"
 }
 
 export const sideBar = {
@@ -172,13 +174,19 @@ export const sideBar = {
   follow: "دنبال کردن"
 }
 
+export const chatPage = {
+  seachBar: "جستجوی چت",
+  findChat: "پیدا کردن گفت و گوی جدید",
+}
+
 export const explore = {
   searchBar: "جستجوی پست",
   sortBy: "دسته بندی بر اساس",
   date: "جدید ترین",
   papularity: "محبوب ترین",
   related: "مرتبط ترین",
-  search: "جستجو"
+  search: "جستجو",
+  noResult: "هیچ نتیجه ای یافت نشد"
 }
 
 export const messages = {
@@ -196,5 +204,11 @@ export const groups = {
 }
 
 export const chatData = {
-  chooseChat: "یک چت را انتخاب کنید"
+  chooseChat: "یک چت را انتخاب کنید",
+  viewProfile: "مشاهده پروفایل"
+}
+
+export const notFound = {
+  notFound: "هیچ نتیجه ای یافت نشد",
+  goHome: "بازگشت به خانه"
 }

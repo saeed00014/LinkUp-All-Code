@@ -12,7 +12,7 @@ import CommentMessage from "./commentMessage"
 import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
 
-const CommentFooter = () => {
+const CommentFooter = ({commentEdition}) => {
   const { post, postUser, comments, setComments } = useContext(PostContext)
   const {isPending, error, data} = useQuery({
     queryKey: ["messages"],
@@ -24,17 +24,19 @@ const CommentFooter = () => {
     }
   })
   return (
-    <footer className="flex flex-col px-4 mt-1">
-      <PostFooterTop />
-      <div className="flex justify-between items-center py-1 mt-2 border-t-2 border-b-2 dark:border-gray-600 gap-1">
+    <footer className="flex flex-col">
+      <PostFooterTop 
+        commentEdition={commentEdition}
+      />
+      <div className="flex justify-between items-center py-1 px-4 mt-2 border-t-2 border-b-2 dark:border-gray-600 gap-1">
         <PostLike />
         <PostComment />
         <PostShare />
       </div>
-      <div className="flex flex-col w-full min-h-[15rem] gap-2 mt-2">
-        <ul className="relative flex flex-col w-full h-full justify-start items-start pb-2 gap-1">
+      <div className="flex flex-col w-full min-h-[15rem]">
+        <ul className="relative flex flex-col w-full h-full justify-start items-start pb-2 gap-1 bg-gray-200 dark:bg-gray-950">
           {post.myComment && 
-            <li className={`flex items-end ${true ? "justify-start" : "justify-end" } min-w-full -mt-1 gap-2`}>
+            <li className={`flex items-end ${true ? "justify-start" : "justify-end" } min-w-full -mt-1 px-4 gap-2`}>
               <span className="relative w-10 h-10 rounded-full overflow-hidden">
                 <Image 
                   fill={true}
@@ -46,7 +48,7 @@ const CommentFooter = () => {
                 <span className="text-[.7rem]">
                   {postUser.firstname}
                 </span>
-                <span className="flex py-2 px-3 w-fit max-w-[20rem] text-[.8rem] bg-gray-200 dark:bg-gray-950 rounded-[.5rem] z-20">
+                <span className="flex py-2 px-3 w-fit max-w-[20rem] text-[.8rem] bg-gray-200 dark:bg-gray-800 rounded-[.5rem] z-20">
                   {post.myComment}
                 </span>
               </div>
@@ -55,14 +57,16 @@ const CommentFooter = () => {
           {comments ? 
             comments.map((message) => {
               return ( 
-                <div key={message.id} className="w-full">
+                <div key={message.id} className="w-full px-4">
                   <CommentMessage message={message} />
                 </div>
               )
           }) 
           : null}
         </ul>
-        <CommentInput type="comments" />
+        <div className="sticky bottom-0 px-4 pl-2 bg-white dark:bg-gray-800">
+          <CommentInput type="comments" />
+        </div>
       </div>
     </footer>
   )

@@ -19,8 +19,8 @@ const ExploreSearch = () => {
   })
   const handleChange = (e) => {
     const value = e.target.value
-    !value && setSearchResult("")
     setSearchValue(value)
+    !value && setSearchResult("")
   }
   const handleSubmit = (e) => {
     e.preventDefault()

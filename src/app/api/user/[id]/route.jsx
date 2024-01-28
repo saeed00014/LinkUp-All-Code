@@ -18,10 +18,10 @@ export async function GET(req, route) {
 export async function PUT(req, route) {
   const id = route.params.id
   const body = await req.json()
-  const {username, email, firstname, lastname, job, link, bio, image} = {...body}  
+  const {username, email, firstname, lastname, job, link, bio, image, background} = {...body}  
   const result = await query({
-    query: "UPDATE user SET username = ?, email = ?, firstname = ?, lastname = ?, job = ?, link = ?, bio = ?, image = ? WHERE id = ?",
-    values: [username, email, firstname, lastname, job, link, bio, image, id]
+    query: "UPDATE user SET username = ?, email = ?, firstname = ?, lastname = ?, job = ?, link = ?, bio = ?, image = ?, background = ? WHERE id = ?",
+    values: [username, email, firstname, lastname, job, link, bio, image, background, id]
   })
   if(result.affectedRows) {
     return NextResponse.json({ response: "changes saved" }, { status: 200 })
