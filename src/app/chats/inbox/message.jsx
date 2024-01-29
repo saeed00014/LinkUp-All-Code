@@ -5,16 +5,13 @@ import { useQuery } from "@tanstack/react-query"
 import { baseURL } from "@/axios/axios"
 import defaultImage from "@/assets/images/default.jpg"
 import Image from "next/image"
-import MessageDelete from "./messageDelete"
-import MessageEdit from "./messageEdit"
-import MessageShare from "./messageShare"
 import Post from "@/components/post/post"
+import Link from "next/link"
 
 const Message = ({message}) => {
   const { currentChat } = useContext(ChatContext)
-  const { chooseMessage, setChooseMessage } = useContext(ChatMessageContext)
+  const { chooseMessage, setChooseMessage, messages } = useContext(ChatMessageContext)
   const { targetUser, chat_id } = currentChat
-  const [ isClicked, setIsClicked ] = useState(false)
 
   useEffect(() => {
     const scrollToBottom = () => {
@@ -43,10 +40,19 @@ const Message = ({message}) => {
   })
 
   const handleClick = () => {
-    // document.getElementById(`${message.attachedMessage_id}`).click()
-    !isClicked && setChooseMessage(oldMessages => [...oldMessages, message])
-    isClicked && setChooseMessage(oldMessages => oldMessages.filter((oldMessage) => oldMessage.id != message.id))
-    setIsClicked(!isClicked)
+    message.id == chooseMessage.id && setChooseMessage("")
+    message.id != chooseMessage.id && setChooseMessage(message)
+  }
+
+  const handleAttachedMessage = () => {
+    const message1 = {id: message.attachedMessage_id, text: message.attachedMessage}
+    const isMessage1Choosed = chooseMessage.id == message1.id
+    const isMessage1 = messages.find(
+      (message) => message.id == message1.id
+    ) 
+    !isMessage1 && setChooseMessage("")
+    isMessage1 && !isMessage1Choosed && setChooseMessage(message1)
+    isMessage1 && isMessage1Choosed && setChooseMessage("")
   }
 
   if(!getMessageUser.isPending && !getSentPostInfo.isPending) {
@@ -55,7 +61,6 @@ const Message = ({message}) => {
 
     return (
       <li
-        onClick={handleClick}
         className={`flex items-end ${targetUser.id != message.user_id ? "flex-row-reverse justify-start text-red-500" : "justify-start" } w-full gap-2`}
       >
         <span className="relative min-w-10 min-h-10 rounded-full overflow-hidden">
@@ -69,21 +74,24 @@ const Message = ({message}) => {
           <span className="text-[.7rem]">
             {user.firstname}
           </span>
-          <div className={`flex ${targetUser.id != message.user_id ? "flex-row-reverse rounded-l-[.5rem]" : "flex-row rounded-r-[.5rem]"} justify-start w-full ${isClicked ? "bg-gray-700" : ""}  gap-2`}>
+          <div className={`flex ${targetUser.id != message.user_id ? "flex-row-reverse rounded-l-[.5rem]" : "flex-row rounded-r-[.5rem]"} justify-start w-full ${message.id == chooseMessage.id ? "bg-gray-700" : ""}  gap-2`}>
             <div className={`relative flex flex-col ${targetUser.id != message.user_id ? "justify-end " : "justify-start"} w-fit`}>
               {message.attachedMessage && 
-                <div
-                  className="flex py-2 pl-3 pr-1 w-full max-w-[20rem] text-[.8rem] rounded-t-[.5rem] bg-gray-200 dark:bg-gray-700/75 hover:bg-gray-700 gap-1 z-20 cursor-pointer"
+                <Link
+                  href={`#message${message.attachedMessage_id}`}
+                  onClick={handleAttachedMessage}
+                  className="flex py-2 pl-3 pr-1 w-full max-w-[20rem] text-[.8rem] rounded-t-[.5rem] bg-gray-200 dark:bg-gray-700/85 hover:bg-gray-700 gap-1 z-20"
                 >
-                  <span className="flex min-w-[.12rem] max-w-[.12rem] w-[.12rem] h-[20px] rounded-full bg-white"></span>
+                  <span className="flex min-w-[.12rem] max-w-[.12rem] w-[.12rem] h-[20px] rounded-full bg-gray-400"></span>
                   <span className="flex items-center text-[.7rem]">  
                     {message.attachedMessage}
                   </span>
-                </div>
+                </Link>
               }
               {message.text && 
                 <span
-                  id={message.id} 
+                  onClick={handleClick}
+                  id={`message${message.id}`} 
                   className={`flex justify-end py-2 px-3 w-full max-w-[20rem] text-[.8rem] ${message.attachedMessage ? "rounded-b-[.5rem]" : "rounded-[.5rem]"} bg-gray-200 dark:bg-gray-800 z-20`}
                 >
                   {message.text}

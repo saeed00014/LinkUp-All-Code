@@ -11,10 +11,10 @@ export async function GET(req) {
     values: [loginUser.id]
   })
   if(result && !result.errno) {
-    return NextResponse.json({ response: result}, {status: 200})
+    return NextResponse.json({ response: result }, {status: 200})
   }
   if(result) {
-    return NextResponse.json({ response: ""}, {status: 500})
+    return NextResponse.json({ response: "" }, {status: 500})
   }
 }
 

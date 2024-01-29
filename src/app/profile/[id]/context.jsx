@@ -6,6 +6,7 @@ import LoadingSpin from "@/components/loadingSpin"
 import { baseURL } from "@/axios/axios"
 
 const Context = ({children}) => {
+  const [page, setPage] = useState(1)
   const [newPost, setNewPost] = useState([])
   const url = window.location.href
   const targetUser_id = url.split("/")[url.split("/").length - 1]
@@ -13,7 +14,7 @@ const Context = ({children}) => {
   const getProfileUserPosts = useQuery({
     queryKey: [`userPosts${targetUser_id}`],
     queryFn: async () => {
-      const post = await baseURL.get(`/user/post/${targetUser_id}`)
+      const post = await baseURL.get(`/user/post/${targetUser_id}?page=${page}`)
       return post
     }
   })
@@ -48,7 +49,9 @@ const Context = ({children}) => {
           newPost,
           setNewPost,
           isLoginUser,
-          targetUser_id
+          targetUser_id,
+          page,
+          setPage
         }}
       >
         {children}

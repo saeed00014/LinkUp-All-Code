@@ -20,7 +20,7 @@ const PostHeaderinfo = () => {
     <>
       <button 
         onClick={() => setIsShowInfo(!isShowInfo)}
-        className='flex items-center justify-center md:text-2xl text-[1.7rem] w-[40px] min-w-[40px] h-[40px] rounded-full dark:hover:bg-gray-700'
+        className='flex items-center justify-center md:text-2xl text-[1.7rem] w-[40px] min-w-[40px] h-[40px] rounded-full dark:hover:bg-gray-600'
       >
         <BsThreeDots />
       </button>

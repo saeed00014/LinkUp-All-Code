@@ -21,7 +21,6 @@ const ChatBody = () => {
   const [editMessage, setEditMessage] = useState("")
   const [shareMessage, setShareMessage] = useState("")
   const [chooseMessage, setChooseMessage] = useState("")
-  console.log(editMessage)
 
   const getCurrentChatMessages = useQuery({
     queryKey: [`messages${chat_id}`],
@@ -77,7 +76,7 @@ const ChatBody = () => {
         {!getCurrentChatMessages.isPending ? 
           <ul 
             id="chatMessageList"
-            className="relative flex flex-col-reverse w-full h-full justify-start items-start py-2 px-2 gap-1 overflow-y-auto"
+            className="relative flex flex-col-reverse w-full h-full justify-start items-start py-2 px-2 gap-1 !overflow-y-auto"
           >
             <div className="flex-col-revers w-full">
               {messages[0] ? 

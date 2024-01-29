@@ -4,7 +4,7 @@ import Context from "./context"
 
 const ChatsBody = () => {
   return (
-    <div className="flex justify-start w-full h-screen pb-[57.5px]">
+    <div className="flex justify-start w-full h-full">
       <Context>
         <ChatsSideBar />
         <Chat />

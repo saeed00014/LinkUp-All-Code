@@ -5,8 +5,8 @@ import Image from "next/image"
 const PostContent = () => {
   const { post } = useContext(PostContext)
   return (
-    <div className="flex flex-col gap-3 text-[.9rem]">
-      <p className="px-4">
+    <div className="flex flex-col gap-2 text-[.9rem]">
+      <p className="px-4 pt-[.2rem]">
         {post.text}
       </p>
       {post.image && 

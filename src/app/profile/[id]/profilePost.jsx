@@ -1,33 +1,57 @@
 "use client"
-import { useContext } from "react"
-import { ProfileContext } from "@/context/context"
-import PostMake from "@/components/postMaker/postMake"
+import { useContext, useEffect, useRef } from "react"
 import Post from "@/components/post/post"
+import { useIntersection } from "@mantine/hooks"
+import { ProfileContext } from "@/context/context"
 
-const ProfilePost = () => {
-  const { user, posts, isLoginUser } = useContext(ProfileContext)
+const ProfilePost = ({ posts, index }) => {
+  const { isLoginUser, page, setPage } = useContext(ProfileContext)
+  const lastPostRef = useRef(null)
+  const { ref, entry } = useIntersection({
+    root: lastPostRef.current,
+    threshold: 1
+  })
+
+  useEffect(() => {
+    if(entry && entry.isIntersecting) {
+      setPage(page + 1)
+    } 
+  }, [entry])
 
   return (
-    <div className="flex flex-col justify-start gap-6">
-      {isLoginUser && 
-        <PostMake 
-          localLoginUser={user} 
-        />
-      }
+    <>
       {posts[0] ? 
-        posts.map((post) => {
+        posts.map((post, i) => {
+          const isRef = (i + index == page * 3 - 1)
+          if(isRef) {
+            return (
+              <div 
+                ref={ref} 
+                id={post.id} 
+                key={post.id}
+              >
+                <Post
+                  isMyPost={isLoginUser} 
+                  post={post} 
+                />
+              </div>
+            )
+          }
           return (
-            <div key={post.id}>
+            <div 
+              id={post.id} 
+              key={post.id}
+            >
               <Post
                 isMyPost={isLoginUser} 
                 post={post} 
               />
             </div>
           )
-        }) 
-        : <div className="flex flex-col items-center justify-center min-w-[550px] rounded-[.5rem] bg-white dark:bg-gray-800 dark:text-white gap-1 py-3 mt-6">there is no post here yet</div>
+        })
+      : null
       }
-    </div>
+    </>
   )
 }
 

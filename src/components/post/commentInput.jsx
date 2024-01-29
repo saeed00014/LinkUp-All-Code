@@ -56,7 +56,7 @@ const CommentInput = ({type}) => {
       />
       <label 
         htmlFor={`commentInputSubmit${post.id}${type}`} 
-        className={`absolute ${miniEdition ? "left-0" : "left-2"}  cursor-pointer flex items-center justify-center h-full w-12`}  
+        className={`absolute ${miniEdition ? "left-0" : "left-0"}  cursor-pointer flex items-center justify-center h-full w-12`}  
       >
         <IoSend />
         <input 

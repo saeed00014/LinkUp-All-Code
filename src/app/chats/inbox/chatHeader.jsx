@@ -31,22 +31,10 @@ const ChatHeader = ({targetUser}) => {
         </div>
       </Link>
         {chooseMessage && 
-          <div className="flex items-center text-[1.3rem] gap-4">
-            {chooseMessage.length < 2 && 
-              <MessageDelete 
-                message={chooseMessage[0]} 
-              />
-            }
-            {chooseMessage.length < 2 && 
-              <MessageEdit
-                message={chooseMessage[0]}
-              />
-            }
-            {chooseMessage.length < 2 && 
-              <MessageShare 
-                message={chooseMessage[0]}
-              />
-            }
+          <div className="flex items-center text-[1.3rem] gap-1">
+            <MessageDelete />
+            <MessageEdit />
+            <MessageShare />
           </div>
         }
     </header>

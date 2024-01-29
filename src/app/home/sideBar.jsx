@@ -5,9 +5,10 @@ import { IoMdArrowDropright } from "react-icons/io"
 import SideBarSuggestion from "./sideBarSuggestion"
 import UserSearch from "../../components/userSearch"
 import UserSearchResult from "./userSearchResult"
+import { sideBar } from "@/assets/data/data"
 
 const SideBar = () => {
-  const { searchResult, setSearchResult } = useContext(HomeContext)
+  const { searchResult, setSearchResult, suggestedUsers } = useContext(HomeContext)
   const [isOpen,  setIsOpen] = useState(false)
 
   return (
@@ -32,7 +33,21 @@ const SideBar = () => {
             )
           })}
         </div>
-        : <SideBarSuggestion />  
+        : 
+        <div className="flex flex-col justify-center items-center w-full h-fit px-3 py-2 gap-3">
+          <span className="flex items-center justify-start w-full">
+            {sideBar.papularUsers}
+          </span>
+          {suggestedUsers && 
+            suggestedUsers.map((user) => {
+              return (
+                <SideBarSuggestion
+                  user={user}
+                />  
+              )
+            })
+          }
+        </div>
       }
     </div>
   )

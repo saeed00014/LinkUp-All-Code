@@ -7,8 +7,11 @@ export async function GET(req, route) {
   const loginUserCookie = cookie.get("user")
   const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
   const id = route.params.id
+  const page = req.nextUrl.searchParams.get("page")
+  const endLimit = page * 3
+  const startLimit = endLimit - 3
   const result = await query({
-    query: `SELECT * FROM post WHERE user_id = ${id}`,
+    query: `SELECT * FROM post WHERE user_id = ${id} LIMIT ${startLimit}, ${endLimit}`,
     value: [id]
   })
   if(result && !result.errno) {

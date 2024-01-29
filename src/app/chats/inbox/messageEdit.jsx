@@ -2,17 +2,17 @@ import { ChatMessageContext } from "@/context/context"
 import { useContext } from "react"
 import { AiFillEdit } from "react-icons/ai"
 
-const MessageEdit = ({message}) => {
-  const { setEditMessage } = useContext(ChatMessageContext)
+const MessageEdit = () => {
+  const { setEditMessage, chooseMessage } = useContext(ChatMessageContext)
   
   const handleEdit = () => {
-    setEditMessage(message)
+    setEditMessage(chooseMessage)
   }
 
   return (
     <span
     onClick={handleEdit}
-      className="hover:bg-gray-200 dark:hover:bg-gray-700"
+      className="p-3 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
     >
       <AiFillEdit />
     </span>
