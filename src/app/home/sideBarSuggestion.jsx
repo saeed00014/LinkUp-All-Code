@@ -46,7 +46,7 @@ const SideBarSuggestion = ({user}) => {
       <div className="flex flex-col items-center justify-center w-full px-3 pt-3 pb-3 bg-gray-200 dark:bg-gray-700 rounded-[1rem] gap-2">
         <Link
           href={`/profile/${user.id}`} 
-          className="relative w-20 h-20 rounded-full overflow-hidden cursor-pointer"
+          className="relative w-16 h-16 rounded-full overflow-hidden cursor-pointer"
         >
           <Image 
             fill={true}

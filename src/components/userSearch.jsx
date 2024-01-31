@@ -4,17 +4,21 @@ import { postShare, sideBar } from "@/assets/data/data"
 import { useMutation } from "@tanstack/react-query"
 import { baseURL } from "@/axios/axios"
 
-const UserSearch = ({type, setSearchResult}) => {
+const UserSearch = ({type, setSearchResult, setSearchValue, setIsPending}) => {
   const mutation = useMutation({
     mutationFn: async (searchValue) => {
       const response = await baseURL.get(`/user/search?username=${searchValue}`)
       if(response.data) {
         setSearchResult(response.data.response)
+        setIsPending(false)
       }
     }
   })
+
   const handleChange = (e) => {
     const value = e.target.value
+    setSearchValue(value)
+    value && setIsPending(true)
     !value && setSearchResult("")
     value && mutation.mutate(value)
   }

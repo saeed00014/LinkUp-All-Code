@@ -34,11 +34,11 @@ export const register = {
   fillErorr: "باید پر شود و کمتر از 25 حرف باشد",
   emailErorr: "باید شامل @ و بین 8 تا 25 حرف لاتین یا اعداد یا حروف خاص باشد",
   emailRepeated: "ایمیل تکراری است",
-  usernameErorr: "باید بین 3 تا 15 حرف لاتین باشد",
+  usernameErorr: "باید بین 3 تا 12 حرف لاتین باشد",
   usernameRepeated: "نام کاربری تکراری است",
   female: "زن",
   male: "مرد",
-  passErorr: "باید بین 8 تا 18 حرف حرف لاتین اعداد و حداقل یک حرف خاص (!@#$%^&*) باشد",
+  passErorr: "باید بین 8 تا 18 حرف و حداقل یک حرف لاتین و عدد باشد",
   passRepeat: "تکرار رمز عبور",
   passRepeatErorr: "رمز عبور باید تکرار شود",
   passRepeatedErorr: "رمز تکرار شده صحیح نیست",
@@ -48,8 +48,8 @@ export const register = {
 
 export const patterns = {
   fill: /^.{1,25}$/,
-  password: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,18}$/,
-  username: /^[A-Za-z]{3,12}$/,
+  password: /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{8,18}$/,
+  username: /^[A-Za-z0-9]{3,12}$/,
   email: /^(?=.*[@])(?=.*[.])[a-zA-Z0-9!@#$%^&*.]{8,25}$/
 }  
 
@@ -87,6 +87,10 @@ export const mainHeaderLinks = [
     icon: <HiOutlineUserGroup />
   }
 ]
+
+export const home = {
+  noResult: "هیچ نتیجه ای یافت نشد"
+}
 
 export const headerLinkMore = {
   name: 'بیشتر',
@@ -149,7 +153,8 @@ export const profile = {
   editProfile: "تغییر اطلاعات",
   follow: "دنبال کردن",
   unfollow: "دنبال شده",
-  sendMessage: "ارسال پیام"
+  sendMessage: "ارسال پیام",
+  logout: "خروج از حساب"
 }
 
 export const profileEdit = {

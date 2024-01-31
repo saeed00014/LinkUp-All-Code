@@ -8,7 +8,7 @@ export async function GET(req) {
   const loginUserCookie = cookie.get("user")
   const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
   const result = await query({
-    query: "SELECT id,username,firstname,image FROM user WHERE id != '165' ORDER BY RAND() LIMIT 2",
+    query: "SELECT id,username,firstname,image FROM user WHERE id != ? ORDER BY RAND() LIMIT 2",
     values: [loginUser.id]
   })
   if(result && !result.errno) {

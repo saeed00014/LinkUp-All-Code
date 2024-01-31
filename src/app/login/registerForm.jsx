@@ -37,8 +37,9 @@ const RegisterForm = ({setRegister}) => {
             setRepeatedUsername(false)
           }
           if(data.id) {
-            const cookies = new Cookies();
+            const cookies = new Cookies()
             cookies.set('user', data, {path: "/"})
+            location.reload("")
           }
         })
         .catch(err => {
@@ -72,7 +73,7 @@ const RegisterForm = ({setRegister}) => {
     if(!patterns.password.test(confirmPassword)) {setConfirmPasswordErorr(true)}
     if(!patterns.fill.test(gender)) {setGenderErorr(true)}
     if(years >= 1384) {setBirthErorr(true)}
-    if(!confirmPasswordErorrMessage && !firstnameErorr && !lastnameErorr && !emailErorr && !passwordErorr && !genderErorr && !birthErorr) {
+    if(!confirmPasswordErorrMessage && !firstnameErorr && !lastnameErorr && !usernameErorr && !emailErorr && !passwordErorr && !genderErorr && !birthErorr) {
       mutation.mutate({
         username : username, 
         email : email, 

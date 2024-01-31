@@ -10,7 +10,7 @@ export async function GET(req) {
     query: `SELECT * FROM post WHERE user_id != ${loginUser.id} ORDER BY RAND() LIMIT 3`,
     value: [loginUser.id]
   })
-  if(result[0]) {
+  if(result && !result.errno) {
     return NextResponse.json({ response: result }, { status: 200 })
   }
   if(result) {

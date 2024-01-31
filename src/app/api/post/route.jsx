@@ -10,7 +10,7 @@ export async function GET(req) {
     query: `SELECT * FROM post WHERE user_id != ${loginUser.id}`,
     value: ""
   })
-  if(result[0]) {
+  if(result && !result.errno) {
     return NextResponse.json({ response: result }, { status: 200 })
   }
   if(result) {
@@ -29,7 +29,7 @@ export async function POST(req) {
     query: "INSERT INTO `post`(user_id,isComments,text,tag,myComment,image) VALUES (?,?,?,?,?,?)",
     values: values
   })
-  if(result.insertId) {
+  if(result && !result.errno && result.insertId) {
     return NextResponse.json({ response: "post is made", id: result.insertId }, { status: 200 })
   }
   if(result) {

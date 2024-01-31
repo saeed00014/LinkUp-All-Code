@@ -26,7 +26,7 @@ const Context = ({children}) => {
     )
   }
   
-  if(!getNewestPost.isPending && getNewestPost.data.data) {
+  if(!getNewestPost.isPending && getNewestPost.data) {
     const defaultPost = getNewestPost.data.data.response
     return (
       <ExploreContext.Provider 

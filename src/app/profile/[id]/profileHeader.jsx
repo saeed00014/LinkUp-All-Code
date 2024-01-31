@@ -7,6 +7,7 @@ import ProfileFollowButton from './profileFollowButton'
 import Image from 'next/image'
 import defaultImage from '@/assets/images/default.jpg'
 import { profile } from '@/assets/data/data'
+import ProfileLogoutButton from './profileLogoutButton'
 
 const ProfileHeader = () => {
   const { user, isLoginUser, follower, following } = useContext(ProfileContext)
@@ -64,12 +65,15 @@ const ProfileHeader = () => {
               </div>
             </div>
             {isLoginUser ? 
-              <button
-                onClick={() => setIsEditActive(true)} 
-                className='text-[#098C95]'
-              >
-                {profile.editProfile}
-              </button> 
+              <div className='flex w-full gap-1'>
+                <button
+                  onClick={() => setIsEditActive(true)} 
+                  className='w-full h-[1.8rem] dark:bg-gray-700 bg-gray-200'
+                >
+                  {profile.editProfile}
+                </button> 
+                <ProfileLogoutButton />
+              </div>
               : 
               <div className='flex w-full items-center justify-between gap-2'>
                 <ProfileFollowButton />

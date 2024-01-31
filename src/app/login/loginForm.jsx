@@ -37,12 +37,11 @@ const LoginForm = () => {
       setLoginErorrMessage(true)
     }
     if(email !== "" && password !== "" && patterns.username.test(email) && patterns.password.test(password)) {
-      console.log("djklfs")
+      mutation.mutate({
+        username: email,
+        password: password
+      })
     }
-    mutation.mutate({
-      username: email,
-      password: password
-    })
   }
 
   return (

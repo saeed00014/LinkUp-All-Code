@@ -6,6 +6,7 @@ import ProfilePost from "./profilePost"
 import PostMake from "@/components/postMaker/postMake"
 import LoadingSpin from "@/components/loadingSpin"
 import { baseURL } from "@/axios/axios"
+import { home } from "@/assets/data/data"
 
 const ProfileBody = () => {
   const { user, posts, isLoginUser, page, targetUser_id } = useContext(ProfileContext)
@@ -39,8 +40,8 @@ const ProfileBody = () => {
             posts={posts}
             index={0}
           /> 
-        : <div className="flex flex-col items-center justify-center min-w-[550px] rounded-[.5rem] bg-white dark:bg-gray-800 dark:text-white gap-1 py-3 mt-6">
-          there is no post here yet
+        : <div className="flex flex-col items-center justify-center min-w-[550px] rounded-[.5rem] bg-white dark:bg-gray-800 dark:text-white gap-1 py-3">
+          {home.noResult}
         </div>
         }
         {getProfileUserPosts.isPending && 

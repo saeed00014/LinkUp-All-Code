@@ -13,11 +13,10 @@ const AuthProvider = ({children}) => {
     }
   })
   if(!isPending) {
-    const login = data.data.login
-    if(login) {
+    if(data.data.login) {
       return children
     }
-    if(!login) {
+    if(!data.data.login) {
       return <Login />
     }
   }

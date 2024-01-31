@@ -28,10 +28,17 @@ const Context = ({children}) => {
     queryKey: ["profileUser"],
     queryFn: async () => {
       if(chat_id && targetUser_id) {
-        const user = await baseURL.get(`/user/${targetUser_id}`)
-        const targetUser = user.data.response
-        setCurrentChat({targetUser: targetUser, chat_id: chat_id})
-        return user
+        const targetUser = await baseURL.get(`/user/${targetUser_id}`)
+        const isChat_idTrue = await baseURL.get(`/chat/check?chat_id=${chat_id}&targetUser_id=${targetUser_id}`)
+        if(isChat_idTrue.data.response[0]) {
+          const targetUserInfo = targetUser.data.response
+          setCurrentChat({targetUser: targetUserInfo, chat_id: chat_id})
+        }
+        if(!isChat_idTrue.data.response[0]) {
+          setCurrentChat({targetUser: "", chat_id: ""})
+          console.log("sorry chat not found")
+        }
+        return targetUser
       }
     }
   })

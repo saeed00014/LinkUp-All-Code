@@ -12,7 +12,6 @@ const ExploreSearch = () => {
     mutationFn: async (searchValue) => {
       const response = await baseURL.get(`/post/search?value=${searchValue}&category=${category}`)
       if(response.data) {
-        console.log(response.data.response)
         setSearchResult(response.data.response)
       }
     }

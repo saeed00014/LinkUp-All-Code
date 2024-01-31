@@ -6,7 +6,7 @@ import bcrypt from "bcrypt"
 export async function GET(req) {
   const cookie = cookies()
   const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUser = loginUserCookie.value && JSON.parse(loginUserCookie.value)
   if(loginUser) {
     const result = await query({
       query: "SELECT * FROM user WHERE id = ?",

@@ -10,7 +10,7 @@ const AcountInfo = () => {
   const { loginUser, localLoginUser } = useContext(HeaderUserLogin)
 
   return (
-    <div className="sticky bottom-0 flex xl:justify-between justify-start items-center w-full h-fit xl:pr-2 xl:py-2 rounded-[.6rem] xl:bg-gray-100 hover:bg-gray-200 dark:xl:bg-gray-700 dark:hover:bg-gray-600 duration-100 cursor-pointer">
+    <div className="sticky bottom-0 flex xl:justify-between justify-start items-center w-full h-fit xl:pr-2 xl:py-2 xl:rounded-[.6rem] rounded-full xl:bg-gray-100 hover:bg-gray-200 dark:xl:bg-gray-700 dark:hover:bg-gray-600 duration-100 cursor-pointer">
       <Link
         href={`/profile/${loginUser.id}`} 
         className="flex w-full h-fit gap-2"
