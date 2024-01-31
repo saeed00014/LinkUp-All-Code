@@ -34,21 +34,25 @@ const ProfileBody = () => {
             localLoginUser={user} 
           />
         }
-        {posts ? 
+        {posts[0] ? 
           <ProfilePost
             posts={posts}
             index={0}
           /> 
-        : <div className="flex flex-col items-center justify-center min-w-  [550px] rounded-[.5rem] bg-white dark:bg-gray-800 dark:text-white gap-1 py-3 mt-6">
+        : <div className="flex flex-col items-center justify-center min-w-[550px] rounded-[.5rem] bg-white dark:bg-gray-800 dark:text-white gap-1 py-3 mt-6">
           there is no post here yet
         </div>
         }
-        {(!getProfileUserPosts.isPending && getProfileUserPosts.data) ?
+        {getProfileUserPosts.isPending && 
+          <div className="flex justify-center w-full">
+            <LoadingSpin />
+          </div>
+        }
+        {(!getProfileUserPosts.isPending && getProfileUserPosts.data) &&
           <ProfilePost 
             posts={newPagePosts}
             index={3}
           /> 
-          : <LoadingSpin />
         }
       </div>
     </div>

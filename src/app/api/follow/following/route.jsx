@@ -2,23 +2,23 @@ import { query } from "@/db/db"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
-export async function POST(req) {
+export async function GET(req) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const cookieUser = cookie.get("user")
+  const loginUser = cookieUser && JSON.parse(cookieUser.value)
   const targetUser_id = req.nextUrl.searchParams.get("targetUser_id")
-  const values = [loginUser.id, targetUser_id]
-  const result = await query({
-    query: "INSERT INTO `follow`(loginUser_id, targetUser_id) VALUES (?,?)",
-    values: values
+  const following = await query({
+    query: "SELECT COUNT(id) AS following FROM follow WHERE loginUser_id = ?",
+    values: [targetUser_id]
   })
-  if(result && !result.errno) {
-    return NextResponse.json({ response: "user followed", id: result.insertId }, { status: 200 })
+  const follower = await query({
+    query: "SELECT COUNT(id) AS follower FROM follow WHERE targetUser_id = ?",
+    values: [targetUser_id]
+  })
+  if(!follower.errno && !following.errno && follower[0] && following[0]) {
+    return NextResponse.json({ follower: follower[0].follower, following: following[0].following }, {status: 200})
   }
-  if(result.errno && result.code == 'ER_DUP_ENTRY' ) {
-    return NextResponse.json({ response: "was followed before", id: "", repeat: true }, { status: 200 })
-  }
-  if(result) {
-    return NextResponse.json({ response: "failed", id: "" }, { status: 500 })
+  if(follower, following) {
+    return NextResponse.json({ response: "" }, {status: 500})
   }
 }

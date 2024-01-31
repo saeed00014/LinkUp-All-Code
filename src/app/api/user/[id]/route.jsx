@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 export async function GET(req, route) {
   const id = route.params.id
   const result = await query({
-    query: "SELECT id,username,email,follower,following,firstname,lastname,gender,birth,job,link,bio,image,background FROM user where id = ?",
+    query: "SELECT id,username,email,firstname,lastname,gender,birth,job,link,bio,image,background FROM user where id = ?",
     values: [id]
   })
   if(result[0]) {

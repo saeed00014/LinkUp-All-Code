@@ -12,7 +12,6 @@ const PostHeaderDelete = () => {
   const deletePost = useMutation({
     mutationFn: async () => {
       const response = await baseURL.delete(`/post/${post.id}`)
-      console.log(response)
       if(response.data.data.deleted) {
         
       }

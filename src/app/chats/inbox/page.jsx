@@ -4,7 +4,7 @@ import MessagesBody from "./chatsBody"
 
 const Chats = () => {
   return (
-    <section className="flex flex-col h-screen">
+    <section className="flex flex-col h-screen overflow-hidden">
       <PageHeader title={messages.messages} />
       <MessagesBody />
     </section>

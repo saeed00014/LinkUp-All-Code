@@ -33,7 +33,15 @@ const ChatBody = () => {
 
   const postNewMessage = useMutation({
     mutationFn: async ({sendMessage}) => {
-      const response = await baseURL.post(`/message?chat_id=${chat_id}&user_id=${sendMessage.user_id}`,{text: sendMessage.text, image: sendMessage.image, post_id: sendMessage.post_id, attachedMessage: sendMessage.attachedMessage, attachedMessage_id: sendMessage.attachedMessage_id})
+      const response = await baseURL.post(`/message?chat_id=${chat_id}&user_id=${sendMessage.user_id}`,{
+        text: sendMessage.text, 
+        image: sendMessage.image, 
+        post_id: sendMessage.post_id, 
+        attachedMessage: sendMessage.attachedMessage 
+          ? sendMessage.attachedMessage : "", 
+        attachedMessage_id: sendMessage.attachedMessage 
+          ? sendMessage.attachedMessage_id : ""
+      })
       const socket = io({path: "/api/socket"})
       if(response.data) {
         socket.emit('newMessage', { message: {...sendMessage, id: response.data.response} })

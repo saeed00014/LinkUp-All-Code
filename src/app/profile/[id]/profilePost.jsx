@@ -9,7 +9,7 @@ const ProfilePost = ({ posts, index }) => {
   const lastPostRef = useRef(null)
   const { ref, entry } = useIntersection({
     root: lastPostRef.current,
-    threshold: 1
+    threshold: 0
   })
 
   useEffect(() => {
@@ -22,12 +22,12 @@ const ProfilePost = ({ posts, index }) => {
     <>
       {posts[0] ? 
         posts.map((post, i) => {
-          const isRef = (i + index == page * 3 - 1)
+          const isRef = (i + index == page * 4 - 1)
           if(isRef) {
             return (
               <div 
                 ref={ref} 
-                id={post.id} 
+                id={`ref${post.id}`} 
                 key={post.id}
               >
                 <Post

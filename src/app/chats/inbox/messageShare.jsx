@@ -6,7 +6,16 @@ const MessageShare = () => {
   const { chooseMessage, setShareMessage, setChooseMessage } = useContext(ChatMessageContext)
 
   const handleShare = () => {
-    setShareMessage({text: chooseMessage.text, id: chooseMessage.id})
+    chooseMessage.post_id == 0 && setShareMessage({
+      text: chooseMessage.text, 
+      id: chooseMessage.id, 
+      post_id: "", 
+    })
+    chooseMessage.post_id != 0 && setShareMessage({
+      text: `post${chooseMessage.post_id}`, 
+      id: chooseMessage.id, 
+      post_id: chooseMessage.post_id 
+    })
     setChooseMessage("")
   } 
 

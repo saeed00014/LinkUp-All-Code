@@ -27,7 +27,13 @@ const Context = ({children}) => {
     }
   })
 
-  
+  const getFollowInfo = useQuery({
+    queryKey: [`followInfo${targetUser_id}`],
+    queryFn: async () => {
+      const follow = await baseURL.get(`/follow/following?targetUser_id=${targetUser_id}`)
+      return follow
+    }
+  })
 
   if(getProfileUser.isPending) {
     return (
@@ -37,10 +43,12 @@ const Context = ({children}) => {
     )
   }
 
-  if(!getProfileUser.isPending && !getProfileUserPosts.isPending && getProfileUser.data.data.response) {
+  if(!getProfileUser.isPending && !getProfileUserPosts.isPending && getProfileUser.data.data.response && !getFollowInfo.isPending) {
     const user = getProfileUser.data.data.response
     const posts = getProfileUserPosts.data.data.response
     const isLoginUser = getProfileUserPosts.data.data.isLoginUser
+    const follower = getFollowInfo.data.data.follower
+    const following = getFollowInfo.data.data.following
     return (
       <ProfileContext.Provider 
         value={{
@@ -51,7 +59,9 @@ const Context = ({children}) => {
           isLoginUser,
           targetUser_id,
           page,
-          setPage
+          setPage,
+          follower,
+          following
         }}
       >
         {children}

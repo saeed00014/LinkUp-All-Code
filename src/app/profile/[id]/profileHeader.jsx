@@ -2,15 +2,14 @@
 import { useContext, useState } from 'react'
 import { ProfileContext } from '@/context/context'
 import ProfileEdit from './profileEdit'
-import defaultImage from '@/assets/images/default.jpg'
-import testProfile2 from '@/assets/images/post.jpg'
-import Image from 'next/image'
-import { profile } from '@/assets/data/data'
 import ProfileChatButton from './profileChatButton'
 import ProfileFollowButton from './profileFollowButton'
+import Image from 'next/image'
+import defaultImage from '@/assets/images/default.jpg'
+import { profile } from '@/assets/data/data'
 
 const ProfileHeader = () => {
-  const { user, isLoginUser } = useContext(ProfileContext)
+  const { user, isLoginUser, follower, following } = useContext(ProfileContext)
   const [isEditActive, setIsEditActive] = useState(false)
 
   return (
@@ -52,7 +51,7 @@ const ProfileHeader = () => {
                   {profile.following}
                 </span>
                 <span>
-                  {user.following}
+                  {follower}
                 </span>
               </div>
               <div className='flex gap-1'>
@@ -60,7 +59,7 @@ const ProfileHeader = () => {
                   {profile.followers}
                 </span>
                 <span>
-                  {user.follower}
+                  {following}
                 </span>
               </div>
             </div>

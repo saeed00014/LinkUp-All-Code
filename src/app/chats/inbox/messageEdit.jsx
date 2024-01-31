@@ -1,18 +1,15 @@
-import { ChatMessageContext } from "@/context/context"
-import { useContext } from "react"
 import { AiFillEdit } from "react-icons/ai"
 
-const MessageEdit = () => {
-  const { setEditMessage, chooseMessage } = useContext(ChatMessageContext)
+const MessageEdit = ({ chooseMessage, setEditMessage, edition }) => {
   
   const handleEdit = () => {
-    setEditMessage(chooseMessage)
+    setEditMessage(chooseMessage.text)
   }
 
   return (
     <span
     onClick={handleEdit}
-      className="p-3 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+      className={`${edition == "message" ? "p-3" : "px-3 py-2"} hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer`}
     >
       <AiFillEdit />
     </span>

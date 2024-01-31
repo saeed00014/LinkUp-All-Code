@@ -1,14 +1,15 @@
-import { baseURL } from "@/axios/axios"
-import { ChatMessageContext } from "@/context/context"
 import { useMutation } from "@tanstack/react-query"
-import { useContext } from "react"
 import { FaTrash } from "react-icons/fa"
+import { baseURL } from "@/axios/axios"
 
-const MessageDelete = () => {
-  const { setMessages, setChooseMessage, chooseMessage } = useContext(ChatMessageContext)
+const MessageDelete = ({ setMessages, setChooseMessage, chooseMessage, edition }) => {
+  const url = (edition == "message") ? 
+    `/message/${chooseMessage.id}` 
+  : `/comment/${chooseMessage.id}`
+
   const deleteMessage = useMutation({
     mutationFn: async () => {
-      const response = await baseURL.delete(`/message/${message.id}`)
+      const response = await baseURL.delete(url)
       return response
     }
   })
@@ -24,7 +25,7 @@ const MessageDelete = () => {
   return (
     <span
       onClick={handleDelete}
-      className="p-4 text-[.94rem] hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer "
+      className={`${edition == "message" ? "p-4" : "px-3 py-2"} text-[.94rem] hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer`}
     >
       <FaTrash />
     </span>

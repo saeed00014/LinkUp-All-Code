@@ -4,9 +4,12 @@ import { cookies } from 'next/headers'
 
 export async function GET(req) {
   const post_id = req.nextUrl.searchParams.get("post_id")
-  const values = [post_id]
+  const page = req.nextUrl.searchParams.get("page")
+  const endLimit = page * 50
+  const startLimit = endLimit - 50
+  const values = [post_id, startLimit, endLimit]
   const result = await query({
-    query: "SELECT `id`,`user_id`,`text` FROM `comment` WHERE post_id = ?",
+    query: `SELECT id,user_id,text FROM comment WHERE post_id = ${post_id} LIMIT ${startLimit}, ${endLimit}`,
     values: values
   })
   if(result[0]) {

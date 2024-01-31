@@ -8,7 +8,6 @@ import { baseURL } from "@/axios/axios"
 const Context = ({children, post, isMyPost, miniEdition}) => {
   const [isCommentActive, setIsCommentActive] = useState()
   const [isLiked, setIsLiked] = useState(false)
-  const [comments, setComments] = useState("")
   const likedPostsIdStorage = JSON.parse(localStorage.getItem("likedPostsId"))
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const Context = ({children, post, isMyPost, miniEdition}) => {
     }
   })
 
-  const { isPending, error, data } = useQuery({
+  const getUser = useQuery({
     queryKey: [`post_${post.id}`],
     queryFn: async () => {
       const users = await baseURL.get(`/post/user/${post.user_id}`)
@@ -39,8 +38,8 @@ const Context = ({children, post, isMyPost, miniEdition}) => {
     }
   })
 
-  if(!isPending && !getAllLikes.isPending && data.data.response) {
-    const postUser = data.data.response
+  if(!getUser.isPending && !getAllLikes.isPending && getUser.data.data.response) {
+    const postUser = getUser.data.data.response
     return (
       <PostContext.Provider value={{
         postUser, 
@@ -49,8 +48,6 @@ const Context = ({children, post, isMyPost, miniEdition}) => {
         setIsCommentActive,
         isLiked, 
         setIsLiked,
-        comments,
-        setComments,
         miniEdition
         }}
       >

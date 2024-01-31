@@ -3,8 +3,8 @@ import Header from "@/components/header/header"
 import Providers from "@/providers/providers"
 
 export const metadata = {
-  title: "AdCherry social media app",
-  description: "AdCherry is a social media app capeble of doing everything",
+  title: "LinkUp social media app",
+  description: "LinkUp is a social media app capeble of doing everything",
 }
 
 export default function RootLayout({ children }) {

@@ -14,7 +14,6 @@ const PostShareFooter = () => {
       const response = await baseURL.post(`/message/postShare?post_id=${post.id}`, {
         newChoosedUsers
       })
-      console.log(response)
       return response
     }
   })

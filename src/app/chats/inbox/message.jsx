@@ -12,14 +12,14 @@ const Message = ({message}) => {
   const { currentChat } = useContext(ChatContext)
   const { chooseMessage, setChooseMessage, messages } = useContext(ChatMessageContext)
   const { targetUser, chat_id } = currentChat
-
   useEffect(() => {
+    console.log(message)
     const scrollToBottom = () => {
       const element = document.getElementById("chatMessageList")
-      element && (element.scrollTop = element.scrollHeight)
+      element && (element.scrollTop = 0)
     }
     scrollToBottom()
-  }, [])
+  }, [message.id])
 
   const getMessageUser = useQuery({
     queryKey: [`messageUser${message.user_id}`],
@@ -45,7 +45,8 @@ const Message = ({message}) => {
   }
 
   const handleAttachedMessage = () => {
-    const message1 = {id: message.attachedMessage_id, text: message.attachedMessage}
+    console.log(message)
+    const message1 = {id: message.attachedMessage_id, text: message.attachedMessage, post_id: message.post_id}
     const isMessage1Choosed = chooseMessage.id == message1.id
     const isMessage1 = messages.find(
       (message) => message.id == message1.id
@@ -58,7 +59,6 @@ const Message = ({message}) => {
   if(!getMessageUser.isPending && !getSentPostInfo.isPending) {
     const user = getMessageUser.data.data.response
     const post = message.post_id ? getSentPostInfo.data.data.response : null
-
     return (
       <li
         className={`flex items-end ${targetUser.id != message.user_id ? "flex-row-reverse justify-start text-red-500" : "justify-start" } w-full gap-2`}
@@ -74,7 +74,7 @@ const Message = ({message}) => {
           <span className="text-[.7rem]">
             {user.firstname}
           </span>
-          <div className={`flex ${targetUser.id != message.user_id ? "flex-row-reverse rounded-l-[.5rem]" : "flex-row rounded-r-[.5rem]"} justify-start w-full ${message.id == chooseMessage.id ? "bg-gray-700" : ""}  gap-2`}>
+          <div className={`flex ${targetUser.id != message.user_id ? "flex-row-reverse" : "flex-row"} justify-start w-full ${message.id == chooseMessage.id ? "bg-gray-700" : ""} gap-2`}>
             <div className={`relative flex flex-col ${targetUser.id != message.user_id ? "justify-end " : "justify-start"} w-fit`}>
               {message.attachedMessage && 
                 <Link
@@ -97,11 +97,17 @@ const Message = ({message}) => {
                   {message.text}
                 </span>
               }
-              {message.post_id ? 
-                <Post 
-                  post={post[0]} 
-                  miniEdition={true} 
-                /> : null
+              {(message.post_id && !message.attachedMessage_id) ? 
+                <div 
+                  id={`message${message.id}`}  
+                  onClick={handleClick}
+                >
+                  <Post 
+                    post={post[0]} 
+                    miniEdition={true} 
+                  /> 
+                </div>
+                : null
               }
             </div>
           </div>

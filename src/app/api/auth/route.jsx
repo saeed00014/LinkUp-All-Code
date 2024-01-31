@@ -13,9 +13,9 @@ export async function GET(req) {
       values: [loginUser.id]
     })
     if(result[0]) {
-      const {id, username, follower, following, firstname, lastname, job, link, bio, image, background} = result[0]
+      const {id, username, firstname, lastname, job, link, bio, image, background} = result[0]
       if(result[0].username == username && result[0].password == loginUser.password) {
-        return NextResponse.json({login: true, user: {id, username, follower, following, firstname, lastname, job, link, bio, image, background}}, { status: 200 })
+        return NextResponse.json({login: true, user: {id, username, firstname, lastname, job, link, bio, image, background}}, { status: 200 })
       }
       if(result[0].username != username || result[0].password != loginUser.password) {
         return NextResponse.json({ login: false }, { status: 200 })

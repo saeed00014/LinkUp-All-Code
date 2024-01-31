@@ -2,7 +2,7 @@
 import { useContext, useState } from "react"
 import { ChatContext, ChatMessageContext } from "@/context/context"
 import { IoSend } from "react-icons/io5"
-import { IoClose } from "react-icons/io5";
+import { IoClose } from "react-icons/io5"
 import { messages } from "@/assets/data/data"
 
 const ChatsSendBar = ({setSendMessage}) => {
@@ -16,7 +16,7 @@ const ChatsSendBar = ({setSendMessage}) => {
     setSendMessage({
       text: message, 
       image: "", 
-      post_id: "", 
+      post_id: shareMessage.post_id, 
       user_id: loginUser.id,
       attachedMessage: shareMessage.text,
       attachedMessage_id: shareMessage.id
@@ -64,28 +64,15 @@ const ChatsSendBar = ({setSendMessage}) => {
           </span>
         </div>
       }
-      {!editMessage && 
-        <input
-          type="text" 
-          name="text"
-          id="chatsSendBar"
-          placeholder={messages.enterMessage}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)} 
-          className="w-full px-2 pt-3 pb-4 bg-white dark:bg-gray-800" 
-        />
-      }
-      {editMessage && 
-        <input
-          type="text" 
-          name="text"
-          id="chatsSendBar"
-          placeholder={messages.enterMessage}
-          value={editMessage.text}
-          onChange={(e) => setEditMessage(e.target.value)} 
-          className="w-full px-2 pt-3 pb-4 bg-white dark:bg-gray-800" 
-        />
-      }
+      <input
+        type="text" 
+        name="text"
+        id="chatsSendBar"
+        placeholder={messages.enterMessage}
+        value={!editMessage ? message : editMessage.text}
+        onChange={!editMessage ? (e) => setMessage(e.target.value) : (e) => setEditMessage(e.target.value)} 
+        className="w-full px-2 pt-3 pb-4 bg-white dark:bg-gray-800" 
+      />
     </form>
   )
 }

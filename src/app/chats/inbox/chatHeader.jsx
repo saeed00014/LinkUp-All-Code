@@ -1,15 +1,16 @@
 "use client"
 import { useContext } from "react"
 import { ChatMessageContext } from "@/context/context"
-import Link from "next/link"
-import Image from "next/image"
-import defaultImage from "@/assets/images/default.jpg"
 import MessageDelete from "./messageDelete"
 import MessageEdit from "./messageEdit"
 import MessageShare from "./messageShare"
+import Link from "next/link"
+import Image from "next/image"
+import defaultImage from "@/assets/images/default.jpg"
  
 const ChatHeader = ({targetUser}) => {
-  const { chooseMessage } = useContext(ChatMessageContext)
+  const { setMessages, setChooseMessage, chooseMessage, setEditMessage } = useContext(ChatMessageContext)
+  console.log(chooseMessage)
   return (
     <header className="flex w-full justify-between px-2 py-2 border-b h-[57.59px] border-b-gray-400 dark:border-b-gray-500 bg-white dark:bg-gray-800">
       <Link 
@@ -32,8 +33,21 @@ const ChatHeader = ({targetUser}) => {
       </Link>
         {chooseMessage && 
           <div className="flex items-center text-[1.3rem] gap-1">
-            <MessageDelete />
-            <MessageEdit />
+            <MessageDelete
+              setMessages={setMessages}
+              setChooseMessage={setChooseMessage} 
+              chooseMessage={chooseMessage} 
+              edition={"message"}
+            />
+            {(chooseMessage.post_id == 0 || !chooseMessage.post_id) &&
+              <MessageEdit 
+                setMessages={setMessages}
+                setChooseMessage={setChooseMessage} 
+                chooseMessage={chooseMessage} 
+                setEditMessage={setEditMessage}
+                edition={"message"}
+              />
+            }
             <MessageShare />
           </div>
         }

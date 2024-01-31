@@ -19,7 +19,7 @@ const LogoLink = () => {
           <BiAperture />
         </span>
         <span className='xl:flex hidden font-bold h-fit text-[1.4rem]'>
-          AdCherry
+          LinkUp
         </span>
       </Link>
     </li>
