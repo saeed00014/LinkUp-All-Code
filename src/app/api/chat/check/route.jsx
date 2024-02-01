@@ -4,8 +4,8 @@ import { NextResponse } from "next/server"
 
 export async function GET(req, route) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const chat_id = req.nextUrl.searchParams.get('chat_id')
   const targetUser_id = req.nextUrl.searchParams.get('targetUser_id')
   const result = await query({

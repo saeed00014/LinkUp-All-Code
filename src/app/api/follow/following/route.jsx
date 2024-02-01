@@ -1,11 +1,7 @@
 import { query } from "@/db/db"
-import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
 export async function GET(req) {
-  const cookie = cookies()
-  const cookieUser = cookie.get("user")
-  const loginUser = cookieUser && JSON.parse(cookieUser.value)
   const targetUser_id = req.nextUrl.searchParams.get("targetUser_id")
   const following = await query({
     query: "SELECT COUNT(id) AS following FROM follow WHERE loginUser_id = ?",

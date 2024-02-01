@@ -99,7 +99,7 @@ const RegisterForm = ({setRegister}) => {
     <form 
       ref={ref}
       onSubmit={(e) => handleSubmit(e)} 
-      className=" flex flex-col bg-white dark:bg-gray-900 md:gap-4 gap-2 shadow-3xl p-4 pt-0 w-[400px] rounded-[.5rem]"
+      className="flex flex-col bg-white dark:bg-gray-900 md:gap-4 gap-2 shadow-3xl p-4 pt-0 w-[400px] rounded-[.5rem]"
     >
       <div className="text-[1.5rem] -mb-2">
         <CloseHeader setEvent={setRegister} title={register.register} />

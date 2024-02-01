@@ -50,7 +50,7 @@ const SideBar = () => {
           }
         </div>
         : 
-        <div className="flex flex-col justify-center items-center w-full h-fit px-3 py-2 gap-3">
+        <div className="flex flex-col justify-center items-center w-full h-fit px-2 py-2 gap-2">
           <span className="flex items-center justify-start w-full">
             {sideBar.papularUsers}
           </span>

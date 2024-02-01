@@ -4,10 +4,9 @@ import { NextResponse } from "next/server"
 
 export async function DELETE(req, route) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const comment_id = route.params.id
-  
   const result = await query({
     query: `DELETE FROM comment WHERE id = ${comment_id} AND user_id = ${loginUser.id}`,
     value: [comment_id, loginUser.id]
@@ -24,9 +23,6 @@ export async function DELETE(req, route) {
 }
 
 export async function PUT(req, route) {
-  const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
   const comment_id = route.params.id
   const text = await req.json()
   const result = await query({

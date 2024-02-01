@@ -4,24 +4,20 @@ import { HeaderUserLogin } from "@/context/context"
 import { useQuery } from "@tanstack/react-query"
 
 const Context = ({children}) => {
-  const localUser = localStorage.getItem("user")
-  const localLoginUser = localUser && JSON.parse(localUser)
-  
-  const { isPending, error, data } = useQuery({
+  const getLoginUser = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const response = await baseURL.get(`/user/loginUser/userInfo`)
+      const response = await baseURL.get(`/user/loginUser/userfull`)
       return response
     }
   })
   
-  if(!isPending) {
-    const loginUser = data.data.response
+  if(!getLoginUser.isPending) {
+    const loginUser = getLoginUser.data.data.response
     return (
       <HeaderUserLogin.Provider 
         value={{
-          loginUser,
-          localLoginUser
+          loginUser
         }}
       >
         {children}

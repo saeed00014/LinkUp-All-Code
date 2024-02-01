@@ -86,7 +86,7 @@ const ChatBody = () => {
             id="chatMessageList"
             className="relative flex flex-col-reverse w-full h-full justify-start items-start py-2 px-2 gap-1 !overflow-y-auto"
           >
-            <div className="flex-col-revers w-full">
+            <div className="flex-col-revers w-full h-full">
               {messages[0] ? 
                 messages.map((message) => {
                   return (
@@ -98,8 +98,8 @@ const ChatBody = () => {
                     </div>
                   )
                 })
-                : 
-                <div className="flex flex-col items-center justify-center w-full h-screen gap-1">
+              : 
+                <div className="flex flex-col items-center justify-center w-full h-full gap-1">
                   <span className="relative flex h-24 w-24">
                     <Image
                       src={targetUser.image || defaultImage}
@@ -127,7 +127,9 @@ const ChatBody = () => {
                 </div>
               }
             </div>
-          </ul> : <div className="flex items-center justify-center w-full h-full">
+          </ul> 
+          : 
+          <div className="flex items-center justify-center w-full h-full">
             <LoadingSpin />
           </div>
         }

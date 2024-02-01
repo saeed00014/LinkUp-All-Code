@@ -22,8 +22,8 @@ export async function GET(req) {
 
 export async function POST(req) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const post_id = req.nextUrl.searchParams.get("post_id")
   const text = await req.json()
   const values = [post_id, loginUser.id, text.text]

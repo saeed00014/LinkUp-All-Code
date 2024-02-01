@@ -5,30 +5,38 @@ import RegisterForm from "./registerForm"
 import { baseURL } from "@/axios/axios"
 import Cookies from "universal-cookie"
 import { login, patterns } from "@/assets/data/data"
+import ForgotPassForm from "./forgotPassForm"
 
 const LoginForm = () => {
   const ref = useRef()
   const [register, setRegister] = useState(false)
   const [loginErorrMessage, setLoginErorrMessage] = useState(false)
+  const [networkErrorMessage, setNetworkErrorMessage] = useState(false)
+  const [forgotPass, setForgotPass] = useState(false)
 
-  const mutation = useMutation({
-    mutationFn: (userInfo) => {
+  const postLoginInfo = useMutation({
+    mutationFn: async (userInfo) => {
       baseURL.post("/auth", userInfo)
         .then((res) => {
           const data = res.data
           if(data.login) {
+            setNetworkErrorMessage(false)
             const cookie = new Cookies()
             cookie.set('user', data.result, {path: "/"})
             location.reload("")
-          } else {
+          } 
+          if(!data.login) {
+            setNetworkErrorMessage(false)
             setLoginErorrMessage(true)
           }
         })
         .catch((err) => {
-          console.log(err)
+          setNetworkErrorMessage(true)
+          console.log(err.message)
         })
     }
   })
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const email = ref.current.email.value
@@ -37,7 +45,7 @@ const LoginForm = () => {
       setLoginErorrMessage(true)
     }
     if(email !== "" && password !== "" && patterns.username.test(email) && patterns.password.test(password)) {
-      mutation.mutate({
+      postLoginInfo.mutate({
         username: email,
         password: password
       })
@@ -70,6 +78,11 @@ const LoginForm = () => {
             {login.errorMessage}
           </span>
         }
+        {networkErrorMessage &&
+          <span className="flex justify-start w-full text-[.95rem] text-red-600">
+            {login.networkErrorMessage}
+          </span>
+        }
         <div className="flex flex-col items-center justify-between w-full pt-2 gap-3">
           <input 
             type="submit" 
@@ -79,7 +92,10 @@ const LoginForm = () => {
         </div>
       </form>
       <div className="flex flex-col items-center justify-between pt-2 gap-3">
-        <button className="w-full h-10 text-[.8rem] pb-1 border-b border-gray-400 dark:border-gray-500 text-blue-800 dark:text-blue-500">
+        <button
+          onClick={() => setForgotPass(true)} 
+          className="w-full h-10 text-[.8rem] pb-1 border-b border-gray-400 dark:border-gray-500 text-blue-800 dark:text-blue-500"
+        >
           {login.forgotPass}
         </button>
         <button 
@@ -92,6 +108,13 @@ const LoginForm = () => {
       {register && 
         <div className='fixed left-0 right-0 bottom-0 flex justify-center items-center h-screen w-screen md:px-4 px-2 bg-gray-400/25 dark:bg-gray-500/50 z-30'>
           <RegisterForm setRegister={setRegister}/> 
+        </div>
+      }
+      {forgotPass && 
+        <div className='fixed left-0 right-0 bottom-0 flex justify-center items-center h-screen w-screen md:px-4 px-2 bg-gray-400/25 dark:bg-gray-500/50 z-30'>
+          <ForgotPassForm
+            setForgotPass={setForgotPass}
+          />
         </div>
       }
     </>

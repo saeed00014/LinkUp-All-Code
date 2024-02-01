@@ -4,8 +4,8 @@ import { NextResponse } from "next/server"
 
 export async function GET(req) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const result = await query({
     query: `SELECT * FROM post WHERE user_id != ${loginUser.id}`,
     value: ""
@@ -20,8 +20,8 @@ export async function GET(req) {
 
 export async function POST(req) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const body = await req.json()
   const isComments = body.isCommentsChecked ? 1 : 0 
   const values = [loginUser.id,isComments,body.text,body.tag,body.myComment,body.image]

@@ -4,8 +4,8 @@ import { NextResponse } from "next/server"
 
 export async function GET(req) {
   const cookie = cookies()
-  const cookieUser = cookie.get("user")
-  const loginUser = cookieUser && JSON.parse(cookieUser.value)
+  const loginUserCookie = cookie.get("user")
+  const loginUser = loginUserCookie && loginUserCookie.value
   const result = await query({
     query: "SELECT * FROM follow WHERE loginUser_id = ?",
     values: [loginUser.id]
@@ -21,7 +21,7 @@ export async function GET(req) {
 export async function POST(req) {
   const cookie = cookies()
   const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUser = loginUserCookie && loginUserCookie.value
   const targetUser_id = req.nextUrl.searchParams.get("targetUser_id")
   const values = [loginUser.id, targetUser_id]
   const result = await query({
@@ -41,8 +41,8 @@ export async function POST(req) {
 
 export async function DELETE(req) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const targetUser_id = req.nextUrl.searchParams.get("targetUser_id")
   const values = [loginUser.id, targetUser_id]
   const result = await query({

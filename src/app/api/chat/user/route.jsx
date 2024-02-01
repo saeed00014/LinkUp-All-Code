@@ -4,8 +4,8 @@ import { NextResponse } from "next/server"
 
 export async function GET(req) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const userOne = req.nextUrl.searchParams.get("userOne")
   const userTwo = req.nextUrl.searchParams.get("userTwo")
   const targetUser_id = (loginUser.id == userOne) ? userTwo : userOne

@@ -4,8 +4,8 @@ import { NextResponse } from "next/server"
 
 export async function GET(req) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const result = await query({
     query: "SELECT * FROM chat WHERE userOne = ? || userTwo = ?",
     values: [loginUser.id, loginUser.id]

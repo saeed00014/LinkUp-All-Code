@@ -4,8 +4,8 @@ import { NextResponse } from "next/server"
 
 export async function GET(req, route) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const targetUser_id = route.params.id
   const result = await query({
     query: "SELECT id FROM follow WHERE loginUser_id = ? && targetUser_id = ?",

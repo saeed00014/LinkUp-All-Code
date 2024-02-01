@@ -5,29 +5,40 @@ import bcrypt from "bcrypt"
 
 export async function GET(req) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie.value && JSON.parse(loginUserCookie.value)
-  if(loginUser) {
-    const result = await query({
-      query: "SELECT * FROM user WHERE id = ?",
-      values: [loginUser.id]
-    })
-    if(result[0]) {
-      const {id, username, firstname, lastname, job, link, bio, image, background} = result[0]
-      if(result[0].username == username && result[0].password == loginUser.password) {
-        return NextResponse.json({login: true, user: {id, username, firstname, lastname, job, link, bio, image, background}}, { status: 200 })
-      }
-      if(result[0].username != username || result[0].password != loginUser.password) {
-        return NextResponse.json({ login: false }, { status: 200 })
-      }
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  
+  try {
+    JSON.parse(loginUserCookie);
+  } catch (e) {
+    cookie.set("user", "")
+    console.log("your cookie is expired")
+    return NextResponse.json({ login: false }, { status: 200 })
+  } 
+
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
+  const result = await query({
+    query: "SELECT id,username,password FROM user WHERE id = ?",
+    values: [loginUser.id]
+  })
+  if(!result[0] && !result.errno) {
+    return NextResponse.json({ login: false }, { status: 200 })
+  }
+  if(result[0] && !result.errno) {
+    const {id, username, password} = result[0]
+    const campareInfo = (
+      username == loginUser.username &&
+      password == loginUser.password
+    )
+    if(campareInfo) {
+      return NextResponse.json({ login: true }, { status: 200 })
     }
-    if(result) {
+    if(!campareInfo) {
       return NextResponse.json({ login: false }, { status: 200 })
     }
   }
-  if(!loginUser) {
-    return NextResponse.json({ login: false }, { status: 200 })
-  }
+
+  return NextResponse.json({ response: "request failed" }, { status: 500 })
+
 }
 
 export async function POST(req) {
@@ -37,7 +48,10 @@ export async function POST(req) {
     query: "SELECT id,username,password FROM user WHERE username = ?",
     values: [username]
   })
-  if(result[0]) {
+  if(!result[0] && !result.errno) {
+    return NextResponse.json({ login: false }, { status: 200 })
+  }
+  if(result[0] && !result.errno) {
     const comparedPassword = await bcrypt.compare(password, result[0].password)
     if(comparedPassword) {
       return NextResponse.json({ login: true, result: result[0] }, { status: 200 })
@@ -46,9 +60,7 @@ export async function POST(req) {
       return NextResponse.json({ login: false }, { status: 200 })
     }
   }
-  if(result) {
-    return NextResponse.json({ login: false }, { status: 200 })
-  }
+  return NextResponse.json({ response: "request failed" }, { status: 500 })
 }
 
 

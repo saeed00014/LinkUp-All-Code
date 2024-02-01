@@ -4,8 +4,8 @@ import { NextResponse } from "next/server"
 
 export async function POST(req) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const post_id = req.nextUrl.searchParams.get("post_id")
   const body = await req.json()
   const choosedUsers = body.newChoosedUsers
@@ -39,7 +39,7 @@ export async function POST(req) {
       })
 
       if(result3.insertId && !result3.errno) {
-        const chat_id = result.insertId 
+        const chat_id = result3.insertId 
         const values = [chat_id, loginUser.id, post_id]
         const result4 = await query({
           query: `INSERT INTO message(chat_id, user_id, post_id) VALUES ('${chat_id}', '${loginUser.id}', '${post_id}')`,

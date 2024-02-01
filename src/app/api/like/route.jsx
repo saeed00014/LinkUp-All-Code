@@ -4,7 +4,8 @@ import { NextResponse } from "next/server"
 
 export async function GET(req) {
   const cookie = cookies()
-  const loginUser = JSON.parse(cookie.get("user").value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const values = [loginUser.id]
   const result = await query({
     query: "SELECT `post_id` FROM `like` WHERE user_id = ?",

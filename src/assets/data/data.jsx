@@ -1,11 +1,15 @@
 export const login = {
   errorMessage: "نام کاربری یا رمز عبور صحیح نیست",
+  networkErrorMessage: "ممکن است سرور های لینک آپ یا اینترنت دچار مشکل باشد لطفا بعدا امتحان کنید",
   submit: "ورود",
   forgotPass: "رمز عبور را فراموش کرده ام",
   register: "ثبت نام",
   email: "ایمیل",
   username: "نام کاربری",
-  pass: "رمز عبور"
+  pass: "رمز عبور",
+  forgotPass1: "بازیابی رمز عبور",
+  forgotpassEmail: "ایمیل خود را وارد کنید",
+  forgotPassNoValidEmail: "ایمیل وارد شده موجود نیست"
 }
 
 export const selectOptionsMounths = ["فروردین",
@@ -32,7 +36,7 @@ export const register = {
   gender: "جنسیت",
   birthDate: "تاریخ تولد",
   fillErorr: "باید پر شود و کمتر از 25 حرف باشد",
-  emailErorr: "باید شامل @ و بین 8 تا 25 حرف لاتین یا اعداد یا حروف خاص باشد",
+  emailErorr: "باید شامل @ و . و بین 8 تا 40 حرف باشد",
   emailRepeated: "ایمیل تکراری است",
   usernameErorr: "باید بین 3 تا 12 حرف لاتین باشد",
   usernameRepeated: "نام کاربری تکراری است",
@@ -50,7 +54,7 @@ export const patterns = {
   fill: /^.{1,25}$/,
   password: /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{8,18}$/,
   username: /^[A-Za-z0-9]{3,12}$/,
-  email: /^(?=.*[@])(?=.*[.])[a-zA-Z0-9!@#$%^&*.]{8,25}$/
+  email: /^(?=.*[@])(?=.*[.])[a-zA-Z0-9!@#$%^&*.]{8,40}$/
 }  
 
 import { HiOutlineHome } from 'react-icons/hi'

@@ -7,7 +7,7 @@ import defaultImage from "@/assets/images/default.jpg"
 import Link from "next/link"
 
 const AcountInfo = () => {
-  const { loginUser, localLoginUser } = useContext(HeaderUserLogin)
+  const { loginUser } = useContext(HeaderUserLogin)
 
   return (
     <div className="sticky bottom-0 flex xl:justify-between justify-start items-center w-full h-fit xl:pr-2 xl:py-2 xl:rounded-[.6rem] rounded-full xl:bg-gray-100 hover:bg-gray-200 dark:xl:bg-gray-700 dark:hover:bg-gray-600 duration-100 cursor-pointer">
@@ -18,7 +18,7 @@ const AcountInfo = () => {
         <span className="relative w-14 h-14">
           <Image 
             fill={true}
-            src={localLoginUser.image || defaultImage}
+            src={loginUser.image || defaultImage}
             alt="profile picture"
             className="rounded-full"
           />

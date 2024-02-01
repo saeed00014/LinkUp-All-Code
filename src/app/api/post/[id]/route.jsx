@@ -19,10 +19,9 @@ export async function GET(req, route) {
 
 export async function DELETE(req, route) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const post_id = route.params.id
-  
   const result = await query({
     query: `DELETE FROM post WHERE id = ${post_id} AND user_id = ${loginUser.id}`,
     value: [post_id, loginUser.id]
