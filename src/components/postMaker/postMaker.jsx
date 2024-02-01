@@ -7,6 +7,7 @@ import CheckInput from "./checkInput"
 import ImageDragDrop from "../imageDragDrop"
 import { baseURL } from "@/axios/axios"
 import { postMaker } from "@/assets/data/data"
+import LoadingSpin from "../loadingSpin"
 
 const PostMaker = ({setIsMakePostActive}) => {
   const ref = useRef()
@@ -17,6 +18,7 @@ const PostMaker = ({setIsMakePostActive}) => {
   const [tag, setTag] = useState("")
   const [text, setText] = useState("")
   const [myComment, setMyComment] = useState("")
+  const [isSendPostLoading, setIsSendPostLoading] = useState(false)
 
   const mutation = useMutation({
     mutationFn: async (madeNewPost) => {
@@ -124,8 +126,12 @@ const PostMaker = ({setIsMakePostActive}) => {
           <input 
             type="submit" 
             value={postMaker.submit} 
+            onChange={() => setIsSendPostLoading(true)}
             className="py-2 px-4 rounded-[.5rem] bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer"
           />
+          {isSendPostLoading && 
+            <LoadingSpin />
+          }
         </div>
       </form>
     </div>

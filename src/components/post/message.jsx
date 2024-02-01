@@ -10,9 +10,8 @@ import { baseURL } from "@/axios/axios"
 
 const Message = ({message}) => {
   const { setComments, chooseMessage, setChooseMessage, setEditMessage } = useContext(PostCommentContext)
-
   const commentUser = useQuery({
-    queryKey: [`commentUser${message.user_id}`],
+    queryKey: [`commentUser${message.id}`],
     queryFn: async () => {
       const response = await baseURL.get(`/comment/user?user_id=${message.user_id}`)
       return response

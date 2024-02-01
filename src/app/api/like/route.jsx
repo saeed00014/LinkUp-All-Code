@@ -11,18 +11,16 @@ export async function GET(req) {
     query: "SELECT `post_id` FROM `like` WHERE user_id = ?",
     values: values
   })
-  if(result[0]) {
-    return NextResponse.json({ message: "liked", response: result }, { status: 200 })
-  }
-  if(result) {
-    return NextResponse.json({ response: "failed" }, { status: 500 })
-  }
+  if(result && !result.errno) {
+    return NextResponse.json({ response: result }, { status: 200 })
+  }  
+  return NextResponse.json({ response: "failed" }, { status: 500 })
 }
 
 export async function POST(req) {
   const cookie = cookies()
-  const loginUserCookie = cookie.get("user")
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value)
+  const loginUserCookie = cookie.get("user") && cookie.get("user").value
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const post_id = req.nextUrl.searchParams.get('post_id')
   const values = [loginUser.id, post_id]
   const result = await query({

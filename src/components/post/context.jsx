@@ -8,7 +8,17 @@ import { baseURL } from "@/axios/axios"
 const Context = ({children, post, isMyPost, miniEdition}) => {
   const [isCommentActive, setIsCommentActive] = useState()
   const [isLiked, setIsLiked] = useState(false)
+  const [likeCount, setLikeCount] = useState("")
+  const [commentCount, setCommentCount] = useState("")
   const likedPostsIdStorage = JSON.parse(localStorage.getItem("likedPostsId"))
+
+  const getLoginUser = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const response = await baseURL.get(`/user/loginUser/userInfo`)
+      return response
+    }
+  })
 
   useEffect(() => {
     const checkLike = () => {
@@ -19,7 +29,7 @@ const Context = ({children, post, isMyPost, miniEdition}) => {
     checkLike()
   }, [post])
 
-  const getAllLikes = useQuery({
+  const getAllLoginUserLikes = useQuery({
     queryKey: ["userLikes"],
     queryFn: async () => {
       const likes = await baseURL.get(`/like`)
@@ -30,6 +40,24 @@ const Context = ({children, post, isMyPost, miniEdition}) => {
     }
   })
 
+  const getAllPostLikesCount = useQuery({
+    queryKey: [`postLikesCount${post.id}`],
+    queryFn: async () => {
+      const likesCount = await baseURL.get(`/like/post/${post.id}`)
+      setLikeCount(likesCount.data.response)
+      return likesCount
+    }  
+  })
+
+  const getAllPostCommentsCount = useQuery({
+    queryKey: [`postCommentsCount${post.id}`],
+    queryFn: async () => {
+      const commentsCount = await baseURL.get(`/comment/post/${post.id}`)
+      setCommentCount(commentsCount.data.response)
+      return commentsCount
+    }  
+  })
+
   const getUser = useQuery({
     queryKey: [`post_${post.id}`],
     queryFn: async () => {
@@ -38,17 +66,22 @@ const Context = ({children, post, isMyPost, miniEdition}) => {
     }
   })
 
-  if(!getUser.isPending && !getAllLikes.isPending && getUser.data.data.response) {
+  if(!getLoginUser.isPending && !getUser.isPending && !getAllLoginUserLikes.isPending && getUser.data.data.response && !getAllPostLikesCount.isPending && !getAllPostCommentsCount.isPending) {
     const postUser = getUser.data.data.response
+    const loginUser = getLoginUser.data.data.response
     return (
       <PostContext.Provider value={{
-        postUser, 
-        post, 
-        isMyPost,
-        setIsCommentActive,
-        isLiked, 
-        setIsLiked,
-        miniEdition
+          postUser, 
+          post, 
+          isMyPost,
+          setIsCommentActive,
+          isLiked, 
+          setIsLiked,
+          miniEdition,
+          likeCount,
+          setLikeCount,
+          commentCount,
+          loginUser
         }}
       >
         {children}

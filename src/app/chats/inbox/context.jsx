@@ -13,8 +13,14 @@ const Context = ({children}) => {
   const [currentChat, setCurrentChat] = useState("")
   const [searchResult, setSearchResult] = useState([])
   const [lastMessage, setLastMessage] = useState("")
-  const localUser = localStorage.getItem("user")
-  const loginUser = localUser && JSON.parse(localUser)
+
+  const getLoginUser = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const response = await baseURL.get(`/user/loginUser/userInfo`)
+      return response
+    }
+  })
 
   const getLoginUserChats = useQuery({
     queryKey: ["chat"],
@@ -36,7 +42,6 @@ const Context = ({children}) => {
         }
         if(!isChat_idTrue.data.response[0]) {
           setCurrentChat({targetUser: "", chat_id: ""})
-          console.log("sorry chat not found")
         }
         return targetUser
       }
@@ -51,8 +56,9 @@ const Context = ({children}) => {
     )
   }
 
-  if(!getLoginUserChats.isPending && ((chat_id && currentChat) || !chat_id)) {
+  if(!getLoginUser.isPending && !getLoginUserChats.isPending && ((chat_id && currentChat) || !chat_id)) {
     const chats = getLoginUserChats.data.data.response
+    const loginUser = getLoginUser.data.data.response
     return (
       <ChatContext.Provider 
         value={{

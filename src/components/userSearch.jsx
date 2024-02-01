@@ -27,6 +27,7 @@ const UserSearch = ({type, setSearchResult, setSearchValue, setIsPending}) => {
     <div className={`relative flex items-center justify-center w-full z-40`}>
       <div className={`relative flex items-center w-full gap-1 dark:bg-gray-800 bg-white ${type == "home" ? "border-b border-b-gray-400 dark:border-b-gray-600 px-2 py-2 min-h-[3.6rem]" : "pb-[1rem]"} z-40`}>
         <label 
+          id="userSearchlable"
           htmlFor="text"
           className={`absolute ${type == "home" ? "right-[1.25rem]" : "right-[5.2rem]" } font-[900] cursor-text z-50`}
         >

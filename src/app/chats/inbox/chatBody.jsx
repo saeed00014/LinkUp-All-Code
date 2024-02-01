@@ -1,6 +1,6 @@
 "use client"
 import { useContext, useEffect, useState } from "react"
-import { ChatContext, ChatMessageContext, DragedMessageContext } from "@/context/context"
+import { ChatContext, ChatMessageContext } from "@/context/context"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import LoadingSpin from "@/components/loadingSpin"
@@ -37,10 +37,10 @@ const ChatBody = () => {
         text: sendMessage.text, 
         image: sendMessage.image, 
         post_id: sendMessage.post_id, 
-        attachedMessage: sendMessage.attachedMessage 
-          ? sendMessage.attachedMessage : "", 
         attachedMessage_id: sendMessage.attachedMessage 
-          ? sendMessage.attachedMessage_id : ""
+          ? sendMessage.attachedMessage_id : "",
+        attachedMessage: sendMessage.attachedMessage 
+          ? sendMessage.attachedMessage : ""
       })
       const socket = io({path: "/api/socket"})
       if(response.data) {
@@ -115,7 +115,7 @@ const ChatBody = () => {
                     </span>
                     <span>|</span>
                     <span>
-                      {targetUser.username}@
+                      {targetUser.username}
                     </span>
                   </div>
                   <Link

@@ -7,7 +7,7 @@ export async function GET(req, route) {
   const loginUserCookie = cookie.get("user") && cookie.get("user").value
   const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
   const result = await query({
-    query: "SELECT id,username,firstname FROM user where id = ?",
+    query: "SELECT id,username,firstname,image FROM user where id = ?",
     values: [loginUser.id]
   })
   if(result[0]) {

@@ -11,7 +11,6 @@ export async function GET(req) {
     JSON.parse(loginUserCookie);
   } catch (e) {
     cookie.set("user", "")
-    console.log("your cookie is expired")
     return NextResponse.json({ login: false }, { status: 200 })
   } 
 

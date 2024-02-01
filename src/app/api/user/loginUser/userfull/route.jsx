@@ -11,7 +11,6 @@ export async function GET(req, route) {
     query: "SELECT id,username,email,firstname,lastname,gender,birth,job,link,bio,image,background FROM user where id = ?",
     values: [loginUser.id]
   })
-  console.log(result)
   if(result[0] && !result.errno) {
     return NextResponse.json({ response: result[0] }, { status: 200 })
   }

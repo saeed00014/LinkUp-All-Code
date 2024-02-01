@@ -26,7 +26,6 @@ export async function DELETE(req, route) {
     query: `DELETE FROM post WHERE id = ${post_id} AND user_id = ${loginUser.id}`,
     value: [post_id, loginUser.id]
   })
-  console.log(result)
   if(result && !result.errno && result.affectedRows == "1") {
     return NextResponse.json({ deleted: true }, { status: 200 })
   }

@@ -9,11 +9,11 @@ import Post from "@/components/post/post"
 import Link from "next/link"
 
 const Message = ({message}) => {
-  const { currentChat } = useContext(ChatContext)
+  const { currentChat, loginUser} = useContext(ChatContext)
   const { chooseMessage, setChooseMessage, messages } = useContext(ChatMessageContext)
   const { targetUser, chat_id } = currentChat
+  
   useEffect(() => {
-    console.log(message)
     const scrollToBottom = () => {
       const element = document.getElementById("chatMessageList")
       element && (element.scrollTop = 0)
@@ -21,15 +21,15 @@ const Message = ({message}) => {
     scrollToBottom()
   }, [message.id])
 
-  const getMessageUser = useQuery({
-    queryKey: [`messageUser${message.user_id}`],
-    queryFn: async () => {
-      const response = await baseURL.get(`/comment/user?user_id=${message.user_id}`)
-      if(response.data.response) {
-        return response
-      }
-    }
-  })
+  // const getMessageUser = useQuery({
+  //   queryKey: [`messageUser${message.user_id}`],
+  //   queryFn: async () => {
+  //     const response = await baseURL.get(`/comment/user?user_id=${message.user_id}`)
+  //     if(response.data.response) {
+  //       return response
+  //     }
+  //   }
+  // })
 
   const getSentPostInfo = useQuery({
     queryKey: [`postInfo${message.id}`],
@@ -45,7 +45,6 @@ const Message = ({message}) => {
   }
 
   const handleAttachedMessage = () => {
-    console.log(message)
     const message1 = {id: message.attachedMessage_id, text: message.attachedMessage, post_id: message.post_id}
     const isMessage1Choosed = chooseMessage.id == message1.id
     const isMessage1 = messages.find(
@@ -56,8 +55,8 @@ const Message = ({message}) => {
     isMessage1 && isMessage1Choosed && setChooseMessage("")
   }
 
-  if(!getMessageUser.isPending && !getSentPostInfo.isPending) {
-    const user = getMessageUser.data.data.response
+  if(!getSentPostInfo.isPending) {
+    const user = (message.user_id == loginUser.id) ? loginUser : targetUser
     const post = message.post_id ? getSentPostInfo.data.data.response : null
     return (
       <li

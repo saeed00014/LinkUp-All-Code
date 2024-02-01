@@ -95,7 +95,7 @@ const CommentFooter = ({commentEdition}) => {
             }
             <CommentMessage />
           </ul>
-          <div className="sticky bottom-0 px-4 pl-2 border-t border-gray-400 bg-white dark:bg-gray-800">
+          <div className="sticky -bottom-[.05rem] px-4 pl-2 border-t border-gray-400 bg-white dark:bg-gray-800">
             <CommentInput 
               editMessage={editMessage}
               setEditMessage={setEditMessage}

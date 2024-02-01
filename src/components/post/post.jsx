@@ -11,7 +11,7 @@ const Post = ({post, isMyPost, miniEdition}) => {
       miniEdition={miniEdition}
     >
       <article
-        className={`flex flex-col ${miniEdition ? "min-w-[380px]" : "min-w-[550px]"}  rounded-[1rem] bg-white dark:bg-gray-800 dark:text-white gap-1 pt-3`}
+        className={`flex flex-col ${miniEdition ? "min-w-[380px]" : "min-w-[550px]"} max-w-[550px]  rounded-[1rem] bg-white dark:bg-gray-800 dark:text-white gap-1 pt-3`}
       >
         <PostHeader />
         <PostContent />

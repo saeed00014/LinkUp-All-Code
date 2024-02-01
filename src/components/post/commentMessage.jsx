@@ -24,6 +24,7 @@ const CommentMessage = () => {
       {comments ? 
         comments.map((message, i) => {
           const isRef = (i == page * 50 - 1)
+          console.log(message.id)
           return (
             <>
               {isRef ? 

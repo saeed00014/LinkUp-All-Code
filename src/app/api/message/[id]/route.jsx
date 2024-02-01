@@ -7,7 +7,6 @@ export async function DELETE(req, route) {
     query: "DELETE FROM message WHERE id = ?",
     values: [id]
   })
-  console.log(result)
   if(result && !result.errno) {
     return NextResponse.json({ response: "message deleted" }, { status: 200 })
   }

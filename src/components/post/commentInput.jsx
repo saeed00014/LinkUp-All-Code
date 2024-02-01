@@ -10,10 +10,8 @@ import { baseURL } from "@/axios/axios"
 
 const CommentInput = ({ type, setEditMessage, editMessage, chooseMessage, setChooseMessage, setComments, comments }) => {
   const ref = useRef()
-  const { post, miniEdition } = useContext(PostContext)
+  const { post, miniEdition, loginUser } = useContext(PostContext)
   const [inputValue, setInputValue] = useState("")
-  const localUser = localStorage.getItem("user")
-  const loginUser = localUser && JSON.parse(localUser)
   const postMessage = useMutation({
     mutationFn: async (newComment) => {
       const response = await baseURL.post(`/comment?post_id=${post.id}&loginUser_id=${loginUser.id}`, newComment)
@@ -21,6 +19,7 @@ const CommentInput = ({ type, setEditMessage, editMessage, chooseMessage, setCho
       setInputValue("")
     }
   })
+  
   const putMessage = useMutation({
     mutationFn: async (newComment) => {
       const response = await baseURL.put(`/comment/${chooseMessage.id}`, {
@@ -52,6 +51,7 @@ const CommentInput = ({ type, setEditMessage, editMessage, chooseMessage, setCho
     }
     if(!editMessage && text) {
       postMessage.mutate({text: text})
+      type != "comments" && setInputValue("")
     }
   }
   
@@ -67,7 +67,7 @@ const CommentInput = ({ type, setEditMessage, editMessage, chooseMessage, setCho
     <form 
       ref={ref}
       onSubmit={(e) => handleSubmit(e)}
-      className={`${type == "comments" ? "sticky bottom-0" : "relative" } flex items-center justify-start w-full py-2 gap-2 rounded-b-[1rem]`}
+      className="relative flex items-center justify-start w-full py-2 gap-2 rounded-b-[1rem]"
     >
       <label 
         id={`commentInputLable${post.id}`}

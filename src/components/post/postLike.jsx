@@ -8,13 +8,14 @@ import { useMutation } from "@tanstack/react-query"
 import { baseURL } from "@/axios/axios"
 
 const PostLike = () => {
-  const { post, isLiked, setIsLiked } = useContext(PostContext)
+  const { post, isLiked, setIsLiked, setLikeCount } = useContext(PostContext)
   const post_id = post.id
   const likedPostsIdStorage = JSON.parse(localStorage.getItem("likedPostsId"))
   
   const mutationLike = useMutation({
     mutationFn: async () => {
       const response = await baseURL.post(`/like?post_id=${post.id}`)
+      setLikeCount(count => count + 1)
       if(response) {
         likedPostsIdStorage ? 
           (likedPostsIdStorage.push({post_id}) && 
@@ -22,9 +23,10 @@ const PostLike = () => {
               JSON.stringify(likedPostsIdStorage)
             )
           )
-        : localStorage.setItem("likedPostsId", 
+        : 
+          localStorage.setItem("likedPostsId", 
             JSON.stringify([{post_id}])
-          )
+        )
       }
     }
   })
@@ -32,6 +34,7 @@ const PostLike = () => {
   const mutationDisLike = useMutation({
     mutationFn: async () => {
       const response = await baseURL.delete(`/like?post_id=${post.id}`)
+      setLikeCount(count => count - 1)
       if(response) {
           const filteredPostsStorage = likedPostsIdStorage.filter((post_id) => post_id.post_id != post.id)
           localStorage.setItem("likedPostsId", 

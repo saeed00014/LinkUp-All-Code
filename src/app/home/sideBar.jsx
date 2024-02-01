@@ -38,9 +38,11 @@ const SideBar = () => {
           {searchResult[0] && !isPending && 
             searchResult.map((result) => {
             return (
-              <UserSearchResult 
-                user={result}
-              /> 
+              <div key={result.id}>
+                <UserSearchResult 
+                  user={result}
+                /> 
+              </div>
             )})
           }
           {!isPending && !searchResult[0] && 
@@ -60,7 +62,6 @@ const SideBar = () => {
                 return (
                   <div 
                     key={user.id}
-                  
                   >
                     <SideBarSuggestion
                       user={user}

@@ -6,20 +6,19 @@ import { IoClose } from "react-icons/io5"
 import { messages } from "@/assets/data/data"
 
 const ChatsSendBar = ({setSendMessage}) => {
-  const { currentChat, loginUser } = useContext(ChatContext)
+  const { loginUser } = useContext(ChatContext)
   const { editMessage, setEditMessage, shareMessage, setShareMessage } = useContext(ChatMessageContext)
-  const { targetUser, chat_id } = currentChat
   const [ message, setMessage ] = useState("")
 
   const handlePostMessage = (e) => {
     e.preventDefault()
     setSendMessage({
+      user_id: loginUser.id,
       text: message, 
       image: "", 
       post_id: shareMessage.post_id, 
-      user_id: loginUser.id,
-      attachedMessage: shareMessage.text,
-      attachedMessage_id: shareMessage.id
+      attachedMessage_id: shareMessage.id,
+      attachedMessage: shareMessage.text
     })
     setMessage("")
     setShareMessage("")

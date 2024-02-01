@@ -1,35 +1,36 @@
 "use client"
-import Link from "next/link"
-import { useQuery } from "@tanstack/react-query"
+import { useContext } from "react"
+import { useMutation } from "@tanstack/react-query"
+import { useRouter } from 'next/navigation'
+import { ChatContext } from "@/context/context"
 import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
 import { baseURL } from "@/axios/axios"
-import { ChatContext } from "@/context/context"
-import { useContext } from "react"
 
 const ChatSearchResult = ({user}) => {
+  const router = useRouter()
   const { setCurrentChat } = useContext(ChatContext)
-  const getUserChatId = useQuery({
-    queryKey: [`userChat${user.id}`],
-    queryFn: async () => {
+  const getUserChatId = useMutation({
+    mutationFn: async () => {
       const response = await baseURL.get(`/chat/${user.id}`)
+      const chat_id = response.data.chat_id
+      router.push(`/chats/inbox?chat_id=${chat_id}&targetUser_id=${user.id}`)
+      setCurrentChat({
+        targetUser: user, 
+        chat_id: chat_id
+      })
+    
       return response
     }
   })
 
-  const handleClick = (chat_id) => {
-    setCurrentChat({
-      targetUser: user, 
-      chat_id: chat_id
-    })
+  const handleClick = () => {
+    getUserChatId.mutate()
   } 
 
-  if(!getUserChatId.isPending) {
-    const chat_id = getUserChatId.data.data.chat_id
-    return (
-    <Link
-      href={`/chats/inbox?chat_id=${chat_id}&targetUser_id=${user.id}`}
-      onClick={() => handleClick(chat_id)}
+  return (
+    <div
+      onClick={() => handleClick()}
       className="group relative flex items-center justify-start w-full cursor-pointer border-b-[1px] dark:border-gray-600 border-gray-400"
     >
       <div className="flex w-full py-2 px-3 gap-2 hover:bg-gray-700">
@@ -51,9 +52,9 @@ const ChatSearchResult = ({user}) => {
           </span>
         </div>
       </div>
-    </Link>
+    </div>
   )
-  }
+  
 }
 
 export default ChatSearchResult

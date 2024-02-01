@@ -14,9 +14,9 @@ const ProfileEdit = ({setIsEditActive}) => {
   const [lastname, setLastname] = useState(user.lastname)
   const [username, setUsername] = useState(user.username)
   const [email, setEmail] = useState(user.email)
-  const [job, setJob] = useState(user.job)
-  const [link, setLink] = useState(user.link)
-  const [bio, setBio] = useState(user.bio)
+  const [job, setJob] = useState(user.job || "")
+  const [link, setLink] = useState(user.link || "")
+  const [bio, setBio] = useState(user.bio || "")
   const [image, setImage] = useState(user.image)
   const [background, setBackground] = useState(user.background)
 

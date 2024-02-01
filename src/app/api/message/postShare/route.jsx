@@ -18,13 +18,11 @@ export async function POST(req) {
     if(result1[0] && !result1.errno) {
       const chat_id = result1[0].id
       const values = [chat_id, loginUser.id, post_id]
-      console.log(values)
       const result2 = await query({
         query: `INSERT INTO message(chat_id, user_id, post_id) VALUES ('${chat_id}', '${loginUser.id}', '${post_id}')`,
         values: [values]
       })
       if(result2 && !result2.errno) {
-        console.log(result2)
         return NextResponse.json({ response: result2.insertId }, { status: 200 })
       }
       if(result2) {

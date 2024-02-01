@@ -6,7 +6,7 @@ import { FaHeart } from "react-icons/fa"
 import { postText } from "@/assets/data/data"
 
 const PostFooterTop = ({commentEdition}) => {
-  const { post, isLiked, miniEdition } = useContext(PostContext)
+  const { post, isLiked, miniEdition, likeCount, commentCount } = useContext(PostContext)
   return (
     <div className={`flex justify-between w-full pt-1 ${miniEdition && !commentEdition ? "px-2 text-[.8rem]" : "px-4"}`}>
       <div className="relative flex items-center justify-end w-fit gap-2 cursor-pointer z-10">
@@ -17,7 +17,7 @@ const PostFooterTop = ({commentEdition}) => {
           }
         </span>
         <span>
-          {post.likes}                                  
+          {likeCount}                                  
         </span>
         {isLiked && 
           <span>
@@ -27,7 +27,7 @@ const PostFooterTop = ({commentEdition}) => {
       </div>
       <div className="flex gap-2">
         <span>
-          {post.comments}
+          {commentCount}
         </span>
         <span>
           {postText.comments}
