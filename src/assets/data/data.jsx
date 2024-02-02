@@ -127,7 +127,7 @@ export const postMake = {
   placeholder: "به چه چیزی فکر میکنید ؟"
 }
 
-export const postMaker = {
+export const postMakerData = {
   postMaker: "ساخت پست",
   text: "متن خود را وارد کنید",
   image: "آپلود عکس و فیلم",
@@ -141,7 +141,8 @@ export const postMaker = {
   commentCheck: "بخش نظرات",
   tagCheck: "تگ ها",
   myComment: "اولین نظر",
-  dragFile: "فایل خود را بکشید"
+  dragFile: "فایل خود را بکشید",
+  emptyFeild: "هیچ محتوایی وجود ندارد"
 }
 
 export const profile = {

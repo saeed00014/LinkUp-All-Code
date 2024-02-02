@@ -3,7 +3,7 @@ import { PostShareContext } from "@/context/context"
 import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
 
-const PostShareUser = ({user}) => {
+const PostShareUserResultUser = ({user}) => {
   const {setChooseUsers} = useContext(PostShareContext)
   const [isUserChoosed, setIsUserChoosed] = useState("")
   const handleChooseUser = () => {
@@ -40,4 +40,4 @@ const PostShareUser = ({user}) => {
   )
 }
 
-export default PostShareUser
+export default PostShareUserResultUser

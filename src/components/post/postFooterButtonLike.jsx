@@ -1,18 +1,17 @@
 import { useContext } from "react"
 import { PostContext } from "@/context/context"
+import { useMutation } from "@tanstack/react-query"
 import { FaRegHeart } from "react-icons/fa"
 import { FaHeart } from "react-icons/fa"
-import PostFooterButtons from "./postFooterButtons"
 import { postText } from "@/assets/data/data"
-import { useMutation } from "@tanstack/react-query"
 import { baseURL } from "@/axios/axios"
 
-const PostLike = () => {
+const PostFooterButtonLike = () => {
   const { post, isLiked, setIsLiked, setLikeCount } = useContext(PostContext)
   const post_id = post.id
   const likedPostsIdStorage = JSON.parse(localStorage.getItem("likedPostsId"))
   
-  const mutationLike = useMutation({
+  const postLike = useMutation({
     mutationFn: async () => {
       const response = await baseURL.post(`/like?post_id=${post.id}`)
       setLikeCount(count => count + 1)
@@ -31,7 +30,7 @@ const PostLike = () => {
     }
   })
 
-  const mutationDisLike = useMutation({
+  const deleteLike = useMutation({
     mutationFn: async () => {
       const response = await baseURL.delete(`/like?post_id=${post.id}`)
       setLikeCount(count => count - 1)
@@ -45,21 +44,23 @@ const PostLike = () => {
   })
   
   const handleLike = () => {
-    !isLiked && mutationLike.mutate()
-    isLiked && mutationDisLike.mutate()
+    !isLiked && postLike.mutate()
+    isLiked && deleteLike.mutate()
     setIsLiked(!isLiked)
   }
   return (
-    <div 
-      className="w-full"
-      onClick={handleLike}
+    <div
+      onClick={handleLike} 
+      className="flex items-center justify-center w-full py-[.3rem] rounded-[.3rem] gap-2 hover:bg-gray-200 dark:hover:bg-gray-600 duration-100 cursor-pointer"
     >
-      <PostFooterButtons 
-        icon={isLiked ? <FaHeart /> : <FaRegHeart />} 
-        text={postText.like} 
-      />
+      <span className="text-[1.2rem]">
+        {isLiked ? <FaHeart /> : <FaRegHeart />} 
+      </span>
+      <span className="text-[.9rem]">
+        {postText.like}
+      </span>
     </div>
   )
 }
 
-export default PostLike
+export default PostFooterButtonLike

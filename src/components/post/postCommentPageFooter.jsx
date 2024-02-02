@@ -2,18 +2,18 @@
 import { useContext, useEffect, useState } from "react"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { PostCommentContext, PostContext } from "@/context/context"
-import PostLike from "./postLike"
-import PostComment from "./postComment"
-import PostShare from "./postShare"
-import CommentInput from "./commentInput"
-import PostFooterTop from "./postFooterTop"
-import CommentMessage from "./commentMessage"
+import PostFooterLikeButton from "./postFooterButtonLike"
+import PostFooterCommentButton from "./postFooterButtonComment"
+import PostCommentSendBar from "./postCommentSendBar"
+import PostFooterTop from "./postFooterHeader"
+import PostCommentList from "./postCommentList"
+import LoadingSpin from "../loadingSpin"
+import PostFooterShareButton from "./postFooterButtonShare"
 import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
 import { baseURL } from "@/axios/axios"
-import LoadingSpin from "../loadingSpin"
 
-const CommentFooter = ({commentEdition}) => {
+const postCommentPageFooter = ({commentEdition}) => {
   const { post, postUser } = useContext(PostContext)
   const [chooseMessage, setChooseMessage] = useState("")
   const [editMessage, setEditMessage] = useState("")
@@ -51,9 +51,9 @@ const CommentFooter = ({commentEdition}) => {
         commentEdition={commentEdition}
       />
       <div className="flex justify-between items-center py-1 px-4 mt-2 border-t-2 border-b-2 dark:border-gray-600 gap-1">
-        <PostLike />
-        <PostComment />
-        <PostShare />
+        <PostFooterLikeButton />
+        <PostFooterCommentButton />
+        <PostFooterShareButton />
       </div>
       <PostCommentContext.Provider
         value={{
@@ -93,10 +93,10 @@ const CommentFooter = ({commentEdition}) => {
                 <LoadingSpin />
               </div>
             }
-            <CommentMessage />
+            <PostCommentList />
           </ul>
           <div className="sticky -bottom-[.05rem] px-4 pl-2 border-t border-gray-400 bg-white dark:bg-gray-800">
-            <CommentInput 
+            <PostCommentSendBar 
               editMessage={editMessage}
               setEditMessage={setEditMessage}
               chooseMessage={chooseMessage}
@@ -112,4 +112,4 @@ const CommentFooter = ({commentEdition}) => {
   )
 }
 
-export default CommentFooter
+export default postCommentPageFooter

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { BsThreeDots } from "react-icons/bs"
 
-const PostHeaderinfo = () => {
+const PostHeaderButtonInfo = () => {
   const [isShowInfo, setIsShowInfo] = useState("")
 
   const handleClick = () => {
@@ -54,4 +54,4 @@ const PostHeaderinfo = () => {
   )
 }
 
-export default PostHeaderinfo
+export default PostHeaderButtonInfo

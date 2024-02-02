@@ -3,7 +3,7 @@ import { useCallback, useState } from "react"
 import { useDropzone} from "react-dropzone"
 import Image from "next/image"
 import checkFormat from "../hooks/checkFormat"
-import { postMaker } from "@/assets/data/data"
+import { postMakerData } from "@/assets/data/data"
 import imageSizeReducer from "./imageSizeReducer"
 
 const ImageDragDrop = ({setImage, currentImage, edition, lable}) => {
@@ -52,7 +52,7 @@ const ImageDragDrop = ({setImage, currentImage, edition, lable}) => {
         />
         <div className={`flex flex-col items-center justify-center w-full min-h-[9rem] h-fit px-2 py-4 ${isDragActive ? "dark:bg-gray-600 bg-gray-300" : "dark:bg-gray-700 bg-gray-200"} cursor-pointer`}>
           <span>
-            {postMaker.dragFile}
+            {postMakerData.dragFile}
           </span>
           {binaryImageName && format == "image" && !isFormatError &&  (
             <div className="flex flex-col w-full items-center gap-2">

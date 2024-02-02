@@ -15,7 +15,7 @@ const ChatUserSearch = () => {
       <div className="flex flex-col items-center justify-center w-[25rem] rounded-b-[1rem] mb-16 overflow-hidden">
         <div className="w-full rounded-t-[1rem] overflow-hidden">
           <UserSearch 
-            type={"home"} 
+            type="home" 
             setSearchResult={setSearchResult}
             setSearchValue={setSearchValue}
             setIsPending={setIsPending}

@@ -30,10 +30,12 @@ export async function POST(req) {
     values: values
   })
   if(result && !result.errno && result.insertId) {
-    return NextResponse.json({ response: "post is made", id: result.insertId }, { status: 200 })
+    return NextResponse.json({ inserted: true, id: result.insertId }, { status: 200 })
   }
-  if(result) {
-    return NextResponse.json({ response: "failed" }, { status: 500 })
+  if(result && result.errno && result.code == 'ER_BAD_FIELD_ERROR') {
+    return NextResponse.json({ inserted: false }, { status: 200 })
   }
+
+  return NextResponse.json({ response: "failed" }, { status: 500 })
   
 }

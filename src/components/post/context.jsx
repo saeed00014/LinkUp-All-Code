@@ -2,14 +2,16 @@
 import { useEffect, useState } from "react"
 import { PostContext } from "@/context/context"
 import { useQuery } from "@tanstack/react-query"
-import Comment from "./comment"
+import Comment from "./postCommentPage"
 import { baseURL } from "@/axios/axios"
+import PostShare from "./postShareUserPage"
 
 const Context = ({children, post, isMyPost, miniEdition}) => {
   const [isCommentActive, setIsCommentActive] = useState()
   const [isLiked, setIsLiked] = useState(false)
   const [likeCount, setLikeCount] = useState("")
   const [commentCount, setCommentCount] = useState("")
+  const [isShareActive, setIsShareActive] = useState(false)
   const likedPostsIdStorage = JSON.parse(localStorage.getItem("likedPostsId"))
 
   const getLoginUser = useQuery({
@@ -70,7 +72,8 @@ const Context = ({children, post, isMyPost, miniEdition}) => {
     const postUser = getUser.data.data.response
     const loginUser = getLoginUser.data.data.response
     return (
-      <PostContext.Provider value={{
+      <PostContext.Provider 
+        value={{
           postUser, 
           post, 
           isMyPost,
@@ -81,12 +84,18 @@ const Context = ({children, post, isMyPost, miniEdition}) => {
           likeCount,
           setLikeCount,
           commentCount,
-          loginUser
+          loginUser,
+          setIsShareActive
         }}
       >
         {children}
         {isCommentActive && 
           <Comment />
+        }
+        {isShareActive && 
+          <PostShare
+            setIsShareActive={setIsShareActive}
+          />
         }
       </PostContext.Provider> 
     )

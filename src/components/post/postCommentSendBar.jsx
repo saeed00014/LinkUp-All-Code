@@ -1,14 +1,14 @@
 "use client"
 import { useContext, useRef, useState } from "react"
-import { IoSend } from "react-icons/io5"
+import { useMutation } from "@tanstack/react-query"
 import { PostContext } from "@/context/context"
-import { postText } from "@/assets/data/data"
+import { IoSend } from "react-icons/io5"
 import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
-import { useMutation } from "@tanstack/react-query"
+import { postText } from "@/assets/data/data"
 import { baseURL } from "@/axios/axios"
 
-const CommentInput = ({ type, setEditMessage, editMessage, chooseMessage, setChooseMessage, setComments, comments }) => {
+const postCommentSendBar = ({ type, setEditMessage, editMessage, chooseMessage, setChooseMessage, setComments, comments }) => {
   const ref = useRef()
   const { post, miniEdition, loginUser } = useContext(PostContext)
   const [inputValue, setInputValue] = useState("")
@@ -105,4 +105,4 @@ const CommentInput = ({ type, setEditMessage, editMessage, chooseMessage, setCho
   )
 }
 
-export default CommentInput
+export default postCommentSendBar

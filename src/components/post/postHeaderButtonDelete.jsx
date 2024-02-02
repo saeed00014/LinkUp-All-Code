@@ -1,11 +1,10 @@
-import { baseURL } from "@/axios/axios"
+import { useContext, useState } from "react"
 import { PostContext } from "@/context/context"
 import { useMutation } from "@tanstack/react-query"
-import { useContext, useState } from "react"
-import { FaRegEdit } from "react-icons/fa"
 import { IoClose } from "react-icons/io5" 
+import { baseURL } from "@/axios/axios"
 
-const PostHeaderDelete = () => {
+const PostHeaderButtonDelete = () => {
   const { post } = useContext(PostContext)
   const [isDeleteActive, setIsDeleteActive] = useState(false)
 
@@ -13,7 +12,7 @@ const PostHeaderDelete = () => {
     mutationFn: async () => {
       const response = await baseURL.delete(`/post/${post.id}`)
       if(response.data.data.deleted) {
-        
+        location.reload("")
       }
     }
   })
@@ -57,4 +56,4 @@ const PostHeaderDelete = () => {
   )
 }
 
-export default PostHeaderDelete
+export default PostHeaderButtonDelete

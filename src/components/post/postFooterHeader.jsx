@@ -5,7 +5,7 @@ import { FaRegHeart } from "react-icons/fa"
 import { FaHeart } from "react-icons/fa"
 import { postText } from "@/assets/data/data"
 
-const PostFooterTop = ({commentEdition}) => {
+const PostFooterHeader = ({commentEdition}) => {
   const { post, isLiked, miniEdition, likeCount, commentCount } = useContext(PostContext)
   return (
     <div className={`flex justify-between w-full pt-1 ${miniEdition && !commentEdition ? "px-2 text-[.8rem]" : "px-4"}`}>
@@ -37,4 +37,4 @@ const PostFooterTop = ({commentEdition}) => {
   )
 }
 
-export default PostFooterTop
+export default PostFooterHeader

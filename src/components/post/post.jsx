@@ -1,6 +1,6 @@
 import PostHeader from "./postHeader"
 import PostFooter from "./postFooter"
-import PostContent from "./postContent"
+import PostBodyContent from "./postBodyContent"
 import Context from "./context"
 
 const Post = ({post, isMyPost, miniEdition}) => {
@@ -14,7 +14,7 @@ const Post = ({post, isMyPost, miniEdition}) => {
         className={`flex flex-col ${miniEdition ? "min-w-[380px]" : "min-w-[550px]"} max-w-[550px]  rounded-[1rem] bg-white dark:bg-gray-800 dark:text-white gap-1 pt-3`}
       >
         <PostHeader />
-        <PostContent />
+        <PostBodyContent />
         <PostFooter />
       </article>
     </Context>

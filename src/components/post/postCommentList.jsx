@@ -1,11 +1,11 @@
 "use client"
 import { useContext, useEffect, useRef } from "react"
-import Message from "./message"
-import { useIntersection } from "@mantine/hooks"
 import { PostCommentContext } from "@/context/context"
+import { useIntersection } from "@mantine/hooks"
+import Message from "./postComment"
 
-const CommentMessage = () => {
-  const { page, setPage, setComments, comments } = useContext(PostCommentContext)
+const postCommentList = () => {
+  const { page, setPage, comments } = useContext(PostCommentContext)
   
   const lastPostRef = useRef(null)
   const { ref, entry } = useIntersection({
@@ -24,7 +24,6 @@ const CommentMessage = () => {
       {comments ? 
         comments.map((message, i) => {
           const isRef = (i == page * 50 - 1)
-          console.log(message.id)
           return (
             <>
               {isRef ? 
@@ -56,4 +55,4 @@ const CommentMessage = () => {
   )
 }
 
-export default CommentMessage
+export default postCommentList

@@ -1,10 +1,10 @@
 import { useContext } from "react"
 import { PostContext } from "@/context/context"
-import Image from "next/image"
-import defaultImage from "@/assets/images/default.jpg"
 import Link from "next/link"
-import PostHeaderDelete from "./postHeaderDelete"
-import PostHeaderinfo from "./postHeaderinfo"
+import PostHeaderButtonDelete from "./postHeaderButtonDelete"
+import PostHeaderButtonInfo from "./postHeaderButtonInfo"
+import defaultImage from "@/assets/images/default.jpg"
+import Image from "next/image"
 
 const PostHeader = ({commentEdition}) => {
   const { post, postUser, isMyPost, miniEdition } = useContext(PostContext)
@@ -31,9 +31,9 @@ const PostHeader = ({commentEdition}) => {
         </div>
       </Link>
       {isMyPost ? 
-        <PostHeaderDelete />
+        <PostHeaderButtonDelete />
       : 
-        <PostHeaderinfo />
+        <PostHeaderButtonInfo />
       } 
     </header>
   )

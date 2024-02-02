@@ -6,7 +6,7 @@ import Input from "./input"
 import CheckInput from "./checkInput"
 import ImageDragDrop from "../imageDragDrop"
 import { baseURL } from "@/axios/axios"
-import { postMaker } from "@/assets/data/data"
+import { login, postMakerData } from "@/assets/data/data"
 import LoadingSpin from "../loadingSpin"
 
 const PostMaker = ({setIsMakePostActive}) => {
@@ -19,10 +19,26 @@ const PostMaker = ({setIsMakePostActive}) => {
   const [text, setText] = useState("")
   const [myComment, setMyComment] = useState("")
   const [isSendPostLoading, setIsSendPostLoading] = useState(false)
+  const [isFieldEmpty, setIsFieldEmpty] = useState(false)
+  const [isNetError, setIsNetError] = useState(false)
 
   const mutation = useMutation({
     mutationFn: async (madeNewPost) => {
-      const response = await baseURL.post('/post', madeNewPost)
+      baseURL.post('/post', madeNewPost)
+        .then(res => {
+          setIsSendPostLoading(false)
+          setIsNetError(false)
+          if(res.data.inserted) {
+            location.reload("")
+          }
+          if(!res.data.inserted) {
+
+          }
+        })
+        .catch(err => {
+          setIsSendPostLoading(false)
+          setIsNetError(true)
+        })
     }
   })
   
@@ -31,16 +47,22 @@ const PostMaker = ({setIsMakePostActive}) => {
     const fd = new FormData()
     const blob = new Blob([image], { type: "multipart/form-data" });
     fd.append('file', 'blob')
-    
-    mutation.mutate({
-      text: text,
-      isTagsChecked: isTagsChecked,
-      isCommentsChecked: isCommentsChecked,
-      isMyCommentChecked: isMyCommentChecked,
-      tag: tag,
-      myComment: myComment,
-      image: image
-    })
+    if(text || image) {
+      setIsSendPostLoading(true)
+      setIsFieldEmpty(false)
+      mutation.mutate({
+        text: text,
+        isTagsChecked: isTagsChecked,
+        isCommentsChecked: isCommentsChecked,
+        isMyCommentChecked: isMyCommentChecked,
+        tag: tag,
+        myComment: myComment,
+        image: image
+      })
+    }
+    if(!text && !image) {
+      setIsFieldEmpty(true)
+    }
   }
 
   return (
@@ -48,7 +70,7 @@ const PostMaker = ({setIsMakePostActive}) => {
     <div className="flex flex-col w-full max-w-[600px] my-10 px-4 rounded-[1rem] bg-white dark:bg-gray-800">
       <CloseHeader 
         setEvent={setIsMakePostActive} 
-        title={postMaker.postMaker} 
+        title={postMakerData.postMaker} 
       />
       <form 
         ref={ref} 
@@ -57,26 +79,26 @@ const PostMaker = ({setIsMakePostActive}) => {
       >
         <Input
           kind="textarea"
-          lable={postMaker.text}
+          lable={postMakerData.text}
           type="text"
           name="text"
-          placeholder={postMaker.textPlaceHolder}
+          placeholder={postMakerData.textPlaceHolder}
           id="text"
           value={text}
           setValue={setText}
         />
         <ImageDragDrop 
           setImage={setImage} 
-          lable={postMaker.image}
+          lable={postMakerData.image}
           edition={"post"}
         />
         {isTagsChecked && 
           <Input
             kind="input"
-            lable={postMaker.tag}
+            lable={postMakerData.tag}
             type="text"
             name="tag"
-            placeholder={postMaker.tagPlaceHolder}
+            placeholder={postMakerData.tagPlaceHolder}
             id="tag"
             value={tag}
             setValue={setTag}
@@ -85,10 +107,10 @@ const PostMaker = ({setIsMakePostActive}) => {
         {isMyCommentChecked && isCommentsChecked && 
           <Input
             kind="textarea"
-            lable={postMaker.myComment}
+            lable={postMakerData.myComment}
             type="text"
             name="myComment"
-            placeholder={postMaker.myCommentPlaceHolder}
+            placeholder={postMakerData.myCommentPlaceHolder}
             id="myComment"
             value={myComment}
             setValue={setMyComment}
@@ -96,7 +118,7 @@ const PostMaker = ({setIsMakePostActive}) => {
         }
         <div className="flex gap-4">
           <CheckInput 
-            lable={postMaker.commentCheck}
+            lable={postMakerData.commentCheck}
             type="checkbox"
             name="commentCheck"
             id="commentCheck"
@@ -105,7 +127,7 @@ const PostMaker = ({setIsMakePostActive}) => {
           />
           <div className={`flex gap-2 ${!isCommentsChecked && "pointer-events-none opacity-70"}`}>
             <CheckInput 
-              lable={postMaker.myComment}
+              lable={postMakerData.myComment}
               type="checkbox"
               name="myCommentCheck"
               id="myCommentCheck"
@@ -114,7 +136,7 @@ const PostMaker = ({setIsMakePostActive}) => {
             />
           </div>
           <CheckInput 
-            lable={postMaker.tagCheck}
+            lable={postMakerData.tagCheck}
             type="checkbox"
             name="tagCheck"
             id="tagCheck"
@@ -122,15 +144,26 @@ const PostMaker = ({setIsMakePostActive}) => {
             setChecked={setIsTagsChecked}
           />
         </div>
-        <div>
+        <div className="flex items-center gap-2">
           <input 
             type="submit" 
-            value={postMaker.submit} 
-            onChange={() => setIsSendPostLoading(true)}
+            value={postMakerData.submit} 
             className="py-2 px-4 rounded-[.5rem] bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer"
           />
           {isSendPostLoading && 
-            <LoadingSpin />
+            <div className="scale-75">
+              <LoadingSpin />
+            </div>
+          }
+          {isFieldEmpty && 
+            <span className="flex justify-start w-full text-[.95rem] text-red-600">
+              {postMakerData.emptyFeild}
+            </span>
+          }
+          {isNetError && 
+            <span className="flex justify-start w-full text-[.95rem] text-red-600">
+              {login.networkErrorMessage}
+            </span>
           }
         </div>
       </form>
