@@ -2,7 +2,7 @@
 import { useContext, useEffect, useRef } from "react"
 import { PostCommentContext } from "@/context/context"
 import { useIntersection } from "@mantine/hooks"
-import Message from "./postComment"
+import PostComment from "./postComment"
 
 const postCommentList = () => {
   const { page, setPage, comments } = useContext(PostCommentContext)
@@ -33,7 +33,7 @@ const postCommentList = () => {
                   key={message.id}
                   className="w-full px-4"
                 >
-                  <Message 
+                  <PostComment 
                     message={message} 
                   />
                 </div> 
@@ -42,7 +42,7 @@ const postCommentList = () => {
                   id={i}
                   className="w-full px-4"
                 >
-                  <Message 
+                  <PostComment 
                     message={message} 
                   />
                 </div> 

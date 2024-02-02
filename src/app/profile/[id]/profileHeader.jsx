@@ -14,7 +14,7 @@ const ProfileHeader = () => {
 
   return (
     <div className='sticky flex items-center w-full h-[234px] z-40'>
-      <div className='flex h-full w-full bg-white dark:bg-gray-700'> 
+      <div className='flex h-full w-full bg-gray-400 dark:bg-gray-700'> 
         {user.background && 
           <Image 
             src={user.background}

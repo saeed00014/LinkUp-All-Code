@@ -82,7 +82,7 @@ const postCommentPageFooter = ({commentEdition}) => {
                   <span className="text-[.7rem]">
                     {postUser.firstname}
                   </span>
-                  <span className="flex py-2 px-3 w-fit max-w-[20rem] text-[.8rem] bg-gray-200 dark:bg-gray-800 rounded-[.5rem] z-20">
+                  <span className="flex py-2 px-3 w-fit max-w-[20rem] text-[.8rem] bg-white dark:bg-gray-800 rounded-[.5rem] z-20">
                     {post.myComment}
                   </span>
                 </div>

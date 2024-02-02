@@ -49,7 +49,7 @@ const ExploreSearch = () => {
         />
         <label 
           htmlFor="exploreSearchSubmit"
-          className="absolute left-[.8rem] flex items-center justify-center h-[2rem] w-[4rem] font-[900] cursor-pointer rounded-full bg-gray-800 z-50"
+          className="absolute left-[.8rem] flex items-center justify-center h-[2rem] w-[4rem] font-[900] cursor-pointer rounded-full bg-gray-300 dark:bg-gray-800 z-50"
         >
           <span className="pb-1">
             {explore.search}

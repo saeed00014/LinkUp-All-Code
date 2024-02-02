@@ -22,7 +22,7 @@ const ChatRoomUserSearch = () => {
           />
         </div>
         {!searchResult ? 
-          <div className="flex flex-col items-center justify-center w-full h-[20rem] bg-gray-800 ">
+          <div className="flex flex-col items-center justify-center w-full h-[20rem] bg-white dark:bg-gray-800 ">
             {isPending && searchValue && 
               <div className="flex justify-center w-full">
                 <LoadingSpin />
