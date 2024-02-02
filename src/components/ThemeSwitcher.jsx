@@ -1,11 +1,9 @@
 "use client"
-
 import { useTheme } from "next-themes"
-import TungstenIcon from '@mui/icons-material/Tungsten';
+import TungstenIcon from '@mui/icons-material/Tungsten'
 
 const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme()
-
   return (
     <div className="group/mode relative flex justify-center items-center w-full h-12 rounded-[.5rem] bg-gray-200 dark:bg-gray-700">
         <button 

@@ -1,15 +1,15 @@
 "use client"
 import { useContext, useState } from "react"
-import { profile, profileEdit } from "@/assets/data/data"
+import { profile, ProfileEditFormData } from "@/assets/data/data"
+import { useMutation } from "@tanstack/react-query"
+import { ProfileContext } from "@/context/context"
 import ImageDragDrop from "@/components/imageDragDrop"
 import CloseHeader from "@/components/closeHeader"
-import { useMutation } from "@tanstack/react-query"
-import { baseURL } from "@/axios/axios"
-import { ProfileContext } from "@/context/context"
 import Input from "./input"
+import { baseURL } from "@/axios/axios"
 
-const ProfileEdit = ({setIsEditActive}) => {
-  const { user } = useContext(ProfileContext)
+const ProfileEditForm = () => {
+  const { user, setIsEditActive } = useContext(ProfileContext)
   const [firstname, setFirstname] = useState(user.firstname)
   const [lastname, setLastname] = useState(user.lastname)
   const [username, setUsername] = useState(user.username)
@@ -20,7 +20,7 @@ const ProfileEdit = ({setIsEditActive}) => {
   const [image, setImage] = useState(user.image)
   const [background, setBackground] = useState(user.background)
 
-  const mutation = useMutation({
+  const putUser = useMutation({
     mutationFn: async (editedValues) => {
       const response = await baseURL.put(`/user/${user.id}`, editedValues)
       location.reload("")
@@ -40,19 +40,22 @@ const ProfileEdit = ({setIsEditActive}) => {
       image : image,
       background: background
     }
-    mutation.mutate(editedValues)
+    putUser.mutate(editedValues)
   }
 
   return (
     <div className="fixed right-0 left-0 top-0 bottom-0 flex justify-center w-screen h-screen bg-gray-700/80 z-40 overflow-hidden">
       <div className="flex flex-col w-full max-w-[600px] my-10 px-4 rounded-[1rem] bg-white dark:bg-gray-800">
-        <CloseHeader setEvent={setIsEditActive} title={profile.editProfile}/>
+        <CloseHeader 
+          setEvent={setIsEditActive} 
+          title={profile.editProfile}
+        />
         <form
           onSubmit={(e) => handleSubmit(e)}
           className="flex flex-col pb-5 gap-4 overflow-y-scroll">
           <div className="flex flex-row gap-3">
             <Input
-              lable={profileEdit.name}
+              lable={ProfileEditFormData.name}
               type="text"
               name="firstname"
               id="firstname"
@@ -60,7 +63,7 @@ const ProfileEdit = ({setIsEditActive}) => {
               setValue={setFirstname}
             />
             <Input
-              lable={profileEdit.lastname}
+              lable={ProfileEditFormData.lastname}
               type="text"
               name="lastname"
               id="lastname"
@@ -70,7 +73,7 @@ const ProfileEdit = ({setIsEditActive}) => {
           </div>
           <div className="flex flex-row gap-3">
             <Input
-              lable={profileEdit.username}
+              lable={ProfileEditFormData.username}
               type="text"
               name="username"
               id="username"
@@ -78,7 +81,7 @@ const ProfileEdit = ({setIsEditActive}) => {
               setValue={setUsername}
             />
             <Input
-              lable={profileEdit.email}
+              lable={ProfileEditFormData.email}
               type="text"
               name="email"
               id="email"
@@ -88,7 +91,7 @@ const ProfileEdit = ({setIsEditActive}) => {
           </div>
           <div className="flex flex-row gap-3">
             <Input
-              lable={profileEdit.job}
+              lable={ProfileEditFormData.job}
               type="text"
               name="job"
               id="job"
@@ -96,7 +99,7 @@ const ProfileEdit = ({setIsEditActive}) => {
               setValue={setJob}
             />
             <Input
-              lable={profileEdit.link}
+              lable={ProfileEditFormData.link}
               type="text"
               name="link"
               id="link"
@@ -105,7 +108,7 @@ const ProfileEdit = ({setIsEditActive}) => {
             />
           </div>
           <Input
-            lable={profileEdit.bio}
+            lable={ProfileEditFormData.bio}
             type="text"
             name="bio"
             id="bio"
@@ -115,19 +118,19 @@ const ProfileEdit = ({setIsEditActive}) => {
           <ImageDragDrop 
             setImage={setImage} 
             currentImage={image} 
-            lable={profileEdit.avatar} 
+            lable={ProfileEditFormData.avatar} 
             edition="avatar"
             />
           <ImageDragDrop 
             setImage={setBackground} 
             currentImage={background}
-            lable={profileEdit.background} 
+            lable={ProfileEditFormData.background} 
             edition="background"
           />
           <div>
             <input 
               type="submit" 
-              value={profileEdit.submitEdit}
+              value={ProfileEditFormData.submitEdit}
               className="border-none !w-fit !px-14 py-2 !bg-gray-200 dark:!bg-gray-700 hover:!bg-gray-300 dark:hover:!bg-gray-600 cursor-pointer"
             />
           </div>
@@ -137,4 +140,4 @@ const ProfileEdit = ({setIsEditActive}) => {
   )
 }
 
-export default ProfileEdit
+export default ProfileEditForm

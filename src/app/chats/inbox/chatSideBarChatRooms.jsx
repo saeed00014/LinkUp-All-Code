@@ -4,7 +4,7 @@ import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
 import Link from "next/link"
 
-const ChatsUser = ({targetUser, chat}) => {
+const ChatSideBarChatRooms = ({targetUser, chat}) => {
   const { setCurrentChat } = useContext(ChatContext)
   const handleClick = () => {
     setCurrentChat({
@@ -44,4 +44,4 @@ const ChatsUser = ({targetUser, chat}) => {
   )
 }
 
-export default ChatsUser
+export default ChatSideBarChatRooms

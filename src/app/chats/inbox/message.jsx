@@ -1,12 +1,12 @@
 "use client"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { ChatContext, ChatMessageContext } from "@/context/context"
-import { useQuery } from "@tanstack/react-query"
-import { baseURL } from "@/axios/axios"
-import defaultImage from "@/assets/images/default.jpg"
-import Image from "next/image"
-import Post from "@/components/post/post"
 import Link from "next/link"
+import { useQuery } from "@tanstack/react-query"
+import Post from "@/components/post/post"
+import Image from "next/image"
+import defaultImage from "@/assets/images/default.jpg"
+import { baseURL } from "@/axios/axios"
 
 const Message = ({message}) => {
   const { currentChat, loginUser} = useContext(ChatContext)

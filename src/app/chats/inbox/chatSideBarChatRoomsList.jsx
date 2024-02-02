@@ -2,10 +2,10 @@
 import { useContext } from "react"
 import { ChatContext } from "@/context/context"
 import { useQuery } from "@tanstack/react-query"
-import ChatsUser from "./chatsUser"
+import ChatSideBarChatRooms from "./chatSideBarChatRooms"
 import { baseURL } from "@/axios/axios"
 
-const ChatsUsersCon = () => {
+const ChatSideBarChatRoomsList = () => {
   const { chats } = useContext(ChatContext)
 
   return (
@@ -22,7 +22,7 @@ const ChatsUsersCon = () => {
           const targetUser = getChatUserInfo.data.data.response
           return (
             <div key={chat.id}>
-              <ChatsUser
+              <ChatSideBarChatRooms
                 targetUser={targetUser}
                 chat={chat}
               />
@@ -34,4 +34,4 @@ const ChatsUsersCon = () => {
   )
 }
 
-export default ChatsUsersCon
+export default ChatSideBarChatRoomsList

@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { baseURL } from "@/axios/axios"
 import { profile } from "@/assets/data/data"
 
-const ProfileFollowButton = () => {
+const ProfileButtonFollow = () => {
   const { targetUser_id } = useContext(ProfileContext)
   const [isFollowed, setIsFollowed] = useState("")
   const getFollowInfo = useQuery({
@@ -53,4 +53,4 @@ const ProfileFollowButton = () => {
   )
 }
 
-export default ProfileFollowButton
+export default ProfileButtonFollow

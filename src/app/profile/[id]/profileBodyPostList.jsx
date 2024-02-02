@@ -1,10 +1,10 @@
 "use client"
 import { useContext, useEffect, useRef } from "react"
 import Post from "@/components/post/post"
-import { useIntersection } from "@mantine/hooks"
 import { ProfileContext } from "@/context/context"
+import { useIntersection } from "@mantine/hooks"
 
-const ProfilePost = ({ posts, index }) => {
+const ProfileBodyPostList = ({ posts, index }) => {
   const { isLoginUser, page, setPage } = useContext(ProfileContext)
   const lastPostRef = useRef(null)
   const { ref, entry } = useIntersection({
@@ -55,4 +55,4 @@ const ProfilePost = ({ posts, index }) => {
   )
 }
 
-export default ProfilePost
+export default ProfileBodyPostList

@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { IoChatbubbles } from "react-icons/io5"
 import UserSearch from "@/components/userSearch"
-import ChatSearchResult from "./chatSearchResult"
-import { chatPage, explore } from "@/assets/data/data"
+import ChatRoomUserSearchResult from "./chatRoomUserSearchResult"
 import LoadingSpin from "@/components/loadingSpin"
+import { chatPage, explore } from "@/assets/data/data"
 
-const ChatUserSearch = () => {
+const ChatRoomUserSearch = () => {
   const [searchResult, setSearchResult] = useState("")
   const [searchValue, setSearchValue] = useState("")
   const [isPending, setIsPending] = useState("")
@@ -48,7 +48,7 @@ const ChatUserSearch = () => {
             }
             {!isPending && searchResult.map((result) => {
               return (
-                <ChatSearchResult 
+                <ChatRoomUserSearchResult 
                   user={result} 
                 />
               )
@@ -60,4 +60,4 @@ const ChatUserSearch = () => {
   )
 }
 
-export default ChatUserSearch
+export default ChatRoomUserSearch

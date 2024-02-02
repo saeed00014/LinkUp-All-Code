@@ -1,15 +1,15 @@
 import { useRef, useState } from "react"
 import { useMutation } from "@tanstack/react-query"
+import Cookies from 'universal-cookie'
 import Input from "./input"
 import InputRadio from "./inputRadio"
 import InputSelect from "./inputSelect"
 import InputSelectTitle from "./inputSelectTitle"
-import { baseURL } from "@/axios/axios"
-import Cookies from 'universal-cookie'
-import { patterns, selectOptionsMounths, register } from "@/assets/data/data"
 import CloseHeader from "@/components/closeHeader"
+import { patterns, selectOptionsMounths, register } from "@/assets/data/data"
+import { baseURL } from "@/axios/axios"
 
-const RegisterForm = ({setRegister}) => {
+const formRegister = ({setRegister}) => {
   const ref = useRef()
   const [firstnameErorr, setFirstnameErorr] = useState(false)
   const [lastnameErorr, setLastnameErorr] = useState(false)
@@ -232,4 +232,4 @@ const RegisterForm = ({setRegister}) => {
   )
 }
 
-export default RegisterForm
+export default formRegister

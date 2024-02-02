@@ -5,7 +5,7 @@ import { IoSend } from "react-icons/io5"
 import { IoClose } from "react-icons/io5"
 import { messages } from "@/assets/data/data"
 
-const ChatsSendBar = ({setSendMessage}) => {
+const ChatRoomSendBar = ({setSendMessage}) => {
   const { loginUser } = useContext(ChatContext)
   const { editMessage, setEditMessage, shareMessage, setShareMessage } = useContext(ChatMessageContext)
   const [ message, setMessage ] = useState("")
@@ -76,4 +76,4 @@ const ChatsSendBar = ({setSendMessage}) => {
   )
 }
 
-export default ChatsSendBar
+export default ChatRoomSendBar

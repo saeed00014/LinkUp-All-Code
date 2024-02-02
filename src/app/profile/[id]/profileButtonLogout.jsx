@@ -1,7 +1,7 @@
-import { profile } from "@/assets/data/data"
 import Cookies from "universal-cookie"
+import { profile } from "@/assets/data/data"
 
-const ProfileLogoutButton = () => {
+const ProfileButtonLogout = () => {
   const handleClick = () => {
     const cookies = new Cookies()
     cookies.set("user", "", {path: "/"})
@@ -17,4 +17,4 @@ const ProfileLogoutButton = () => {
   )
 }
 
-export default ProfileLogoutButton
+export default ProfileButtonLogout

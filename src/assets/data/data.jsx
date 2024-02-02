@@ -120,14 +120,14 @@ export const postShare = {
   sendTo: "ارسال به"
 } 
 
-export const postMake = {
+export const postMakerData = {
   video: "فیلم",
   image: "عکس",
   tag: "تگ ها",
   placeholder: "به چه چیزی فکر میکنید ؟"
 }
 
-export const postMakerData = {
+export const postMakerFormData = {
   postMaker: "ساخت پست",
   text: "متن خود را وارد کنید",
   image: "آپلود عکس و فیلم",
@@ -162,7 +162,7 @@ export const profile = {
   logout: "خروج از حساب"
 }
 
-export const profileEdit = {
+export const ProfileEditFormData = {
   username: "نام کاربری",
   email: "ایمیل",
   name: "نام",

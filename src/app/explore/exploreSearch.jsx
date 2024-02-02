@@ -1,14 +1,14 @@
 "use client"
-import { FaMagnifyingGlass } from "react-icons/fa6"
-import { explore } from "@/assets/data/data"
-import { useMutation } from "@tanstack/react-query"
-import { baseURL } from "@/axios/axios"
 import { useContext } from "react"
+import { useMutation } from "@tanstack/react-query"
+import { FaMagnifyingGlass } from "react-icons/fa6"
 import { ExploreContext } from "@/context/context"
+import { explore } from "@/assets/data/data"
+import { baseURL } from "@/axios/axios"
 
 const ExploreSearch = () => {
   const { setSearchResult, searchValue, setSearchValue, category } = useContext(ExploreContext)
-  const mutation = useMutation({
+  const getSearchResult = useMutation({
     mutationFn: async (searchValue) => {
       const response = await baseURL.get(`/post/search?value=${searchValue}&category=${category}`)
       if(response.data) {
@@ -24,7 +24,7 @@ const ExploreSearch = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     const value = e.target.text.value
-    value && mutation.mutate(value)
+    value && getSearchResult.mutate(value)
   }
 
   return (

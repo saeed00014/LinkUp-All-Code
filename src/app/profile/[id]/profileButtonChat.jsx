@@ -2,11 +2,11 @@
 import { useContext } from 'react'
 import { ProfileContext } from '@/context/context'
 import { useMutation } from '@tanstack/react-query'
-import { baseURL } from '@/axios/axios'
-import { profile } from '@/assets/data/data'
 import { useRouter } from 'next/navigation'
+import { profile } from '@/assets/data/data'
+import { baseURL } from '@/axios/axios'
 
-const ProfileChatButton = () => {
+const ProfileButtonChat = () => {
   const router = useRouter()
   const { targetUser_id } = useContext(ProfileContext)
   const chatStatus = useMutation({
@@ -33,4 +33,4 @@ const ProfileChatButton = () => {
   )
 }
 
-export default ProfileChatButton
+export default ProfileButtonChat

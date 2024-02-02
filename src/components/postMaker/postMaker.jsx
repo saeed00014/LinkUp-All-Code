@@ -1,175 +1,60 @@
 "use client"
-import { useRef, useState } from "react"
-import { useMutation } from "@tanstack/react-query"
-import CloseHeader from "../closeHeader"
-import Input from "./input"
-import CheckInput from "./checkInput"
-import ImageDragDrop from "../imageDragDrop"
-import { baseURL } from "@/axios/axios"
-import { login, postMakerData } from "@/assets/data/data"
-import LoadingSpin from "../loadingSpin"
+import { useState } from "react"
+import { HiHashtag } from "react-icons/hi"
+import { IoMdPhotos } from "react-icons/io"
+import { IoVideocam } from "react-icons/io5"
+import PostMakerButtons from "./postMakerButtons"
+import PostMakerForm from "./postMakerForm"
+import Image from "next/image"
+import defaultImage from "@/assets/images/default.jpg"
+import { postMakerData } from "@/assets/data/data"
 
-const PostMaker = ({setIsMakePostActive}) => {
-  const ref = useRef()
-  const [image, setImage] = useState("")
-  const [isCommentsChecked, setIsCommentsChecked] = useState(true)
-  const [isMyCommentChecked, setIsMyCommentChecked] = useState(true)
-  const [isTagsChecked, setIsTagsChecked] = useState(true)
-  const [tag, setTag] = useState("")
-  const [text, setText] = useState("")
-  const [myComment, setMyComment] = useState("")
-  const [isSendPostLoading, setIsSendPostLoading] = useState(false)
-  const [isFieldEmpty, setIsFieldEmpty] = useState(false)
-  const [isNetError, setIsNetError] = useState(false)
-
-  const mutation = useMutation({
-    mutationFn: async (madeNewPost) => {
-      baseURL.post('/post', madeNewPost)
-        .then(res => {
-          setIsSendPostLoading(false)
-          setIsNetError(false)
-          if(res.data.inserted) {
-            location.reload("")
-          }
-          if(!res.data.inserted) {
-
-          }
-        })
-        .catch(err => {
-          setIsSendPostLoading(false)
-          setIsNetError(true)
-        })
-    }
-  })
-  
-  const hendleSubmit = (e) => {
-    e.preventDefault()
-    const fd = new FormData()
-    const blob = new Blob([image], { type: "multipart/form-data" });
-    fd.append('file', 'blob')
-    if(text || image) {
-      setIsSendPostLoading(true)
-      setIsFieldEmpty(false)
-      mutation.mutate({
-        text: text,
-        isTagsChecked: isTagsChecked,
-        isCommentsChecked: isCommentsChecked,
-        isMyCommentChecked: isMyCommentChecked,
-        tag: tag,
-        myComment: myComment,
-        image: image
-      })
-    }
-    if(!text && !image) {
-      setIsFieldEmpty(true)
-    }
-  }
+const PostMaker = ({localLoginUser}) => {
+  const [isMakePostActive, setIsMakePostActive] = useState(false)
 
   return (
-    <div className="fixed right-0 left-0 top-0 bottom-0 flex justify-center w-screen h-screen bg-gray-700/80 z-40 overflow-hidden">
-    <div className="flex flex-col w-full max-w-[600px] my-10 px-4 rounded-[1rem] bg-white dark:bg-gray-800">
-      <CloseHeader 
-        setEvent={setIsMakePostActive} 
-        title={postMakerData.postMaker} 
-      />
-      <form 
-        ref={ref} 
-        onSubmit={(e) => hendleSubmit(e)} 
-        className="flex flex-col w-full gap-6 mb-3 overflow-scroll z-50"
-      >
-        <Input
-          kind="textarea"
-          lable={postMakerData.text}
-          type="text"
-          name="text"
-          placeholder={postMakerData.textPlaceHolder}
-          id="text"
-          value={text}
-          setValue={setText}
+    <div className="flex flex-col w-full min-w-[550px] max-w-[550px] min-h-[123px] pt-3 pb-2 px-4 rounded-[.8rem] bg-white dark:bg-gray-800">
+      <div className="flex items-center gap-4 pb-3 mb-1 border-b-2 dark:border-gray-600">
+        <span className="relative min-w-12 h-12 rounded-full overflow-hidden">
+          <Image 
+            fill={true}
+            src={localLoginUser.image || defaultImage}
+            alt="profile picture"
+          />
+        </span>
+        <span 
+          onClick={() => setIsMakePostActive("text")} 
+          className="flex items-center justify-start w-full h-fit py-2 pr-4 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 duration-100 cursor-pointer"
+        >
+          {postMakerData.placeholder}
+        </span>
+      </div>
+      <div className="flex justify-between">
+        <PostMakerButtons 
+          title={"video"} 
+          text={postMakerData.video} 
+          icon={<IoVideocam />}
+          setMakePost={setIsMakePostActive} 
         />
-        <ImageDragDrop 
-          setImage={setImage} 
-          lable={postMakerData.image}
-          edition={"post"}
+        <PostMakerButtons 
+          title={"image"} 
+          text={postMakerData.image} 
+          icon={<IoMdPhotos />} 
+          setMakePost={setIsMakePostActive} 
         />
-        {isTagsChecked && 
-          <Input
-            kind="input"
-            lable={postMakerData.tag}
-            type="text"
-            name="tag"
-            placeholder={postMakerData.tagPlaceHolder}
-            id="tag"
-            value={tag}
-            setValue={setTag}
-          />
-        }
-        {isMyCommentChecked && isCommentsChecked && 
-          <Input
-            kind="textarea"
-            lable={postMakerData.myComment}
-            type="text"
-            name="myComment"
-            placeholder={postMakerData.myCommentPlaceHolder}
-            id="myComment"
-            value={myComment}
-            setValue={setMyComment}
-          />
-        }
-        <div className="flex gap-4">
-          <CheckInput 
-            lable={postMakerData.commentCheck}
-            type="checkbox"
-            name="commentCheck"
-            id="commentCheck"
-            checked={isCommentsChecked}
-            setChecked={setIsCommentsChecked}
-          />
-          <div className={`flex gap-2 ${!isCommentsChecked && "pointer-events-none opacity-70"}`}>
-            <CheckInput 
-              lable={postMakerData.myComment}
-              type="checkbox"
-              name="myCommentCheck"
-              id="myCommentCheck"
-              checked={isMyCommentChecked}
-              setChecked={setIsMyCommentChecked}
-            />
-          </div>
-          <CheckInput 
-            lable={postMakerData.tagCheck}
-            type="checkbox"
-            name="tagCheck"
-            id="tagCheck"
-            checked={isTagsChecked}
-            setChecked={setIsTagsChecked}
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <input 
-            type="submit" 
-            value={postMakerData.submit} 
-            className="py-2 px-4 rounded-[.5rem] bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer"
-          />
-          {isSendPostLoading && 
-            <div className="scale-75">
-              <LoadingSpin />
-            </div>
-          }
-          {isFieldEmpty && 
-            <span className="flex justify-start w-full text-[.95rem] text-red-600">
-              {postMakerData.emptyFeild}
-            </span>
-          }
-          {isNetError && 
-            <span className="flex justify-start w-full text-[.95rem] text-red-600">
-              {login.networkErrorMessage}
-            </span>
-          }
-        </div>
-      </form>
+        <PostMakerButtons 
+          title={"tag"} 
+          text={postMakerData.tag} 
+          icon={<HiHashtag />} 
+          setMakePost={setIsMakePostActive} 
+        />
+      </div>
+      {isMakePostActive &&
+        <PostMakerForm 
+          setIsMakePostActive={setIsMakePostActive} 
+        />
+      }
     </div>
-  </div>
-
   )
 }
 

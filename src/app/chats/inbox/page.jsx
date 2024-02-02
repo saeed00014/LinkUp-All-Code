@@ -1,12 +1,12 @@
-import { messages } from "@/assets/data/data"
 import PageHeader from "@/components/pageHeader"
-import MessagesBody from "./chatsBody"
+import Chat from "./chat"
+import { messages } from "@/assets/data/data"
 
 const Chats = () => {
   return (
     <section className="flex flex-col h-screen overflow-hidden">
       <PageHeader title={messages.messages} />
-      <MessagesBody />
+      <Chat />
     </section>
   )
 }

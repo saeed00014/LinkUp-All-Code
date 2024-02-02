@@ -8,7 +8,7 @@ import Link from "next/link"
 import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
  
-const ChatHeader = ({targetUser}) => {
+const ChatRoomHeader = ({targetUser}) => {
   const { setMessages, setChooseMessage, chooseMessage, setEditMessage } = useContext(ChatMessageContext)
 
   return (
@@ -55,4 +55,4 @@ const ChatHeader = ({targetUser}) => {
   )
 }
 
-export default ChatHeader
+export default ChatRoomHeader

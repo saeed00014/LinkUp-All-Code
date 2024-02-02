@@ -1,10 +1,10 @@
 "use client"
-import Link from "next/link"
-import ChatsUsers from "./chatsUsersCon"
 import { useContext } from "react"
+import Link from "next/link"
+import ChatSideBarChatRoomsList from "./chatSideBarChatRoomsList"
 import { ChatContext } from "@/context/context"
 
-const ChatsSideBar = () => {
+const ChatSideBar = () => {
   const { setCurrentChat } = useContext(ChatContext)
   const handleClick = () => {
     setCurrentChat("")
@@ -21,9 +21,9 @@ const ChatsSideBar = () => {
           new chat
         </Link>
       </div>
-      <ChatsUsers />
+      <ChatSideBarChatRoomsList />
     </div>
   )
 }
 
-export default ChatsSideBar
+export default ChatSideBar

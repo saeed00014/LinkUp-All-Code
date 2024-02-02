@@ -1,17 +1,16 @@
 "use client"
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { ProfileContext } from '@/context/context'
-import ProfileEdit from './profileEdit'
-import ProfileChatButton from './profileChatButton'
-import ProfileFollowButton from './profileFollowButton'
+import ProfileButtonChat from './profileButtonChat'
+import ProfileLogoutButton from './profileButtonLogout'
+import ProfileButtonFollow from './profileButtonFollow'
+import ProfileButtonEdit from './profileButtonEdit'
 import Image from 'next/image'
 import defaultImage from '@/assets/images/default.jpg'
 import { profile } from '@/assets/data/data'
-import ProfileLogoutButton from './profileLogoutButton'
 
 const ProfileHeader = () => {
   const { user, isLoginUser, follower, following } = useContext(ProfileContext)
-  const [isEditActive, setIsEditActive] = useState(false)
 
   return (
     <div className='sticky flex items-center w-full h-[234px] z-40'>
@@ -66,18 +65,13 @@ const ProfileHeader = () => {
             </div>
             {isLoginUser ? 
               <div className='flex w-full gap-1'>
-                <button
-                  onClick={() => setIsEditActive(true)} 
-                  className='w-full h-[1.8rem] dark:bg-gray-700 bg-gray-200'
-                >
-                  {profile.editProfile}
-                </button> 
+                <ProfileButtonEdit />
                 <ProfileLogoutButton />
               </div>
               : 
               <div className='flex w-full items-center justify-between gap-2'>
-                <ProfileFollowButton />
-                <ProfileChatButton />
+                <ProfileButtonFollow />
+                <ProfileButtonChat />
               </div>
             }
           </div>
@@ -92,11 +86,6 @@ const ProfileHeader = () => {
           className='min-h-full min-w-full object-cover' 
         />
       </div>
-      {isEditActive &&
-        <ProfileEdit 
-          setIsEditActive={setIsEditActive} 
-        />
-      }
     </div>
   )
 }

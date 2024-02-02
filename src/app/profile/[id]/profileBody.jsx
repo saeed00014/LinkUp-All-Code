@@ -2,8 +2,8 @@
 import { useContext, useEffect, useState } from "react"
 import { ProfileContext } from "@/context/context"
 import { useMutation } from "@tanstack/react-query"
-import ProfilePost from "./profilePost"
-import PostMake from "@/components/postMaker/postMake"
+import ProfileBodyPostList from "./profileBodyPostList"
+import PostMaker from "@/components/postMaker/postMaker"
 import LoadingSpin from "@/components/loadingSpin"
 import { baseURL } from "@/axios/axios"
 import { home } from "@/assets/data/data"
@@ -31,12 +31,12 @@ const ProfileBody = () => {
     <div className="flex justify-center items-start xl:gap-[15rem] w-full h-svh px-4 mt-4 pb-[400px] overflow-y-scroll">
       <div className="flex flex-col justify-start gap-6">
         {isLoginUser && 
-          <PostMake 
+          <PostMaker 
             localLoginUser={user} 
           />
         }
         {posts[0] ? 
-          <ProfilePost
+          <ProfileBodyPostList
             posts={posts}
             index={0}
           /> 
@@ -50,7 +50,7 @@ const ProfileBody = () => {
           </div>
         }
         {(!getProfileUserPosts.isPending && getProfileUserPosts.data) &&
-          <ProfilePost 
+          <ProfileBodyPostList 
             posts={newPagePosts}
             index={3}
           /> 

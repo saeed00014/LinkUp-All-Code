@@ -1,13 +1,13 @@
 "use client"
 import { useRef, useState } from "react"
 import { useMutation } from "@tanstack/react-query"
-import RegisterForm from "./registerForm"
-import { baseURL } from "@/axios/axios"
 import Cookies from "universal-cookie"
+import FormForgotPass from "./formForgotPass"
+import FormRegister from "./formRegister"
 import { login, patterns } from "@/assets/data/data"
-import ForgotPassForm from "./forgotPassForm"
+import { baseURL } from "@/axios/axios"
 
-const LoginForm = () => {
+const formLogin = () => {
   const ref = useRef()
   const [register, setRegister] = useState(false)
   const [loginErorrMessage, setLoginErorrMessage] = useState(false)
@@ -107,12 +107,12 @@ const LoginForm = () => {
       </div>
       {register && 
         <div className='fixed left-0 right-0 bottom-0 flex justify-center items-center h-screen w-screen md:px-4 px-2 bg-gray-400/25 dark:bg-gray-500/50 z-30'>
-          <RegisterForm setRegister={setRegister}/> 
+          <FormRegister setRegister={setRegister}/> 
         </div>
       }
       {forgotPass && 
         <div className='fixed left-0 right-0 bottom-0 flex justify-center items-center h-screen w-screen md:px-4 px-2 bg-gray-400/25 dark:bg-gray-500/50 z-30'>
-          <ForgotPassForm
+          <FormForgotPass
             setForgotPass={setForgotPass}
           />
         </div>
@@ -121,4 +121,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default formLogin

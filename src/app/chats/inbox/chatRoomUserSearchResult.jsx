@@ -7,7 +7,7 @@ import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
 import { baseURL } from "@/axios/axios"
 
-const ChatSearchResult = ({user}) => {
+const ChatRoomUserSearchResult = ({user}) => {
   const router = useRouter()
   const { setCurrentChat } = useContext(ChatContext)
   const getUserChatId = useMutation({
@@ -57,4 +57,4 @@ const ChatSearchResult = ({user}) => {
   
 }
 
-export default ChatSearchResult
+export default ChatRoomUserSearchResult

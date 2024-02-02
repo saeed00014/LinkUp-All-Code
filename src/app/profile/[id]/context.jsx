@@ -2,12 +2,14 @@
 import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { ProfileContext } from "@/context/context"
+import ProfileEditForm from "./profileEditForm"
 import LoadingSpin from "@/components/loadingSpin"
 import { baseURL } from "@/axios/axios"
 
 const Context = ({children}) => {
   const [page, setPage] = useState(1)
   const [newPost, setNewPost] = useState([])
+  const [isEditActive, setIsEditActive] = useState(false)
   const url = window.location.href
   const targetUser_id = url.split("/")[url.split("/").length - 1]
 
@@ -61,10 +63,14 @@ const Context = ({children}) => {
           page,
           setPage,
           follower,
-          following
+          following,
+          setIsEditActive
         }}
       >
         {children}
+        {isEditActive &&
+          <ProfileEditForm />
+        }
       </ProfileContext.Provider>
     )
   }

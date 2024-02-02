@@ -1,4 +1,4 @@
-const PostMakeButtons = ({title, text, icon, setMakePost}) => {
+const PostMakerButtons = ({title, text, icon, setMakePost}) => {
   return (
     <div 
       onClick={() => setMakePost(title)} 
@@ -14,4 +14,4 @@ const PostMakeButtons = ({title, text, icon, setMakePost}) => {
   )
 }
 
-export default PostMakeButtons
+export default PostMakerButtons

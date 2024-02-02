@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react'
 import CloseHeader from '@/components/closeHeader'
-import { login, patterns, register } from '@/assets/data/data'
 import Input from './input'
+import { login, patterns, register } from '@/assets/data/data'
 
-const ForgotPassForm = ({setForgotPass}) => {
+const FormForgotPass = ({setForgotPass}) => {
   const ref = useRef()
   const [emailErorr, setEmailErorr] = useState(false)
   const [notValidEmail, setNotValidEmail] = useState(false)
@@ -58,4 +58,4 @@ const ForgotPassForm = ({setForgotPass}) => {
   )
 }
 
-export default ForgotPassForm
+export default FormForgotPass

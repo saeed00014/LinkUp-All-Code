@@ -1,21 +1,15 @@
-"use client"
-import { useContext } from "react"
-import { ChatContext } from "../../../context/context"
-import ChatBody from "./chatBody"
-import ChatUserSearch from "./chatUserSearch"
+import Context from "./context"
+import ChatRoom from "./chatRoom"
+import ChatSideBar from "./chatSideBar"
 
 const Chat = () => {
-  const { currentChat } = useContext(ChatContext)
-  const { targetUser } = currentChat
-
   return (
-    <>
-      {targetUser ? 
-        <ChatBody />
-      : 
-        <ChatUserSearch />
-      }
-    </>
+    <div className="flex justify-start w-full h-full">
+      <Context>
+        <ChatSideBar />
+        <ChatRoom />
+      </Context>
+    </div>
   )
 }
 

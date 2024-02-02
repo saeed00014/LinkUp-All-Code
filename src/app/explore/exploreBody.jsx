@@ -2,7 +2,6 @@
 import { useContext } from "react"
 import { ExploreContext } from "@/context/context"
 import Post from "@/components/post/post"
-import { explore } from "@/assets/data/data"
 
 const ExploreBody = () => {
   const { searchResult, defaultPost, searchValue, category } = useContext(ExploreContext)

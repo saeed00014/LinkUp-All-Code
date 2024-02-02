@@ -4,16 +4,16 @@ import { ChatContext, ChatMessageContext } from "@/context/context"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import LoadingSpin from "@/components/loadingSpin"
-import ChatHeader from "./chatHeader"
+import ChatRoomHeader from "./chatRoomHeader"
+import ChatRoomSendBar from "./chatRoomSendBar"
 import Message from "./message"
-import ChatsSendBar from "./chatsSendBar"
 import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
-import { baseURL } from "@/axios/axios"
 import { io } from 'socket.io-client'
 import { chatData } from "@/assets/data/data"
+import { baseURL } from "@/axios/axios"
 
-const ChatBody = () => {
+const ChatRoomBody = () => {
   const { currentChat } = useContext(ChatContext)
   const { targetUser, chat_id } = currentChat
   const [sendMessage, setSendMessage] = useState("")
@@ -78,7 +78,7 @@ const ChatBody = () => {
           setChooseMessage
         }}
       >
-        <ChatHeader 
+        <ChatRoomHeader 
           targetUser={targetUser}
         />
         {!getCurrentChatMessages.isPending ? 
@@ -133,7 +133,7 @@ const ChatBody = () => {
             <LoadingSpin />
           </div>
         }
-        <ChatsSendBar 
+        <ChatRoomSendBar 
           setSendMessage={setSendMessage}
         />
       </ChatMessageContext.Provider>
@@ -141,4 +141,4 @@ const ChatBody = () => {
   )
 }
 
-export default ChatBody
+export default ChatRoomBody
