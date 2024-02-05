@@ -1,12 +1,23 @@
-const Input = ({lable, type, name, id, value, setValue}) => {
+const Input = ({lable, type, name, id, value, maxValue, setValue}) => {
   return (
     <div className="flex flex-col gap-1 w-full">
-      <label 
-        htmlFor={id}
-        className="px-1"
-      >
-        {lable}
-      </label>
+      <div className="flex justify-between px-1">
+        <label 
+          htmlFor={id}
+        >
+          {lable}
+        </label>
+        <div>
+          <span>
+            {maxValue}
+          </span>
+          <span>/</span>
+          <span>
+            {value.length}
+          </span>
+        </div>
+
+      </div>
       <input 
         type={type}
         name={name}

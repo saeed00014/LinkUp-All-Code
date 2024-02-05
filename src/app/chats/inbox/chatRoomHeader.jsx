@@ -12,7 +12,7 @@ const ChatRoomHeader = ({targetUser}) => {
   const { setMessages, setChooseMessage, chooseMessage, setEditMessage } = useContext(ChatMessageContext)
 
   return (
-    <header className="flex w-full justify-between px-2 py-2 border-b h-[57.59px] border-b-gray-400 dark:border-b-gray-500 bg-white dark:bg-gray-800">
+    <header className=" flex w-full justify-between px-2 py-2 border-b h-[57.59px] border-b-gray-400 dark:border-b-gray-500 bg-white dark:bg-gray-800 z-40">
       <Link 
         href={`/profile/${targetUser.id}`}
         className="flex gap-2"

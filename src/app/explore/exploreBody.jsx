@@ -2,29 +2,39 @@
 import { useContext } from "react"
 import { ExploreContext } from "@/context/context"
 import Post from "@/components/post/post"
+import LoadingSpin from "@/components/loadingSpin"
+import { explore } from "@/assets/data/data"
 
 const ExploreBody = () => {
-  const { searchResult, defaultPost, searchValue, category } = useContext(ExploreContext)
-
+  const { searchResult, defaultPost, searchValue, category, isSearchLoading } = useContext(ExploreContext)
   return (
     <div className="flex flex-col justify-start items-center w-full h-screen p-4 pb-[15rem] gap-3 overflow-y-scroll">
       <div className="flex flex-col w-fit gap-3">
-        {/* {!searchResult[0] && searchValue &&
+        {isSearchLoading && searchValue &&
+          <div className="flex items-center justify-center w-full mt-[4rem]">
+            <LoadingSpin />
+          </div>
+        }
+        {!isSearchLoading && !searchResult[0] && searchValue &&
           <div className="mt-[4rem]">
             {explore.noResult}
           </div>
-        } */}
-        {searchResult && 
+        }
+        {!isSearchLoading && searchResult[0] && searchValue &&
           searchResult.map((post) => {
             return (
-              <Post post={post} />
+              <div key={post.id}>
+                <Post post={post} />
+              </div>
             )
           })
         }
-        {!searchResult && !searchValue && 
+        {!isSearchLoading && !searchValue &&
           defaultPost.map((post) => {
             return (
-              <Post post={post}/>
+              <div key={post.id}>
+                <Post post={post}/>
+              </div>
             )
           })
         }

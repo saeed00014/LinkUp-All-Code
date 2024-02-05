@@ -13,6 +13,9 @@ const Context = ({children}) => {
   const [currentChat, setCurrentChat] = useState("")
   const [searchResult, setSearchResult] = useState([])
   const [lastMessage, setLastMessage] = useState("")
+  const [chats, setChats] = useState("")
+  const [isEditchatActive, setIsEditChatActive] = useState(false)
+  const [choosedChatRoom, setChoosedChatRoom] = useState()
 
   const getLoginUser = useQuery({
     queryKey: ["user"],
@@ -26,6 +29,7 @@ const Context = ({children}) => {
     queryKey: ["chat"],
     queryFn: async () => {
       const response = await baseURL.get("/chat")
+      setChats(response.data.response)
       return response
     }
   })
@@ -57,19 +61,23 @@ const Context = ({children}) => {
   }
 
   if(!getLoginUser.isPending && !getLoginUserChats.isPending && ((chat_id && currentChat) || !chat_id)) {
-    const chats = getLoginUserChats.data.data.response
     const loginUser = getLoginUser.data.data.response
     return (
       <ChatContext.Provider 
         value={{
           loginUser,
           chats,
+          setChats,
           setCurrentChat,
           currentChat,
           searchResult,
           setSearchResult,
           lastMessage,
-          setLastMessage
+          setLastMessage,
+          setIsEditChatActive,
+          isEditchatActive,
+          setChoosedChatRoom,
+          choosedChatRoom
         }}
       >
         {children}

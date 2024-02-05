@@ -34,7 +34,7 @@ const ChatRoomSendBar = ({setSendMessage}) => {
         (e) => handleEditMessage(e) : 
         (e) => handlePostMessage(e)
       }
-      className="relative flex flex-col items-center w-full"
+      className="sticky bottom-0 flex flex-col items-center w-full bg-white dark:bg-gray-800 z-50"
     >
       <label 
         htmlFor="chatsSubmit"

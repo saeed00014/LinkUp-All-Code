@@ -9,6 +9,7 @@ const Context = ({children}) => {
   const [searchResult, setSearchResult] = useState("")
   const [category, setCategory] = useState("date")
   const [searchValue, setSearchValue] = useState("")
+  const [isSearchLoading, setIsSearchLoading] = useState(false)
 
   const getNewestPost = useQuery({
     queryKey: ["post"],
@@ -37,7 +38,9 @@ const Context = ({children}) => {
           category,
           setCategory,
           searchValue,
-          setSearchValue
+          setSearchValue,
+          isSearchLoading,
+          setIsSearchLoading
         }}
       >
         {children}

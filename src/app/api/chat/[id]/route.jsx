@@ -30,3 +30,19 @@ export async function GET(req, route) {
     return NextResponse.json({ response: "" }, { status: 500})
   }
 }
+
+export async function DELETE(req, route) {
+  const id = route.params.id
+  const result = await query({
+    query: "DELETE FROM CHAT WHERE id = ?",
+    values: [id]
+  })
+  if(!result.errno && result.affectedRows == 1) {
+    return NextResponse.json({ response: "chat deleted" }, { status: 200})
+  }
+  if(!result.errno && result.affectedRows == 0) {
+    return NextResponse.json({ response: "chat not found" }, { status: 404})
+  }
+  return NextResponse.json({ response: "there waws a problem pls try agian later" }, { status: 500})
+
+}

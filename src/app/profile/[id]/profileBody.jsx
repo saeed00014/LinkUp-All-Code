@@ -28,11 +28,11 @@ const ProfileBody = () => {
   }, [page])
 
   return (
-    <div className="flex justify-center items-start xl:gap-[15rem] w-full h-svh px-4 mt-4 pb-[400px] overflow-y-scroll">
+    <div className="flex justify-center items-start xl:gap-[15rem] w-full h-svh px-4 mt-3 pb-[400px] overflow-y-scroll">
       <div className="flex flex-col justify-start gap-6">
         {isLoginUser && 
           <PostMaker 
-            localLoginUser={user} 
+            loginUser={user} 
           />
         }
         {posts[0] ? 

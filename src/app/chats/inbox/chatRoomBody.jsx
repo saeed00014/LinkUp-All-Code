@@ -65,7 +65,10 @@ const ChatRoomBody = () => {
   }, [sendMessage])
 
   return (
-    <div className="relative flex flex-col justify-between w-full h-auto bg-gray-200 dark:bg-gray-950">
+    <div
+      id="chatMessageListCon"
+      className="relative flex flex-col justify-between w-full h-full bg-gray-200 dark:bg-gray-950"
+    >
       <ChatMessageContext.Provider 
         value={{ 
           messages,
@@ -84,11 +87,11 @@ const ChatRoomBody = () => {
         {!getCurrentChatMessages.isPending ? 
           <ul 
             id="chatMessageList"
-            className="relative flex flex-col-reverse w-full h-full justify-start items-start py-2 px-2 gap-1 !overflow-y-auto"
+            className="relative flex flex-col-reverse w-full h-full overflow-y-scroll justify-start items-start py-2 px-2 gap-1"
           >
-            <div className="flex-col-revers w-full h-full">
-              {messages[0] ? 
-                messages.map((message) => {
+            {messages[0] ? 
+              <div className="flex-col-revers w-full h-fit">
+                {messages.map((message) => {
                   return (
                     <div 
                       key={message.id} 
@@ -97,36 +100,36 @@ const ChatRoomBody = () => {
                       <Message message={message} />
                     </div>
                   )
-                })
-              : 
-                <div className="flex flex-col items-center justify-center w-full h-full gap-1">
-                  <span className="relative flex h-24 w-24">
-                    <Image
-                      src={targetUser.image || defaultImage}
-                      alt="profile picture"
-                      width={100}
-                      height={100}
-                      className="rounded-full"        
-                    />
+                })}
+              </div>
+            : 
+              <div className="flex flex-col items-center justify-center w-full h-full gap-1">
+                <span className="relative flex h-24 w-24">
+                  <Image
+                    src={targetUser.image || defaultImage}
+                    alt="profile picture"
+                    width={100}
+                    height={100}
+                    className="rounded-full"        
+                  />
+                </span>
+                <div className="flex items-center gap-1">
+                  <span className="pb-[.3rem]">
+                    {targetUser.firstname}
                   </span>
-                  <div className="flex items-center gap-1">
-                    <span className="pb-[.3rem]">
-                      {targetUser.firstname}
-                    </span>
-                    <span>|</span>
-                    <span>
-                      {targetUser.username}
-                    </span>
-                  </div>
-                  <Link
-                    href={`/profile/${targetUser.id}`}
-                    className="px-4 py-2 rounded-[.5rem] bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700"
-                  >
-                    {chatData.viewProfile}
-                  </Link>
+                  <span>|</span>
+                  <span>
+                    {targetUser.username}
+                  </span>
                 </div>
-              }
-            </div>
+                <Link
+                  href={`/profile/${targetUser.id}`}
+                  className="px-4 py-2 rounded-[.5rem] bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700"
+                >
+                  {chatData.viewProfile}
+                </Link>
+              </div>
+            }
           </ul> 
           : 
           <div className="flex items-center justify-center w-full h-full">

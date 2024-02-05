@@ -32,7 +32,5 @@ export async function DELETE(req, route) {
   if(result && !result.errno && result.affectedRows == "0") {
     return NextResponse.json({ deleted: false }, { status: 404 })
   }
-  if(result) {
-    return NextResponse.json({ response: "" }, { status: 500 })
-  }
+  return NextResponse.json({ response: "" }, { status: 500 })
 }

@@ -17,6 +17,7 @@ const Message = ({message}) => {
     const scrollToBottom = () => {
       const element = document.getElementById("chatMessageList")
       element && (element.scrollTop = 0)
+      console.log(element.scrollTop)
     }
     scrollToBottom()
   }, [message.id])

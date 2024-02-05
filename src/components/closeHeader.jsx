@@ -8,7 +8,7 @@ const CloseHeader = ({setEvent, title}) => {
       </span>
       <button 
         onClick={() => setEvent(false)} 
-        className='relative flex items-center justify-center font-normal text-3xl min-w-[40px] max-w-[40px] min-h-[40px] max-h-[40px] rounded-full hover:bg-gray-200 dark:hover:bg-gray-600'
+        className='relative flex p-2 text-3xl rounded-full hover:bg-gray-200 dark:hover:bg-gray-600'
       >
         <IoClose />
       </button>

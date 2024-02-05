@@ -7,23 +7,32 @@ import { explore } from "@/assets/data/data"
 import { baseURL } from "@/axios/axios"
 
 const ExploreSearch = () => {
-  const { setSearchResult, searchValue, setSearchValue, category } = useContext(ExploreContext)
+  const { setSearchResult, searchValue, setSearchValue, category, setIsSearchLoading } = useContext(ExploreContext)
   const getSearchResult = useMutation({
-    mutationFn: async (searchValue) => {
-      const response = await baseURL.get(`/post/search?value=${searchValue}&category=${category}`)
-      if(response.data) {
-        setSearchResult(response.data.response)
-      }
+    mutationFn: (searchValue) => {
+      baseURL.get(`/post/search?value=${searchValue}&category=${category}`)
+        .then(res => {
+          console.log(res)
+          setSearchResult(res.data.response)
+          setIsSearchLoading(false)
+        })
+        .catch(err => {
+          console.log(err)
+          setIsSearchLoading(false)
+        })
     }
   })
+
   const handleChange = (e) => {
     const value = e.target.value
-    setSearchValue(value)
-    !value && setSearchResult("")
+    !value && setSearchValue("")
   }
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     const value = e.target.text.value
+    value && setSearchValue(value)
+    value && setIsSearchLoading(true)
     value && getSearchResult.mutate(value)
   }
 
@@ -43,7 +52,6 @@ const ExploreSearch = () => {
           name="text"
           id="text"
           placeholder={explore.searchBar}
-          value={searchValue}
           onChange={(e) => handleChange(e)}
           className="w-full py-2 pr-10 pl-1 bg-gray-200 dark:bg-gray-700 rounded-[3rem] z-40"
         />

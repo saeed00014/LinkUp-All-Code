@@ -111,7 +111,11 @@ export const postText = {
   input: "نظر خود را بنویسید",
   name: "نسرین",
   testComment: "چقدر زیبا",
-  liked: "لایک شده"
+  liked: "لایک شده",
+  delete: "آیا میخواهید این پست را حذف کنید؟",
+  deleteOk: "بله",
+  deleteCancel: "خیر",
+  problem: "مشکلی وجود دارد لطفا بعدا امتحان کنید"
 }
 
 export const postShare = {
@@ -215,10 +219,13 @@ export const groups = {
 
 export const chatData = {
   chooseChat: "یک چت را انتخاب کنید",
-  viewProfile: "مشاهده پروفایل"
+  viewProfile: "مشاهده پروفایل",
+  newChat: "چت جدید",
+  editChat: "تغییر چتها"
 }
 
 export const notFound = {
   notFound: "هیچ نتیجه ای یافت نشد",
   goHome: "بازگشت به خانه"
 }
+

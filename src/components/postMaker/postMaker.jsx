@@ -9,7 +9,7 @@ import Image from "next/image"
 import defaultImage from "@/assets/images/default.jpg"
 import { postMakerData } from "@/assets/data/data"
 
-const PostMaker = ({localLoginUser}) => {
+const PostMaker = ({loginUser}) => {
   const [isMakePostActive, setIsMakePostActive] = useState(false)
 
   return (
@@ -18,7 +18,7 @@ const PostMaker = ({localLoginUser}) => {
         <span className="relative min-w-12 h-12 rounded-full overflow-hidden">
           <Image 
             fill={true}
-            src={localLoginUser.image || defaultImage}
+            src={loginUser.image || defaultImage}
             alt="profile picture"
           />
         </span>

@@ -23,10 +23,11 @@ export async function PUT(req, route) {
     query: "UPDATE user SET username = ?, email = ?, firstname = ?, lastname = ?, job = ?, link = ?, bio = ?, image = ?, background = ? WHERE id = ?",
     values: [username, email, firstname, lastname, job, link, bio, image, background, id]
   })
-  if(result.affectedRows) {
+  if(result && !result.errno && result.affectedRows == 1) {
     return NextResponse.json({ response: "changes saved" }, { status: 200 })
   }
-  if(result) {
-    return NextResponse.json({ response: "failed" }, { status: 500 })
-  }
+  if(result && !result.errno && result.affectedRows == 0) {
+    return NextResponse.json({ response: "user notfound" }, { status: 404 })
+  } 
+  return NextResponse.json({ response: "failed" }, { status: 500 })
 }

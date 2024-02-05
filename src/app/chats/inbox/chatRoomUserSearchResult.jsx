@@ -9,12 +9,13 @@ import { baseURL } from "@/axios/axios"
 
 const ChatRoomUserSearchResult = ({user}) => {
   const router = useRouter()
-  const { setCurrentChat } = useContext(ChatContext)
+  const { loginUser, setChats, setCurrentChat } = useContext(ChatContext)
   const getUserChatId = useMutation({
     mutationFn: async () => {
       const response = await baseURL.get(`/chat/${user.id}`)
       const chat_id = response.data.chat_id
       router.push(`/chats/inbox?chat_id=${chat_id}&targetUser_id=${user.id}`)
+      setChats(prev => [...prev, {id: chat_id, userOne: user.id, userTwo: loginUser.id}])
       setCurrentChat({
         targetUser: user, 
         chat_id: chat_id

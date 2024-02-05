@@ -1,12 +1,13 @@
 "use client"
 import { useContext, useState } from "react"
-import { profile, ProfileEditFormData } from "@/assets/data/data"
+import { postText, profile, ProfileEditFormData } from "@/assets/data/data"
 import { useMutation } from "@tanstack/react-query"
 import { ProfileContext } from "@/context/context"
 import ImageDragDrop from "@/components/imageDragDrop"
 import CloseHeader from "@/components/closeHeader"
 import Input from "./input"
 import { baseURL } from "@/axios/axios"
+import LoadingSpin from "@/components/loadingSpin"
 
 const ProfileEditForm = () => {
   const { user, setIsEditActive } = useContext(ProfileContext)
@@ -19,11 +20,21 @@ const ProfileEditForm = () => {
   const [bio, setBio] = useState(user.bio || "")
   const [image, setImage] = useState(user.image)
   const [background, setBackground] = useState(user.background)
+  const [isEditLoading, setIsEditLoading] = useState(false)
+  const [isEditError, setIsEditError] = useState(false)
 
   const putUser = useMutation({
-    mutationFn: async (editedValues) => {
-      const response = await baseURL.put(`/user/${user.id}`, editedValues)
-      location.reload("")
+    mutationFn: (editedValues) => {
+      baseURL.put(`/user/${user.id}`, editedValues)
+        .then(res => {
+          setIsEditLoading(false)
+          setIsEditError(false)
+          location.reload("")
+        })
+        .catch(err => {
+          setIsEditLoading(false)
+          setIsEditError(true)
+        })
     }
   })
 
@@ -40,6 +51,7 @@ const ProfileEditForm = () => {
       image : image,
       background: background
     }
+    setIsEditLoading(true)
     putUser.mutate(editedValues)
   }
 
@@ -60,6 +72,7 @@ const ProfileEditForm = () => {
               name="firstname"
               id="firstname"
               value={firstname}
+              maxValue={"25"}
               setValue={setFirstname}
             />
             <Input
@@ -68,6 +81,7 @@ const ProfileEditForm = () => {
               name="lastname"
               id="lastname"
               value={lastname}
+              maxValue={"25"}
               setValue={setLastname}
             />
           </div>
@@ -78,6 +92,7 @@ const ProfileEditForm = () => {
               name="username"
               id="username"
               value={username}
+              maxValue={"12"}
               setValue={setUsername}
             />
             <Input
@@ -86,6 +101,7 @@ const ProfileEditForm = () => {
               name="email"
               id="email"
               value={email}
+              maxValue={"40"}
               setValue={setEmail}
             />
           </div>
@@ -96,6 +112,7 @@ const ProfileEditForm = () => {
               name="job"
               id="job"
               value={job}
+              maxValue={"40"}
               setValue={setJob}
             />
             <Input
@@ -104,6 +121,7 @@ const ProfileEditForm = () => {
               name="link"
               id="link"
               value={link}
+              maxValue={"40"}
               setValue={setLink}
             />
           </div>
@@ -113,6 +131,7 @@ const ProfileEditForm = () => {
             name="bio"
             id="bio"
             value={bio}
+            maxValue={"255"}
             setValue={setBio}
           />
           <ImageDragDrop 
@@ -127,12 +146,22 @@ const ProfileEditForm = () => {
             lable={ProfileEditFormData.background} 
             edition="background"
           />
-          <div>
+          <div className="relative flex items-center gap-2">
             <input 
               type="submit" 
               value={ProfileEditFormData.submitEdit}
               className="border-none !w-fit !px-14 py-2 !bg-gray-200 dark:!bg-gray-700 hover:!bg-gray-300 dark:hover:!bg-gray-600 cursor-pointer"
             />
+            {isEditLoading && 
+              <span className="absolute right-1 scale-75">
+                <LoadingSpin />
+              </span>
+            }
+            {isEditError && 
+              <span className="flex justify-start w-full text-[.95rem] text-red-600">
+                {postText.problem}
+              </span>
+            }
           </div>
         </form>
       </div>
