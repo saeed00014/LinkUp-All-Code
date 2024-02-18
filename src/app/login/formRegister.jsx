@@ -1,124 +1,144 @@
-import { useRef, useState } from "react"
-import { useMutation } from "@tanstack/react-query"
-import Cookies from 'universal-cookie'
-import Input from "./input"
-import InputRadio from "./inputRadio"
-import InputSelect from "./inputSelect"
-import InputSelectTitle from "./inputSelectTitle"
-import CloseHeader from "@/components/closeHeader"
-import { patterns, selectOptionsMounths, register } from "@/assets/data/data"
-import { baseURL } from "@/axios/axios"
+import React, { useRef, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import Cookies from "universal-cookie";
+import Input from "./input";
+import InputRadio from "./inputRadio";
+import InputSelect from "./inputSelect";
+import InputSelectTitle from "./inputSelectTitle";
+import CloseHeader from "@/components/closeHeader";
+import { patterns, register } from "@/assets/data/data";
+import { baseURL } from "@/axios/axios";
 
-const formRegister = ({setRegister}) => {
-  const ref = useRef()
-  const [firstnameErorr, setFirstnameErorr] = useState(false)
-  const [lastnameErorr, setLastnameErorr] = useState(false)
-  const [emailErorr, setEmailErorr] = useState(false)
-  const [usernameErorr, setUsernameErorr] = useState(false)
-  const [birthErorr, setBirthErorr] = useState(false)
-  const [genderErorr, setGenderErorr] = useState(false)
-  const [passwordErorr, setPasswordErorr] = useState(false)
-  const [confirmPasswordErorr, setConfirmPasswordErorr] = useState(false)
-  const [confirmPasswordErorrMessage, setConfirmPasswordErorrMessage] = useState("")
-  const [repeatedUsername, setRepeatedUsername] = useState(false)
-  const [repeatedEmail, setRepeatedEmail] = useState(false)
+const FormRegister = ({ setRegister }) => {
+  const ref = useRef();
+  const [firstnameErorr, setFirstnameErorr] = useState(false);
+  const [lastnameErorr, setLastnameErorr] = useState(false);
+  const [emailErorr, setEmailErorr] = useState(false);
+  const [usernameErorr, setUsernameErorr] = useState(false);
+  const [birthErorr, setBirthErorr] = useState(false);
+  const [genderErorr, setGenderErorr] = useState(false);
+  const [passwordErorr, setPasswordErorr] = useState(false);
+  const [confirmPasswordErorr, setConfirmPasswordErorr] = useState(false);
+  const [confirmPasswordErorrMessage, setConfirmPasswordErorrMessage] =
+    useState("");
+  const [repeatedUsername, setRepeatedUsername] = useState(false);
+  const [repeatedEmail, setRepeatedEmail] = useState(false);
 
   const mutation = useMutation({
     mutationFn: (newUser) => {
-      baseURL.post('/user', newUser)
-        .then(res => {
-          const data = res.data
-          if(data.repeated) {
-            data.repeated.includes('email') ? 
-            (setRepeatedEmail(true), setRepeatedUsername(false))
-            : (setRepeatedUsername(true), setRepeatedEmail(false))
+      baseURL
+        .post("/user", newUser)
+        .then((res) => {
+          const data = res.data;
+          console.log(data)
+          if (data.repeated) {
+            console.log(data.repeated)
+            data.repeated.includes("email")
+              ? (setRepeatedEmail(true), setRepeatedUsername(false))
+              : (setRepeatedUsername(true), setRepeatedEmail(false));
           } else {
-            setRepeatedEmail(false)
-            setRepeatedUsername(false)
+            setRepeatedEmail(false);
+            setRepeatedUsername(false);
           }
-          if(data.id) {
-            const cookies = new Cookies()
-            cookies.set('user', data, {path: "/"})
-            location.reload("")
+          if (data.id) {
+            const cookies = new Cookies();
+            cookies.set("user", data, { path: "/" });
+            location.reload("");
           }
         })
-        .catch(err => {
-          (err)
-        })
+        .catch((err) => {
+          err;
+        });
     },
-  })
+  });
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    const currentRef = ref.current
-    const firstname = currentRef.firstname.value
-    const lastname = currentRef.lastname.value
-    const email = currentRef.email.value
-    const username = currentRef.username.value
-    const years = currentRef.years.value
-    const gender = currentRef.gender.value
-    const password = currentRef.password.value
-    const confirmPassword = currentRef.confirmPassword.value
+    e.preventDefault();
+    const currentRef = ref.current;
+    const firstname = currentRef.firstname.value;
+    const lastname = currentRef.lastname.value;
+    const email = currentRef.email.value;
+    const username = currentRef.username.value;
+    const years = currentRef.years.value;
+    const gender = currentRef.gender.value;
+    const password = currentRef.password.value;
+    const confirmPassword = currentRef.confirmPassword.value;
 
-    if(password == confirmPassword && password != "") {
-      setConfirmPasswordErorrMessage(false)
+    if (password == confirmPassword && password != "") {
+      setConfirmPasswordErorrMessage(false);
     } else {
-      setConfirmPasswordErorrMessage(true)
-    } 
-    if(!patterns.fill.test(firstname)) {setFirstnameErorr(true)}
-    if(!patterns.fill.test(lastname)) {setLastnameErorr(true)}
-    if(!patterns.email.test(email)) {setEmailErorr(true)}
-    if(!patterns.username.test(username)) {setUsernameErorr(true)}
-    if(!patterns.password.test(password)) {setPasswordErorr(true)}
-    if(!patterns.password.test(confirmPassword)) {setConfirmPasswordErorr(true)}
-    if(!patterns.fill.test(gender)) {setGenderErorr(true)}
-    if(years >= 1384) {setBirthErorr(true)}
-    if(!confirmPasswordErorrMessage && !firstnameErorr && !lastnameErorr && !usernameErorr && !emailErorr && !passwordErorr && !genderErorr && !birthErorr) {
-      mutation.mutate({
-        username : username, 
-        email : email, 
-        firstname : firstname, 
-        lastname : lastname, 
-        gender : gender, 
-        years : years, 
-        password : password
-      })
+      setConfirmPasswordErorrMessage(true);
     }
-  } 
+    if (!patterns.fill.test(firstname)) {
+      setFirstnameErorr(true);
+    }
+    if (!patterns.fill.test(lastname)) {
+      setLastnameErorr(true);
+    }
+    if (!patterns.email.test(email)) {
+      setEmailErorr(true);
+    }
+    if (!patterns.username.test(username)) {
+      setUsernameErorr(true);
+    }
+    if (!patterns.password.test(password)) {
+      setPasswordErorr(true);
+    }
+    if (!patterns.password.test(confirmPassword)) {
+      setConfirmPasswordErorr(true);
+    }
+    if (!patterns.fill.test(gender)) {
+      setGenderErorr(true);
+    }
+    if (years >= 1384) {
+      setBirthErorr(true);
+    }
+    if (
+      !confirmPasswordErorrMessage &&
+      !firstnameErorr &&
+      !lastnameErorr &&
+      !usernameErorr &&
+      !emailErorr &&
+      !passwordErorr &&
+      !genderErorr &&
+      !birthErorr 
+    ) {
+      mutation.mutate({
+        username: username,
+        email: email,
+        firstname: firstname,
+        lastname: lastname,
+        gender: gender,
+        years: years,
+        password: password,
+      });
+    }
+  };
 
-  const days = []
-  for (let i = 1; i <= 31; i++ ) {
-    days.push(i)
-  }
-  const years = []
-  for (let i = 1402; i >= 1302; i-- ) {
-    years.push(i)
-  }
-
-  return (  
-    <form 
+  return (
+    <form
       ref={ref}
-      onSubmit={(e) => handleSubmit(e)} 
+      onSubmit={(e) => handleSubmit(e)}
       className="flex flex-col bg-white dark:bg-gray-900 md:gap-4 gap-2 shadow-3xl p-4 pt-0 w-[400px] rounded-[.5rem]"
     >
       <div className="text-[1.5rem] -mb-2">
         <CloseHeader setEvent={setRegister} title={register.register} />
       </div>
       <div className="flex items-center w-full gap-2">
-        <Input 
-          type="name" 
-          id="firstname" 
-          name="firstname" 
+        <Input
+          type="name"
+          id="firstname"
+          name="firstname"
           placeholder={register.name}
           setError={setFirstnameErorr}
           pattern={patterns.fill}
           isIconError={firstnameErorr}
           iconErrorText={register.fillErorr}
         />
-        <Input 
-          type="name" 
-          id="lastname" 
-          name="lastname" 
+        <Input
+          type="name"
+          id="lastname"
+          name="lastname"
           placeholder={register.lastname}
           setError={setLastnameErorr}
           pattern={patterns.fill}
@@ -126,10 +146,10 @@ const formRegister = ({setRegister}) => {
           iconErrorText={register.fillErorr}
         />
       </div>
-      <Input 
-        type="text" 
-        id="email" 
-        name="email" 
+      <Input
+        type="text"
+        id="email"
+        name="email"
         placeholder={register.email}
         setError={setEmailErorr}
         pattern={patterns.email}
@@ -138,17 +158,17 @@ const formRegister = ({setRegister}) => {
         isTextError={repeatedEmail}
         textErrorText={register.emailRepeated}
       />
-      <Input 
-        type="username" 
-        id="username" 
-        name="username" 
+      <Input
+        type="username"
+        id="username"
+        name="username"
         placeholder={register.username}
         setError={setUsernameErorr}
         pattern={patterns.username}
         isIconError={usernameErorr}
         iconErrorText={register.usernameErorr}
         isTextError={repeatedUsername}
-        textErrorText={register.repeatedUsername}
+        textErrorText={register.usernameRepeated}
       />
       <InputSelectTitle
         title={register.birthDate}
@@ -156,22 +176,16 @@ const formRegister = ({setRegister}) => {
         iconErrorText={register.birthErorr}
       />
       <div className="flex w-full md:gap-2 gap-1">
-        <InputSelect 
-          id="days"
-          name="days" 
-          options={days}
-        />
-        <InputSelect 
+        <InputSelect id="days" name="days" />
+        <InputSelect
           id="mounths"
-          name="mounths" 
-          options={selectOptionsMounths}
+          name="mounths"
         />
-        <InputSelect 
+        <InputSelect
           id="years"
-          name="years" 
+          name="years"
           setError={setBirthErorr}
           pattern={patterns.fill}
-          options={years}
         />
       </div>
       <InputSelectTitle
@@ -180,39 +194,39 @@ const formRegister = ({setRegister}) => {
         iconErrorText={register.genderErorr}
       />
       <div className="flex items-center w-full md:gap-2 gap-1">
-        <InputRadio 
+        <InputRadio
           label={register.female}
-          type="radio" 
-          id="female" 
-          name="gender" 
+          type="radio"
+          id="female"
+          name="gender"
           value="female"
           setError={setGenderErorr}
           pattern={patterns.fill}
         />
-        <InputRadio 
+        <InputRadio
           label={register.male}
-          type="radio" 
-          id="male" 
-          name="gender" 
+          type="radio"
+          id="male"
+          name="gender"
           value="male"
           setError={setGenderErorr}
           pattern={patterns.fill}
         />
       </div>
-      <Input 
-        type="password" 
-        id="password" 
-        name="password" 
+      <Input
+        type="password"
+        id="password"
+        name="password"
         placeholder={register.pass}
         setError={setPasswordErorr}
         pattern={patterns.password}
         isIconError={passwordErorr}
         iconErrorText={register.passErorr}
       />
-      <Input 
-        type="password" 
-        id="confirmPassword" 
-        name="confirmPassword" 
+      <Input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
         placeholder={register.passRepeat}
         setError={setConfirmPasswordErorr}
         pattern={patterns.password}
@@ -222,14 +236,14 @@ const formRegister = ({setRegister}) => {
         textErrorText={register.passRepeatedErorr}
       />
       <span className="flex justify-center w-full">
-        <input 
-          type="submit" 
-          value={register.register} 
+        <input
+          type="submit"
+          value={register.register}
           className="w-[200px] h-10 md:mt-4 mt-2 bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-500 text-white rounded-[.3rem] cursor-pointer"
         />
       </span>
     </form>
-  )
-}
+  );
+};
 
-export default formRegister
+export default FormRegister;

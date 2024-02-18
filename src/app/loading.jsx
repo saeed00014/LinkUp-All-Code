@@ -1,3 +1,5 @@
+import React from "react";
+
 const Loading = () => {
   return (
     <div className="fixed left-0 top-0 right-0 bottom-0 flex items-center justify-center z-[110] bg-gray-200 dark:bg-gray-800/75">
@@ -8,7 +10,7 @@ const Loading = () => {
         <span className="w-[.8rem] h-[.8rem] bg-white animate-[loading_1s_ease-in-out_infinite_1s] rounded-full"></span>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Loading
+export default Loading;

@@ -3,9 +3,9 @@ import { FaTrash } from "react-icons/fa"
 import { baseURL } from "@/axios/axios"
 
 const MessageDelete = ({ setMessages, setChooseMessage, chooseMessage, edition }) => {
-  const url = (edition == "message") ? 
-    `/message/${chooseMessage.id}` 
-  : `/comment/${chooseMessage.id}`
+  const url = (edition == "message") ?
+    `/message/${chooseMessage.id}`
+    : `/comment/${chooseMessage.id}`
 
   const deleteMessage = useMutation({
     mutationFn: async () => {
@@ -13,10 +13,10 @@ const MessageDelete = ({ setMessages, setChooseMessage, chooseMessage, edition }
       return response
     }
   })
-  
+
   const handleDelete = () => {
     deleteMessage.mutate()
-    setMessages(oldMessages => 
+    setMessages(oldMessages =>
       oldMessages.filter((oldMessage) => oldMessage.id != chooseMessage.id)
     )
     setChooseMessage("")

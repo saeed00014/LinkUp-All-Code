@@ -1,45 +1,52 @@
-import { query } from "@/db/db"
-import { NextResponse } from "next/server"
-import { cookies } from 'next/headers'
+import { query } from "@/db/db";
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 export async function GET(req) {
-  const post_id = req.nextUrl.searchParams.get("post_id")
-  const page = req.nextUrl.searchParams.get("page")
-  const endLimit = page * 50
-  const startLimit = endLimit - 50
-  const values = [post_id, startLimit, endLimit]
+  const post_id = req.nextUrl.searchParams.get("post_id");
+  const page = req.nextUrl.searchParams.get("page");
+  const endLimit = page * 50;
+  const startLimit = endLimit - 50;
+  const values = [post_id, startLimit, endLimit];
   const result = await query({
     query: `SELECT id,user_id,text FROM comment WHERE post_id = ${post_id} LIMIT ${startLimit}, ${endLimit}`,
-    values: values
-  })
-  if(result[0]) {
-    return NextResponse.json({ response: "get successfully", result: result }, { status: 200 })
+    values: values,
+  });
+  if (result[0]) {
+    return NextResponse.json(
+      { response: "get successfully", result: result },
+      { status: 200 }
+    );
   }
-  if(result) {
-    return NextResponse.json({ response: "failed" }, { status: 500 })
+  if (result) {
+    return NextResponse.json({ response: "failed" }, { status: 500 });
   }
 }
 
 export async function POST(req) {
-  const cookie = cookies()
-  const loginUserCookie = cookie.get("user") && cookie.get("user").value
-  const loginUser = loginUserCookie && JSON.parse(loginUserCookie)
-  const post_id = req.nextUrl.searchParams.get("post_id")
-  const text = await req.json()
-  const values = [post_id, loginUser.id, text.text]
+  const cookie = cookies();
+  const loginUserCookie = cookie.get("user")?.value;
+  const loginUser = loginUserCookie && JSON.parse(loginUserCookie);
+  const post_id = req.nextUrl.searchParams.get("post_id");
+  const text = await req.json();
+  const values = [post_id, loginUser.id, text.text];
   const result = await query({
-    query: "INSERT INTO `comment` (`post_id`, `user_id`, `text`) VALUES (?, ?, ?)",
-    values: values
-  })
-  const values2 = [post_id]
+    query:
+      "INSERT INTO `comment` (`post_id`, `user_id`, `text`) VALUES (?, ?, ?)",
+    values: values,
+  });
+  const values2 = [post_id];
   const result2 = await query({
     query: "UPDATE post SET comments = comments + 1 WHERE id = ?",
-    values: values2
-  })
-  if(result.insertId) {
-    return NextResponse.json({ response: "inserted successfully", insertId: result.insertId }, { status: 200 })
+    values: values2,
+  });
+  if (result.insertId) {
+    return NextResponse.json(
+      { response: "inserted successfully", insertId: result.insertId },
+      { status: 200 }
+    );
   }
-  if(result) {
-    return NextResponse.json({ response: "failed" }, { status: 500 })
+  if (result) {
+    return NextResponse.json({ response: "failed" }, { status: 500 });
   }
 }

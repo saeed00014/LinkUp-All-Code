@@ -11,7 +11,7 @@ import { baseURL } from "@/axios/axios"
 const Message = ({message}) => {
   const { currentChat, loginUser} = useContext(ChatContext)
   const { chooseMessage, setChooseMessage, messages } = useContext(ChatMessageContext)
-  const { targetUser, chat_id } = currentChat
+  const { targetUser } = currentChat
   
   useEffect(() => {
     const scrollToBottom = () => {

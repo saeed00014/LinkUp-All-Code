@@ -1,0 +1,1 @@
+import { GET } from "@/app/api/auth/route"

@@ -1,16 +1,17 @@
-import Context from "./context"
-import ChatRoom from "./chatRoom"
-import ChatSideBar from "./chatSideBar"
+import React from "react";
+import Context from "./context";
+import Room from "./room";
+import SideBar from "./sideBar";
 
 const Chat = () => {
   return (
-    <div className="flex justify-start w-full h-full">
+    <div className="flex justify-start w-full h-full !overflow-hidden">
       <Context>
-        <ChatSideBar />
-        <ChatRoom />
+        <SideBar />
+        <Room />
       </Context>
     </div>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;

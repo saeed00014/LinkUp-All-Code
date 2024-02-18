@@ -1,7 +1,7 @@
-import PageHeader from "@/components/pageHeader"
-import ExploreHeader from "./exploreHeader"
-import ExploreBody from "./exploreBody"
-import Context from "./context"
+import Context from "./context";
+import PageHeader from "@/components/pageHeader";
+import ExploreHeader from "./exploreHeader";
+import ExploreBody from "./exploreBody";
 
 const Explore = () => {
   return (
@@ -12,7 +12,7 @@ const Explore = () => {
         <ExploreBody />
       </Context>
     </section>
-  )
-}
+  );
+};
 
-export default Explore
+export default Explore;

@@ -1,80 +1,90 @@
-"use client"
-import { useContext, useState } from "react"
-import { HomeContext } from "@/context/context"
-import { IoMdArrowDropright } from "react-icons/io"
-import SideBarSuggestion from "./sideBarSuggestion"
-import UserSearch from "../../components/userSearch"
-import UserSearchResult from "./userSearchResult"
-import { home, sideBar } from "@/assets/data/data"
-import LoadingSpin from "@/components/loadingSpin"
+"use client";
+import React, { useState } from "react";
+import { IoMdArrowDropright } from "react-icons/io";
+import SideBarSuggestion from "./sideBarSuggestion";
+import UserSearch from "../../components/userSearch";
+import UserSearchResult from "./userSearchResult";
+import LoadingSpin from "@/components/loadingSpin";
+import { home, sideBar } from "@/assets/data/data";
+import { useQuery } from "@tanstack/react-query";
+import { baseURL } from "@/axios/axios";
 
 const SideBar = () => {
-  const { searchResult, setSearchResult, suggestedUsers } = useContext(HomeContext)
-  const [isOpen,  setIsOpen] = useState(false)
-  const [searchValue, setSearchValue] = useState("")
-  const [isPending, setIsPending] = useState("")
+  const [searchResult, setSearchResult] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [isPending, setIsPending] = useState("");
+
+  const getSuggestionUser = useQuery({
+    queryKey: ["suggestionUser"],
+    queryFn: async () => {
+      const users = await baseURL.get("/user");
+      return users;
+    },
+  });
 
   return (
-    <div className={`fixed ${isOpen ? "xl:left-0 left-0" : "xl:left-0 -left-[250px]" } duration-150 top-0 flex flex-col w-[250px] h-screen border-r border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-800 z-30`}>
+    <div
+      className={`fixed ${isOpen ? "xl:left-0 left-0" : "xl:left-0 -left-[250px]"} duration-150 top-0 flex flex-col w-[250px] h-screen border-r border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-800 z-30`}
+    >
       <span
         onClick={() => setIsOpen(!isOpen)}
         className={`absolute -right-[1.65rem] top-0 xl:hidden flex items-center justify-center w-[1.6rem] h-[57.9px] ${isOpen ? "rotate-180 border-l border-t" : " border-r border-b"} border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer`}
       >
-        <IoMdArrowDropright className="text-[1.6rem]"/>
+        <IoMdArrowDropright className="text-[1.6rem]" />
       </span>
-      <UserSearch 
+      <UserSearch
         type="home"
         setSearchResult={setSearchResult}
         setSearchValue={setSearchValue}
         setIsPending={setIsPending}
       />
-      {searchValue ? 
+      {searchValue ? (
         <div className="flex flex-col w-full rounded-[.3rem] h-screen bg-white dark:bg-gray-800 overflow-y-scroll z-30">
-          {isPending && 
+          {isPending && (
             <div className="flex justify-center w-full mt-9">
               <LoadingSpin />
             </div>
-          }
-          {searchResult[0] && !isPending && 
+          )}
+          {!isPending &&
+            searchResult[0] &&
             searchResult.map((result) => {
-            return (
-              <div key={result.id}>
-                <UserSearchResult 
-                  user={result}
-                /> 
-              </div>
-            )})
-          }
-          {!isPending && !searchResult[0] && 
+              return (
+                <div key={result.id}>
+                  <UserSearchResult user={result} />
+                </div>
+              );
+            })}
+          {!isPending && !searchResult[0] && (
             <div className="flex items-center justify-center w-full mt-9">
               {home.noResult}
             </div>
-          }
+          )}
         </div>
-        : 
+      ) : (
         <div className="flex flex-col justify-center items-center w-full h-fit px-2 py-2 gap-2">
           <span className="flex items-center justify-start w-full">
             {sideBar.papularUsers}
           </span>
           <div className="grid grid-cols-2 gap-2">
-            {suggestedUsers && 
-              suggestedUsers.map((user) => {
+            {!getSuggestionUser.isPending ? (
+              getSuggestionUser.data.data.response?.map((user) => {
                 return (
-                  <div 
-                    key={user.id}
-                  >
-                    <SideBarSuggestion
-                      user={user}
-                    />  
+                  <div key={user.id}>
+                    <SideBarSuggestion user={user} />
                   </div>
-                )
+                );
               })
-            }
+            ) : (
+              <div className="flex w-full h-full items-center justify-center">
+                <LoadingSpin />
+              </div>
+            )}
           </div>
         </div>
-      }
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default SideBar
+export default SideBar;

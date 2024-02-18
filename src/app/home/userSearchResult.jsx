@@ -1,13 +1,13 @@
-"use client"
-import Image from "next/image"
-import defaultImage from "@/assets/images/default.jpg"
-import { useRouter } from "next/navigation"
+"use client";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import defaultImage from "@/assets/images/default.jpg";
 
-const UserSearchResult = ({user}) => {
-  const router = useRouter()
+const UserSearchResult = ({ user }) => {
+  const router = useRouter();
   const handleClick = (user) => {
-    router.push(`/profile/${user.id}`)
-  }
+    router.push(`/profile/${user.id}`);
+  };
 
   return (
     <div
@@ -16,7 +16,7 @@ const UserSearchResult = ({user}) => {
     >
       <div className="flex w-full py-2 px-3 gap-2 hover:bg-gray-700">
         <span className="flex justify-center">
-          <Image 
+          <Image
             src={user.image || defaultImage}
             width={50}
             height={50}
@@ -25,16 +25,12 @@ const UserSearchResult = ({user}) => {
           />
         </span>
         <div className="flex flex-col justify-center items-start text-[.9rem]">
-          <span>
-            {user.firstname}
-          </span>
-          <span>
-            {user.username}
-          </span>
+          <span>{user.firstname}</span>
+          <span>{user.username}</span>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserSearchResult
+export default UserSearchResult;

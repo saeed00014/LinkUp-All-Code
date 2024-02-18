@@ -1,11 +1,12 @@
-import "./globals.css"
-import Header from "@/components/header/header"
-import Providers from "@/providers/providers"
+import React from "react";
+import Providers from "@/providers/providers";
+import Header from "@/components/header/header";
+import "./globals.css";
 
 export const metadata = {
   title: "LinkUp social media app",
   description: "LinkUp is a social media app capeble of doing everything",
-}
+};
 
 export default function RootLayout({ children }) {
   return (
@@ -19,5 +20,5 @@ export default function RootLayout({ children }) {
         </Providers>
       </body>
     </html>
-  )
+  );
 }
