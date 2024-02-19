@@ -20,7 +20,7 @@ export async function GET() {
 
 export async function POST(req) {
   const cookie = cookies();
-  const loginUserCookie = cookie.get("user") && cookie.get("user").value;
+  const loginUserCookie = cookie.get("user")?.value;
   const loginUser = loginUserCookie && JSON.parse(loginUserCookie);
   const body = await req.json();
   const isComments = body.isCommentsChecked ? 1 : 0;

@@ -1,7 +1,7 @@
 import { query } from "@/db/db";
 import { NextResponse } from "next/server";
 
-export async function GET(route) {
+export async function GET(req, route) {
   const post_id = route.params.id;
   const values = [post_id];
   const result = await query({

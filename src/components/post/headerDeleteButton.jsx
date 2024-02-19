@@ -6,7 +6,7 @@ import { baseURL } from "@/axios/axios";
 import LoadingSpin from "../loadingSpin";
 import { postText } from "@/assets/data/data";
 
-const PostHeaderButtonDelete = () => {
+const HeaderDeleteButton = () => {
   const { post } = useContext(PostContext);
   const [isDeleteActive, setIsDeleteActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -80,4 +80,4 @@ const PostHeaderButtonDelete = () => {
   );
 };
 
-export default PostHeaderButtonDelete;
+export default HeaderDeleteButton;

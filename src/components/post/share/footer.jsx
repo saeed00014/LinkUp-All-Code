@@ -7,7 +7,7 @@ import defaultImage from "@/assets/images/default.jpg";
 import { postText } from "@/assets/data/data";
 import { baseURL } from "@/axios/axios";
 
-const PostShareUserPageFooter = () => {
+const Footer = () => {
   const { choosedUsers } = useContext(PostShareContext);
   const { post } = useContext(PostContext);
   const sendPost = useMutation({
@@ -60,4 +60,4 @@ const PostShareUserPageFooter = () => {
   );
 };
 
-export default PostShareUserPageFooter;
+export default Footer;

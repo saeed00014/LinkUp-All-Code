@@ -7,7 +7,7 @@ const ProfileButtonEdit = () => {
   return (
     <button
       onClick={() => setIsEditActive(true)}
-      className="w-full h-[1.8rem] dark:bg-gray-700 bg-gray-200"
+      className="w-full min-w-max h-[1.8rem] px-1 dark:bg-gray-700 bg-gray-200"
     >
       {profile.editProfile}
     </button>

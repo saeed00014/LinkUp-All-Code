@@ -6,7 +6,7 @@ import { FaHeart } from "react-icons/fa";
 import { postText } from "@/assets/data/data";
 import { baseURL } from "@/axios/axios";
 
-const PostFooterButtonLike = () => {
+const FooterLikeButton = () => {
   const { post, isLiked, setIsLiked, setLikeCount } = useContext(PostContext);
   const post_id = post.id;
   const likedPostsIdStorage = JSON.parse(localStorage.getItem("likedPostsId"));
@@ -61,4 +61,4 @@ const PostFooterButtonLike = () => {
   );
 };
 
-export default PostFooterButtonLike;
+export default FooterLikeButton;

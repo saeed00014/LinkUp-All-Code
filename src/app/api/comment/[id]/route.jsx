@@ -2,7 +2,7 @@ import { query } from "@/db/db";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function DELETE(route) {
+export async function DELETE(req, route) {
   const cookie = cookies();
   const loginUserCookie = cookie.get("user")?.value;
   const loginUser = loginUserCookie && JSON.parse(loginUserCookie);

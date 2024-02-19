@@ -151,12 +151,10 @@ export const postMakerFormData = {
 
 export const profile = {
   profile: "پروفایل",
-  id: "nasrin007jf",
-  name: "نسرین",
-  lastname: "علیزاده",
-  fullName: "نسرین علیزاده",
-  job: "عکاس",
-  job2: "طراح گرافیک",
+  username: "نام و نام کاربری:",
+  bio: "درباره",
+  job: "شغل",
+  link: "وب سایت",
   followers: "دنبال کرده",
   following: "دنبال شده",
   editProfile: "تغییر اطلاعات",

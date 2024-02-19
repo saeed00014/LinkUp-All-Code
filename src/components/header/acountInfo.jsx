@@ -11,14 +11,14 @@ const AcountInfo = () => {
   const getLoginUser = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const response = await baseURL.get(`/user/loginUser/userfull`);
+      const response = await baseURL.get(`/user/loginUser/userInfo`);
       return response;
     },
   });
   if (!getLoginUser.isPending) {
     const loginUser = getLoginUser.data.data.response;
     return (
-      <div className="sticky bottom-0 flex xl:justify-between justify-start items-center w-full h-fit xl:pr-2 xl:py-2 xl:rounded-[.6rem] rounded-full xl:bg-gray-100 hover:bg-gray-200 dark:xl:bg-gray-700 dark:hover:bg-gray-600 duration-100 cursor-pointer">
+      <div className="sticky bottom-0 flex xl:justify-between justify-start items-center w-full h-fit xl:pr-2 xl:py-1 xl:rounded-[.6rem] rounded-full xl:bg-gray-100 hover:bg-gray-200 dark:xl:bg-gray-700 dark:hover:bg-gray-600 duration-100 cursor-pointer">
         <Link
           href={`/profile/${loginUser.id}`}
           className="flex w-full h-fit gap-2"

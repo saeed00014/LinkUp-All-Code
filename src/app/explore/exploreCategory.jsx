@@ -11,7 +11,7 @@ const ExploreCategory = () => {
 
   return (
     <div className="flex items-center min-w-max h-[3.6rem] gap-3">
-      <label htmlFor="sort">{explore.sortBy}</label>
+      {/* <label htmlFor="sort">{explore.sortBy}</label> */}
       <select
         name="sort"
         id="sort"

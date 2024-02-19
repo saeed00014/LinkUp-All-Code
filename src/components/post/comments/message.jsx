@@ -5,13 +5,13 @@ import { PostCommentContext } from "@/context/context";
 import Image from "next/image";
 import defaultImage from "@/assets/images/default.jpg";
 import { baseURL } from "@/axios/axios";
-import MessageEdit from "../messageEdit";
-import MessageDelete from "../messageDelete";
+import MessageEdit from "../../messageEdit";
+import MessageDelete from "../../messageDelete";
 
-const PostComment = ({ message }) => {
+const Message = ({ message }) => {
   const { setComments, chooseMessage, setChooseMessage, setEditMessage } =
     useContext(PostCommentContext);
-    
+
   const commentUser = useQuery({
     queryKey: [`commentUser${message.id}`],
     queryFn: async () => {
@@ -71,4 +71,4 @@ const PostComment = ({ message }) => {
   }
 };
 
-export default PostComment;
+export default Message;

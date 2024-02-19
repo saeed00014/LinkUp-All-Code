@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { PostContext } from "@/context/context";
 import Image from "next/image";
 
-const PostBodyContent = () => {
+const Content = () => {
   const { post } = useContext(PostContext);
   return (
     <div className="flex flex-col gap-2 text-[.9rem]">
@@ -22,4 +22,4 @@ const PostBodyContent = () => {
   );
 };
 
-export default PostBodyContent;
+export default Content;

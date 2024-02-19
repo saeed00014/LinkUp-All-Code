@@ -7,6 +7,7 @@ import PostMaker from "@/components/postMaker/postMaker";
 import LoadingSpin from "@/components/loadingSpin";
 import { baseURL } from "@/axios/axios";
 import { home } from "@/assets/data/data";
+import ProfileInfo from "./profileInfo";
 
 const ProfileBody = () => {
   const { user, isLoginUser, page, targetUser_id } = useContext(ProfileContext);
@@ -41,9 +42,12 @@ const ProfileBody = () => {
   }, [page]);
 
   return (
-    <div className="flex justify-center items-start xl:gap-[15rem] w-full h-svh px-4 mt-3 pb-[400px] overflow-y-scroll">
-      <div className="flex flex-col justify-start gap-6">
+    <div className="flex flex-row justify-center items-start gap-2 w-full h-svh px-4 mt-3 pb-[400px] overflow-y-scroll">
+      <div className="flex flex-col justify-start items-center w-full gap-6">
         {isLoginUser && <PostMaker loginUser={user} />}
+        <div className="lg:hidden flex items-start justify-center lg:w-6/12 w-full">
+            <ProfileInfo />
+        </div>
         {!getFirstPosts.isPending && getFirstPosts.data.data.response[0] ? (
           <ProfileBodyPostList
             posts={getFirstPosts.data.data.response}
@@ -64,6 +68,9 @@ const ProfileBody = () => {
         {!getNewPosts.isPending && getNewPosts.data && (
           <ProfileBodyPostList posts={newPagePosts} index={3} />
         )}
+      </div>
+      <div className="sticky top-0 lg:flex hidden items-start justify-center lg:w-6/12 w-full">
+        <ProfileInfo />
       </div>
     </div>
   );

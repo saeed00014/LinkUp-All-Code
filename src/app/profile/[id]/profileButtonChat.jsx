@@ -29,7 +29,7 @@ const ProfileButtonChat = () => {
   return (
     <button
       onClick={handleChat}
-      className="flex items-center justify-center w-full h-[1.8rem] dark:bg-gray-700 bg-gray-200"
+      className="flex items-center justify-center w-full min-w-max h-[1.8rem] px-1 dark:bg-gray-700 bg-gray-200"
     >
       {profile.sendMessage}
     </button>

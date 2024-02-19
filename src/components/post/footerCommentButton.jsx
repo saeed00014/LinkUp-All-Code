@@ -4,7 +4,7 @@ import { PostContext } from "@/context/context";
 import { FaRegComment } from "react-icons/fa";
 import { postText } from "@/assets/data/data";
 
-const PostFooterButtonComment = () => {
+const FooterCommentButton = () => {
   const { post } = useContext(PostContext);
   const handleClick = () => {
     document.getElementById(`commentInputLable${post.id}`).click();
@@ -23,4 +23,4 @@ const PostFooterButtonComment = () => {
   );
 };
 
-export default PostFooterButtonComment;
+export default FooterCommentButton;

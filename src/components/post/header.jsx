@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { PostContext } from "@/context/context";
 import Link from "next/link";
-import PostHeaderButtonDelete from "./postHeaderButtonDelete";
-import PostHeaderButtonInfo from "./postHeaderButtonInfo";
+import HeaderDeleteButton from "./headerDeleteButton";
+import HeaderInfoButton from "./headerInfoButton";
 import defaultImage from "@/assets/images/default.jpg";
 import Image from "next/image";
 
-const PostHeader = ({ commentEdition }) => {
+const Header = ({ commentEdition }) => {
   const { post, postUser, isMyPost, miniEdition } = useContext(PostContext);
   return (
     <header
@@ -25,9 +25,9 @@ const PostHeader = ({ commentEdition }) => {
           <span>{postUser.username}</span>
         </div>
       </Link>
-      {isMyPost ? <PostHeaderButtonDelete /> : <PostHeaderButtonInfo />}
+      {isMyPost ? <HeaderDeleteButton /> : <HeaderInfoButton />}
     </header>
   );
 };
 
-export default PostHeader;
+export default Header;

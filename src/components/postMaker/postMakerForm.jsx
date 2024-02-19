@@ -2,6 +2,7 @@
 import { React, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import CloseHeader from "../closeHeader";
+import CloseBackground from "../closeBackground"
 import Input from "./input";
 import CheckInput from "./checkInput";
 import ImageDragDrop from "../imageDragDrop";
@@ -68,7 +69,8 @@ const PostMakerForm = ({ setIsMakePostActive }) => {
 
   return (
     <div className="fixed right-0 left-0 top-0 bottom-0 flex justify-center w-screen h-screen bg-gray-700/80 z-40 overflow-hidden">
-      <div className="flex flex-col w-full max-w-[600px] my-10 px-4 rounded-[1rem] bg-white dark:bg-gray-800">
+      <CloseBackground setEvent={setIsMakePostActive} />
+      <div className="flex flex-col lg:w-[550px] w-[500px] my-10 px-4 rounded-[1rem] bg-white dark:bg-gray-800 z-50">
         <CloseHeader
           setEvent={setIsMakePostActive}
           title={postMakerFormData.postMaker}

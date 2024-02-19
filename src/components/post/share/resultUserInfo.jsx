@@ -1,9 +1,9 @@
 import React from "react";
 import { baseURL } from "@/axios/axios";
 import { useQuery } from "@tanstack/react-query";
-import PostShareUserResultUser from "./postShareUserResultUser";
+import ResultUser from "./resultUser";
 
-const PostShareUserResultUserInfo = ({ user }) => {
+const ResultUserInfo = ({ user }) => {
   const userInfo = useQuery({
     queryKey: [`userInfo${user.targetUser_id}`],
     queryFn: async () => {
@@ -14,8 +14,8 @@ const PostShareUserResultUserInfo = ({ user }) => {
 
   if ((!userInfo.isPending, userInfo.data)) {
     const user = userInfo.data.data.response;
-    return <PostShareUserResultUser user={user} />;
+    return <ResultUser user={user} />;
   }
 };
 
-export default PostShareUserResultUserInfo;
+export default ResultUserInfo;

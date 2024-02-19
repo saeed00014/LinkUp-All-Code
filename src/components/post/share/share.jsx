@@ -2,16 +2,16 @@
 import React, { useState } from "react";
 import { PostShareContext } from "@/context/context";
 import { useQuery } from "@tanstack/react-query";
-import CloseHeader from "../closeHeader";
+import CloseHeader from "../../closeHeader";
 import UserSearch from "@/components/userSearch";
-import PostShareUserPageFooter from "./postShareUserPageFooter";
-import PostShareUserResultUser from "@/components/post/postShareUserResultUser";
-import PostShareUserResultUserInfo from "./postShareUserResultUserInfo";
-import LoadingSpin from "../loadingSpin";
+import Footer from "./footer";
+import ResultUser from "./resultUser";
+import ResultUserInfo from "./resultUserInfo";
+import LoadingSpin from "../../loadingSpin";
 import { postShare } from "@/assets/data/data";
 import { baseURL } from "@/axios/axios";
 
-const PostShareUserPage = ({ setIsShareActive }) => {
+const Share = ({ setIsShareActive }) => {
   const [searchResult, setSearchResult] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [isPending, setIsPending] = useState(false);
@@ -57,7 +57,7 @@ const PostShareUserPage = ({ setIsShareActive }) => {
                 loginUserFreind.data.map((user) => {
                   return (
                     <div key={user.id}>
-                      <PostShareUserResultUserInfo user={user} />
+                      <ResultUserInfo user={user} />
                     </div>
                   );
                 })}
@@ -67,17 +67,17 @@ const PostShareUserPage = ({ setIsShareActive }) => {
                 searchResult.map((user) => {
                   return (
                     <div key={user.id}>
-                      <PostShareUserResultUser user={user} />
+                      <ResultUser user={user} />
                     </div>
                   );
                 })}
             </div>
           </div>
-          <PostShareUserPageFooter />
+          <Footer />
         </div>
       </div>
     </PostShareContext.Provider>
   );
 };
 
-export default PostShareUserPage;
+export default Share;

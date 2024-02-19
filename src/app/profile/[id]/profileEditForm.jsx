@@ -8,6 +8,7 @@ import CloseHeader from "@/components/closeHeader";
 import Input from "./input";
 import { baseURL } from "@/axios/axios";
 import LoadingSpin from "@/components/loadingSpin";
+import CloseBackground from "@/components/closeBackground";
 
 const ProfileEditForm = () => {
   const { user, setIsEditActive } = useContext(ProfileContext);
@@ -58,7 +59,8 @@ const ProfileEditForm = () => {
 
   return (
     <div className="fixed right-0 left-0 top-0 bottom-0 flex justify-center w-screen h-screen bg-gray-700/80 z-40 overflow-hidden">
-      <div className="flex flex-col w-full max-w-[600px] my-10 px-4 rounded-[1rem] bg-white dark:bg-gray-800">
+      <CloseBackground setEvent={setIsEditActive} />
+      <div className="flex flex-col w-full max-w-[600px] my-10 px-4 rounded-[1rem] bg-white dark:bg-gray-800 z-50">
         <CloseHeader setEvent={setIsEditActive} title={profile.editProfile} />
         <form
           onSubmit={(e) => handleSubmit(e)}

@@ -19,7 +19,7 @@ export async function GET() {
 
 export async function POST(req) {
   const cookie = cookies();
-  const loginUserCookie = cookie.get("user") && cookie.get("user").value;
+  const loginUserCookie = cookie.get("user")?.value;
   const loginUser = loginUserCookie && JSON.parse(loginUserCookie);
   const post_id = req.nextUrl.searchParams.get("post_id");
   const values = [loginUser.id, post_id];
@@ -45,7 +45,7 @@ export async function POST(req) {
 
 export async function DELETE(req) {
   const cookie = cookies();
-  const loginUserCookie = cookie.get("user");
+  const loginUserCookie = cookie.get("user")?.value;
   const loginUser = loginUserCookie && JSON.parse(loginUserCookie.value);
   const post_id = req.nextUrl.searchParams.get("post_id");
   const values = [loginUser.id, post_id];

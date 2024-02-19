@@ -8,7 +8,7 @@ import defaultImage from "@/assets/images/default.jpg";
 import { postText } from "@/assets/data/data";
 import { baseURL } from "@/axios/axios";
 
-const PostCommentSendBar = ({
+const SendBar = ({
   type,
   setEditMessage,
   editMessage,
@@ -124,4 +124,4 @@ const PostCommentSendBar = ({
   );
 };
 
-export default PostCommentSendBar;
+export default SendBar;

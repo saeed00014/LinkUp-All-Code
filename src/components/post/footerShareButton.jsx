@@ -3,7 +3,7 @@ import { PostContext } from "@/context/context";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { postText } from "@/assets/data/data";
 
-const PostFooterButtonShare = () => {
+const FooterShareButton = () => {
   const { setIsShareActive } = useContext(PostContext);
   return (
     <span onClick={() => setIsShareActive(true)} className="w-full">
@@ -17,4 +17,4 @@ const PostFooterButtonShare = () => {
   );
 };
 
-export default PostFooterButtonShare;
+export default FooterShareButton;

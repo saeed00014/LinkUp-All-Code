@@ -1,6 +1,6 @@
 "use client"
 import { useContext, useEffect } from "react"
-import { ChatContext, ChatMessageContext } from "@/context/context"
+import { ChatContext, ChatRoomContext } from "@/context/context"
 import Link from "next/link"
 import { useQuery } from "@tanstack/react-query"
 import Post from "@/components/post/post"
@@ -10,7 +10,7 @@ import { baseURL } from "@/axios/axios"
 
 const Message = ({message}) => {
   const { currentChat, loginUser} = useContext(ChatContext)
-  const { chooseMessage, setChooseMessage, messages } = useContext(ChatMessageContext)
+  const { chooseMessage, setChooseMessage, messages } = useContext(ChatRoomContext)
   const { targetUser } = currentChat
   
   useEffect(() => {

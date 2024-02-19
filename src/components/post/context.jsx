@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { PostContext } from "@/context/context";
 import { useQuery } from "@tanstack/react-query";
-import Comment from "./postCommentPage";
+import Comment from "./comments/comment";
 import { baseURL } from "@/axios/axios";
-import PostShare from "./postShareUserPage";
+import Share from "./share/share";
 
 const Context = ({ children, post, isMyPost, miniEdition }) => {
   const [isCommentActive, setIsCommentActive] = useState();
@@ -31,7 +31,7 @@ const Context = ({ children, post, isMyPost, miniEdition }) => {
     checkLike();
   }, [post]);
 
-  const getAllLoginUserLikes = useQuery({
+  const getLoginUserLikes = useQuery({
     queryKey: ["userLikes"],
     queryFn: async () => {
       const likes = await baseURL.get(`/like`);
@@ -45,7 +45,7 @@ const Context = ({ children, post, isMyPost, miniEdition }) => {
     },
   });
 
-  const getAllPostLikesCount = useQuery({
+  const getPostLikesCount = useQuery({
     queryKey: [`postLikesCount${post.id}`],
     queryFn: async () => {
       const likesCount = await baseURL.get(`/like/post/${post.id}`);
@@ -54,7 +54,7 @@ const Context = ({ children, post, isMyPost, miniEdition }) => {
     },
   });
 
-  const getAllPostCommentsCount = useQuery({
+  const getPostCommentsCount = useQuery({
     queryKey: [`postCommentsCount${post.id}`],
     queryFn: async () => {
       const commentsCount = await baseURL.get(`/comment/post/${post.id}`);
@@ -74,10 +74,10 @@ const Context = ({ children, post, isMyPost, miniEdition }) => {
   if (
     !getLoginUser.isPending &&
     !getUser.isPending &&
-    !getAllLoginUserLikes.isPending &&
+    !getLoginUserLikes.isPending &&
     getUser.data.data.response &&
-    !getAllPostLikesCount.isPending &&
-    !getAllPostCommentsCount.isPending
+    !getPostLikesCount.isPending &&
+    !getPostCommentsCount.isPending
   ) {
     const postUser = getUser.data.data.response;
     const loginUser = getLoginUser.data.data.response;
@@ -100,7 +100,7 @@ const Context = ({ children, post, isMyPost, miniEdition }) => {
       >
         {children}
         {isCommentActive && <Comment />}
-        {isShareActive && <PostShare setIsShareActive={setIsShareActive} />}
+        {isShareActive && <Share setIsShareActive={setIsShareActive} />}
       </PostContext.Provider>
     );
   }

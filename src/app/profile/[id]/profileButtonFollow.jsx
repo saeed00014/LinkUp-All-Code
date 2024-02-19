@@ -41,7 +41,7 @@ const ProfileButtonFollow = () => {
   };
 
   return (
-    <div className="w-full h-[1.8rem] dark:bg-gray-700 bg-gray-200">
+    <div className="w-full min-w-max h-[1.8rem] px-1 dark:bg-gray-700 bg-gray-200">
       {!getFollowInfo.isPending && (
         <button
           className="flex items-center justify-center w-full h-full"

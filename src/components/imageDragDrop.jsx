@@ -13,9 +13,9 @@ const ImageDragDrop = ({ setImage, currentImage, edition, lable }) => {
   const [isFormatError, setIsFormatError] = useState(false);
   const onDrop = useCallback((acceptedFiles) => {
     setBinaryImageName(acceptedFiles[0].name);
-
+    
     checkFormat({ acceptedFiles, setFormat, setIsFormatError });
-
+    
     const file = new FileReader();
 
     file.onload = function () {
