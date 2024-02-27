@@ -2,7 +2,7 @@
 import { React, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import CloseHeader from "../closeHeader";
-import CloseBackground from "../closeBackground"
+import CloseBackground from "../closeBackground";
 import Input from "./input";
 import CheckInput from "./checkInput";
 import ImageDragDrop from "../imageDragDrop";
@@ -34,7 +34,7 @@ const PostMakerForm = ({ setIsMakePostActive }) => {
             location.reload("");
           }
           if (!res.data.inserted) {
-            console.log("no result")
+            console.log("no result");
           }
         })
         .catch(() => {

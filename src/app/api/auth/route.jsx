@@ -40,7 +40,6 @@ export async function GET() {
 export async function POST(req) {
   const body = await req.json();
   const { username, password } = body;
-
   const result = await query({
     query: "SELECT id,username,password FROM user WHERE username = ?",
     values: [username],

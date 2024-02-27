@@ -28,8 +28,13 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/chats/inbox/chat.jsx",
-    "src/app/chats/inbox/context.jsx"
+    "src/app/chats/inbox/chat.tsx",
+    "src/app/chats/inbox/context.tsx",
+    "src/app/login/loginForm.tsx",
+    "src/lib/zodSchema.js",
+    "src/app/profile/[id]/editForm.tsx",
+    "src/app/home/homeBody.tsx",
+    "src/components/post/header.jsx"
   ],
   "exclude": ["node_modules"]
 }

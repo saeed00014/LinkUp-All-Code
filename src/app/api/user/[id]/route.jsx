@@ -6,14 +6,12 @@ export async function GET(req, route) {
   const cookie = cookies();
   const loginUserCookie = cookie.get("user")?.value;
   const loginUser = loginUserCookie && JSON.parse(loginUserCookie);
-  const id = route.params.id;
-  
+  const id = route.params.id; 
   const result = await query({
     query:
       "SELECT id,username,email,firstname,lastname,gender,birth,job,link,bio,image,background FROM user where id = ?",
     values: [id],
   });
-
   if (result[0]) {
     return NextResponse.json(
       { response: result[0], isLoginUser: loginUser.id == id },
@@ -56,7 +54,6 @@ export async function PUT(req, route) {
       id,
     ],
   });
-
   if (result && !result.errno && result.affectedRows == 1) {
     return NextResponse.json({ response: "changes saved" }, { status: 200 });
   }

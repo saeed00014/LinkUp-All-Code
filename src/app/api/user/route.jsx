@@ -15,14 +15,12 @@ export async function GET() {
   if (result && !result.errno) {
     return NextResponse.json({ response: result }, { status: 200 });
   }
-  if (result) {
-    return NextResponse.json({ response: "failed" }, { status: 500 });
-  }
+  return NextResponse.json({ response: "failed" }, { status: 500 });
 }
 
 export async function POST(req) {
   const body = await req.json();
-  const { email, username, firstname, lastname, gender, years, password } =
+  const { email, username, firstname, lastname, gender, year, password } =
     body;
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -32,7 +30,7 @@ export async function POST(req) {
     firstname,
     lastname,
     gender,
-    years,
+    year,
     hashedPassword,
   ];
   const result = await query({

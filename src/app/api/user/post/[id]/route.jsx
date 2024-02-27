@@ -13,7 +13,5 @@ export async function GET(req, route) {
   if (result && !result.errno) {
     return NextResponse.json({ response: result }, { status: 200 });
   }
-  if (result.errno) {
-    return NextResponse.json({ response: "" }, { status: 500 });
-  }
+  return NextResponse.json({ response: "" }, { status: 500 });
 }

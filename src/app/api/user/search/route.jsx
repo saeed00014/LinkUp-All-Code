@@ -14,7 +14,5 @@ export async function GET(req) {
   if (result && !result.errno) {
     return NextResponse.json({ response: result }, { status: 200 });
   }
-  if (result) {
-    return NextResponse.json({ response: "failed" }, { status: 500 });
-  }
+  return NextResponse.json({ response: "failed" }, { status: 500 });
 }
