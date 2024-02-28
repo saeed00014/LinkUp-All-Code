@@ -21,11 +21,7 @@ const HomeBody = () => {
   });
 
   if (getRandomPost.isPending) {
-    return (
-      <div className="flex w-full h-full justify-center items-center">
-        <LoadingSpin />
-      </div>
-    );
+    return <LoadingSpin />;
   }
 
   if (getRandomPost.error) {
@@ -36,8 +32,8 @@ const HomeBody = () => {
 
   return (
     <div className="flex flex-col items-center w-full h-screen pt-4 pb-[10rem] gap-4 bg-gray-200 dark:bg-gray-950 overflow-y-scroll">
-      <PostMaker image={loginUser?.image} />
-      {randomPosts?.map((post) => {
+      <PostMaker image={loginUser.image} />
+      {randomPosts.map((post) => {
         return (
           <div key={post.id}>
             <Post post={post} />

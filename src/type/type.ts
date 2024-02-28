@@ -61,26 +61,53 @@ export type ChatType = {
 }
 
 export type ChatMessageType = {
-  id?: number,
+  id: number,
   user_id: number,
   post_id: number,
   text: string,
   image: string,
-  attachedMessage_id?: number,
-  attachedMessage?: string
+  attachedMessage_id: number,
+  attachedMessage: string
 }
 
 export type ShareMessageType = {
   id: number,
   text: string,
-  post_id: number
+  post_id: number,
+  image: string
 }
 
 export type ChatSendMessageType = {
   text: string,
   image: string,
   user_id: number,
-  post_id: string,
+  post_id: number,
   attachedMessage_id: number,
   attachedMessage: string
+}
+
+export type CurrentChat = {
+  targetUser: UserInfoType,
+  chat_id: number
+}
+
+export type CookieUserType = {
+  id: number,
+  username: string,
+  password: String
+}
+
+export type AuthUserInfoType = {
+  username: string,
+  password: string
+}
+
+export type SqlQueryResultSuccessType = {
+  fieldCount: number,
+  affectedRows: number,
+  insertId: number,
+  info: string,
+  serverStatus: number,
+  warningStatus: number,
+  changedRows: number
 }

@@ -1,7 +1,13 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
 
-const CloseHeader = ({ setEvent, title }) => {
+const CloseHeader = ({
+  setEvent,
+  title,
+}: {
+  setEvent: React.Dispatch<React.SetStateAction<boolean>>;
+  title: string;
+}) => {
   return (
     <header className="flex justify-between items-center w-full py-3">
       <span>{title}</span>

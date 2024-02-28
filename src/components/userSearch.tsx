@@ -4,16 +4,23 @@ import { useMutation } from "@tanstack/react-query";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { baseURL } from "@/axios/axios";
 import { postShare, sideBar } from "@/assets/data/data";
+import { UserInfoType } from "@/type/type";
+
+type Props = {
+  type: string;
+  setSearchResult: React.Dispatch<React.SetStateAction<UserInfoType[]>>;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  setIsPending: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 const UserSearch = ({
   type,
   setSearchResult,
   setSearchValue,
   setIsPending,
-}) => {
-  
+}: Props) => {
   const mutation = useMutation({
-    mutationFn: async (searchValue) => {
+    mutationFn: async (searchValue: string) => {
       const response = await baseURL.get(
         `/user/search?username=${searchValue}`
       );
@@ -24,11 +31,11 @@ const UserSearch = ({
     },
   });
 
-  const handleChange = (e) => {
-    const value = e.target.value;
+  const handleChange = (e: React.SyntheticEvent) => {
+    const value = (e.target as HTMLInputElement).value;
     setSearchValue(value);
     value && setIsPending(true);
-    !value && setSearchResult("");
+    !value && setSearchResult([]);
     value && mutation.mutate(value);
   };
 

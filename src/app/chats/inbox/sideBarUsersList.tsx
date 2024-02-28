@@ -8,7 +8,7 @@ const SideBarUsersList = () => {
 
   return (
     <ul className="flex flex-col w-full !overflow-y-scroll">
-      {chats[0] && chats?.map((chat) => {
+      {chats[0] && chats.map((chat) => {
         return (
           <li key={chat.id}>
             <SideBarUser chat={chat} />

@@ -6,8 +6,12 @@ import { useSearchParams } from "next/navigation";
 import RoomUserSearch from "./roomUserSearch";
 import LoadingSpin from "@/components/loadingSpin";
 import { baseURL } from "@/axios/axios";
-import { ChatMessageType, ShareMessageType, UserInfoType } from "@/type/type";
-import ErrorPage from "@/components/errorPage";
+import {
+  ChatMessageType,
+  ChatSendMessageType,
+  ShareMessageType,
+  UserInfoType,
+} from "@/type/type";
 
 const RoomContext = ({ children }: { children: React.ReactNode }) => {
   const { setCurrentChat, currentChat } = useContext(ChatContext);
@@ -16,14 +20,16 @@ const RoomContext = ({ children }: { children: React.ReactNode }) => {
   const chat_id = searchParams?.get("chat_id");
   const targetUser_id = searchParams?.get("targetUser_id");
 
-  const [sendMessage, setSendMessage] = useState<ChatMessageType | undefined>();
+  const [sendMessage, setSendMessage] = useState<ChatSendMessageType>(
+    {} as ChatSendMessageType
+  );
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
-  const [shareMessage, setShareMessage] = useState<
-    ShareMessageType | undefined
-  >(undefined);
-  const [chooseMessage, setChooseMessage] = useState<
-    ChatMessageType | undefined
-  >(undefined);
+  const [shareMessage, setShareMessage] = useState<ShareMessageType>(
+    {} as ShareMessageType
+  );
+  const [chooseMessage, setChooseMessage] = useState<ChatMessageType>(
+    {} as ChatMessageType
+  );
 
   const getCurrentChat = useQuery({
     queryKey: [`profileUser${chat_id}`],
@@ -41,23 +47,19 @@ const RoomContext = ({ children }: { children: React.ReactNode }) => {
           });
           return targetUser;
         }
-        setCurrentChat({ targetUser: undefined, chat_id: 0 });
-        return undefined;
+        setCurrentChat({ targetUser: {} as UserInfoType, chat_id: 0 });
+        return null;
       }
-      return undefined;
+      return null;
     },
   });
 
   if (getCurrentChat.isPending) {
-    return (
-      <div className="flex justify-center items-center w-full h-full">
-        <LoadingSpin />
-      </div>
-    );
+    return <LoadingSpin />;
   }
 
   if (getCurrentChat.error) {
-    return <ErrorPage />;
+    return <RoomUserSearch />;
   }
 
   return (
@@ -73,7 +75,7 @@ const RoomContext = ({ children }: { children: React.ReactNode }) => {
         setChooseMessage,
       }}
     >
-      {currentChat?.targetUser ? children : <RoomUserSearch />}
+      {currentChat.chat_id ? children : <RoomUserSearch />}
     </ChatRoomContext.Provider>
   );
 };

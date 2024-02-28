@@ -3,12 +3,13 @@ import { ChatContext } from "@/context/context";
 import Link from "next/link";
 import { chatData } from "@/assets/data/data";
 import SideBarHeaderEdit from "./sideBarHeaderEdit";
+import { UserInfoType } from "@/type/type";
 
 const SideBarHeader = () => {
   const { setCurrentChat } = useContext(ChatContext);
 
   const handleClick = () => {
-    setCurrentChat({ targetUser: undefined, chat_id: 0 });
+    setCurrentChat({ targetUser: {} as UserInfoType, chat_id: 0 });
   };
 
   return (

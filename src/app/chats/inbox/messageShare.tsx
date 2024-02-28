@@ -1,4 +1,5 @@
 import { ChatRoomContext } from "@/context/context";
+import { ChatMessageType } from "@/type/type";
 import { useContext } from "react";
 import { FaArrowTurnUp } from "react-icons/fa6";
 
@@ -8,11 +9,12 @@ const MessageShare = () => {
 
   const handleShare = () => {
     setShareMessage({
-      id: chooseMessage?.id || 0,
-      text: chooseMessage?.text || "",
-      post_id: chooseMessage?.post_id || 0,
+      id: chooseMessage.id,
+      text: chooseMessage.text,
+      post_id: chooseMessage.post_id,
+      image: chooseMessage.image,
     });
-    setChooseMessage(undefined);
+    setChooseMessage({} as ChatMessageType);
   };
 
   return (

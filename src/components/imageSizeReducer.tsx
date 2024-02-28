@@ -1,4 +1,9 @@
-const imageSizeReducer = ({ file, setImage, edition }) => {
+type Props = {
+  file: string,
+  setImage: React.Dispatch<React.SetStateAction<string>>,
+  edition: string
+}
+const imageSizeReducer = ({ file, setImage, edition }: Props) => {
   const MAX_WIDTH = edition == "profile" ? 125 : 1000;
   const MAX_HEIGHT = edition == "profile" ? 125 : 1600;
   const MIME_TYPE = "image/jpeg";
@@ -31,7 +36,7 @@ const imageSizeReducer = ({ file, setImage, edition }) => {
     canvas.width = newWidth;
     canvas.height = newHeight;
     const ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+    ctx?.drawImage(img, 0, 0, newWidth, newHeight);
     canvas.toBlob(
       (blob) => {
         const reader = new window.FileReader();

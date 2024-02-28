@@ -1,6 +1,14 @@
+import React from "react";
+import { ChatMessageType } from "@/type/type";
 import { AiFillEdit } from "react-icons/ai"
 
-const MessageEdit = ({ chooseMessage, setEditMessage, edition }) => {
+type Props = {
+  chooseMessage: ChatMessageType;
+  setEditMessage: React.Dispatch<React.SetStateAction<string>>;
+  edition: string;
+};
+
+const MessageEdit = ({ chooseMessage, setEditMessage, edition }: Props) => {
   
   const handleEdit = () => {
     setEditMessage(chooseMessage.text)

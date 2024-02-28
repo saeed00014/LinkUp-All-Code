@@ -1,7 +1,9 @@
 "use client";
 import {
   ChatMessageType,
+  ChatSendMessageType,
   ChatType,
+  CurrentChat,
   PostType,
   ShareMessageType,
   UserInfoType,
@@ -39,13 +41,8 @@ type ChatContext = {
   loginUser: UserInfoType;
   chats: ChatType[];
   setChats: React.Dispatch<React.SetStateAction<ChatType[]>>;
-  currentChat: { targetUser: UserInfoType | undefined; chat_id: number };
-  setCurrentChat: React.Dispatch<
-    React.SetStateAction<{
-      targetUser: UserInfoType | undefined;
-      chat_id: number;
-    }>
-  >;
+  currentChat: CurrentChat;
+  setCurrentChat: React.Dispatch<React.SetStateAction<CurrentChat>>;
   searchResult: UserInfoType[];
   setSearchResult: React.Dispatch<React.SetStateAction<UserInfoType[]>>;
   lastMessage: string;
@@ -57,18 +54,12 @@ export const ChatContext = createContext<ChatContext>({} as ChatContext);
 type ChatRoomContext = {
   messages: ChatMessageType[];
   setMessages: React.Dispatch<React.SetStateAction<ChatMessageType[]>>;
-  sendMessage: ChatMessageType | undefined;
-  setSendMessage: React.Dispatch<
-    React.SetStateAction<ChatMessageType | undefined>
-  >;
-  shareMessage: ShareMessageType | undefined;
-  setShareMessage: React.Dispatch<
-    React.SetStateAction<ShareMessageType | undefined>
-  >;
-  chooseMessage: ChatMessageType | undefined;
-  setChooseMessage: React.Dispatch<
-    React.SetStateAction<ChatMessageType | undefined>
-  >;
+  sendMessage: ChatSendMessageType;
+  setSendMessage: React.Dispatch<React.SetStateAction<ChatSendMessageType>>;
+  shareMessage: ShareMessageType;
+  setShareMessage: React.Dispatch<React.SetStateAction<ShareMessageType>>;
+  chooseMessage: ChatMessageType;
+  setChooseMessage: React.Dispatch<React.SetStateAction<ChatMessageType>>;
 };
 
 export const ChatRoomContext = createContext<ChatRoomContext>(

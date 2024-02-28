@@ -11,9 +11,9 @@ const Room = () => {
       className="relative flex flex-col justify-between w-full h-full bg-gray-200 dark:bg-gray-950"
     >
       <RoomContext>
-          <RoomHeader/>
-          <RoomBody />
-          <RoomSendBar />
+        <RoomHeader/>
+        <RoomBody />
+        <RoomSendBar />
       </RoomContext>
     </div>
   )

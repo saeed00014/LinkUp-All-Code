@@ -5,14 +5,13 @@ import { ChatContext } from "@/context/context";
 import LoadingSpin from "@/components/loadingSpin";
 import { baseURL } from "@/axios/axios";
 import ErrorPage from "@/components/errorPage";
-import { ChatType, UserInfoType } from "@/type/type";
+import { ChatType, CurrentChat, UserInfoType } from "@/type/type";
 
 const Context = ({ children }: { children: React.ReactNode }) => {
   const [chats, setChats] = useState<ChatType[]>([]);
-  const [currentChat, setCurrentChat] = useState<{
-    targetUser: UserInfoType | undefined;
-    chat_id: number;
-  }>({ targetUser: undefined, chat_id: 0 });
+  const [currentChat, setCurrentChat] = useState<CurrentChat>(
+    {} as CurrentChat
+  );
   const [searchResult, setSearchResult] = useState<UserInfoType[]>(
     [] as UserInfoType[]
   );
@@ -36,11 +35,7 @@ const Context = ({ children }: { children: React.ReactNode }) => {
   });
 
   if (getLoginUser.isPending || getLoginUserChats.isPending) {
-    return (
-      <div className="fixed left-0 top-0 bottom-0 right-0 flex items-center justify-center">
-        <LoadingSpin />
-      </div>
-    );
+    return <LoadingSpin />;
   }
 
   if (getLoginUser.error) {

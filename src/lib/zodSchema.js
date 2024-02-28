@@ -14,8 +14,8 @@ export const registerFormSchema = z.object({
   // year: z.string().transform(val => Number(val) - 18).positive()
   gender: z.string().min(3),
   password: z
-  .string()
-  .regex(/^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{8,18}$/),
+    .string()
+    .regex(/^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{8,18}$/),
   confirmPass: z.string().min(1),
 });
 
@@ -27,4 +27,4 @@ export const editUserSchema = z.object({
   job: z.string().regex(/^.{1,25}$/),
   link: z.string().regex(/^.{1,40}$/),
   bio: z.string().regex(/^.{1,225}$/),
-})
+});

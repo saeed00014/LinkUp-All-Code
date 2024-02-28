@@ -6,7 +6,14 @@ import imageSizeReducer from "./imageSizeReducer";
 import Image from "next/image";
 import { postMakerFormData } from "@/assets/data/data";
 
-const ImageDragDrop = ({ setImage, currentImage, edition, lable }) => {
+type Props = {
+  setImage: React.Dispatch<React.SetStateAction<string>>,
+  currentImage: string,
+  edition: string,
+  lable: string 
+}
+
+const ImageDragDrop = ({ setImage, currentImage, edition, lable }: Props) => {
   const [binaryImage, setBinaryImage] = useState("");
   const [binaryImageName, setBinaryImageName] = useState("");
   const [format, setFormat] = useState("");
@@ -19,7 +26,7 @@ const ImageDragDrop = ({ setImage, currentImage, edition, lable }) => {
     const file = new FileReader();
 
     file.onload = function () {
-      setBinaryImage(file.result);
+      setBinaryImage(file?.result);
       imageSizeReducer({
         file: file.result,
         setImage: setImage,

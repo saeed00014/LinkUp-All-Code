@@ -4,10 +4,13 @@ import { ChatContext, ChatRoomContext } from "@/context/context";
 import { IoSend } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { messages } from "@/assets/data/data";
+import { ShareMessageType } from "@/type/type";
 
 const RoomSendBar = () => {
   const { loginUser } = useContext(ChatContext);
-  const [editMessage, setEditMessage] = useState<string>()
+  const [editMessage, setEditMessage] = useState<{ text: string }>({
+    text: "",
+  });
   const { shareMessage, setShareMessage, setSendMessage } =
     useContext(ChatRoomContext);
   const [message, setMessage] = useState("");
@@ -16,14 +19,14 @@ const RoomSendBar = () => {
     e.preventDefault();
     setSendMessage({
       user_id: loginUser.id,
-      post_id: shareMessage?.post_id || 0,
+      post_id: shareMessage.post_id,
       text: message,
       image: "",
-      attachedMessage_id: shareMessage?.id,
-      attachedMessage: shareMessage?.text,
+      attachedMessage_id: shareMessage.id,
+      attachedMessage: shareMessage.text,
     });
     setMessage("");
-    setShareMessage(undefined);
+    setShareMessage({} as ShareMessageType);
   };
 
   const handleEditMessage = (e: React.SyntheticEvent) => {
@@ -44,14 +47,14 @@ const RoomSendBar = () => {
         <IoSend />
         <input type="submit" id="chatsSubmit" className="invisible w-0 h-0" />
       </label>
-      {shareMessage && (
+      {shareMessage.id && (
         <div className="flex justify-between items-center w-full h-[3rem] pr-2 bg-gray-700/25">
           <div className="flex items-center justify-center gap-2">
             <span className="h-[38px] w-[.15rem] rounded-full bg-white"></span>
             <span>{shareMessage.text}</span>
           </div>
           <span
-            onClick={() => setShareMessage(undefined)}
+            onClick={() => setShareMessage({} as ShareMessageType)}
             className="flex justify-center w-[48px] text-2xl"
           >
             <IoClose />
@@ -67,7 +70,7 @@ const RoomSendBar = () => {
         onChange={
           !editMessage
             ? (e) => setMessage(e.target.value)
-            : (e) => setEditMessage(e.target.value)
+            : (e) => setEditMessage({ text: e.target.value })
         }
         className="w-full px-2 pt-3 pb-4 bg-white dark:bg-gray-800"
       />

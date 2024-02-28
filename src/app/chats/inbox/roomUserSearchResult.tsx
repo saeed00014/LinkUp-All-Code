@@ -12,11 +12,13 @@ const RoomUserSearchResult = ({ user }: { user: UserInfoType }) => {
   const router = useRouter();
   const { loginUser, chats, setChats, setCurrentChat } =
     useContext(ChatContext);
+
   const getUserChatId = useMutation({
     mutationFn: async () => {
       const response = await baseURL.get(`/chat/${user.id}`);
       const chat_id = response.data.chat_id;
       router.push(`/chats/inbox?chat_id=${chat_id}&targetUser_id=${user.id}`);
+      
       const isChatThere = chats.find((chat) => chat.id === chat_id);
       if (!isChatThere) {
         setChats((prev) => [

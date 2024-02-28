@@ -1,6 +1,10 @@
 import React from "react";
 
-const CloseBackground = ({ setEvent }) => {
+const CloseBackground = ({
+  setEvent,
+}: {
+  setEvent: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   return (
     <div
       onClick={() => setEvent(false)}
